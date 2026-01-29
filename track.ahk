@@ -8,6 +8,7 @@
 #Include lib\config.ahk
 #Include lib\debug.ahk
 #Include lib\helpers.ahk
+#INclude lib\ini_normalizer.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
