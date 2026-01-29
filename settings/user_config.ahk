@@ -19,3 +19,6 @@ global INCLUDE_PERSONAL_SETTINGS := true
 
 ; Set to true to enable debugging logs if encoutering issues
 global ENABLE_DEBUG := true
+
+; Target success streak to reach, set to 0 to disable;
+global TARGET_SUCCESS_STREAK := 2

@@ -8,7 +8,8 @@
 #Include lib\config.ahk
 #Include lib\debug.ahk
 #Include lib\helpers.ahk
-#INclude lib\ini_normalizer.ahk
+#Include lib\ini_normalizer.ahk
+#Include lib\gui_popup.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
@@ -210,6 +211,8 @@ NewInstance() {
     IniWrite "0", INI_PATH, name, "success"
     IniWrite "0", INI_PATH, name, "fail"
     IniWrite "0", INI_PATH, name, "success_pct"
+    IniWrite "0", INI_PATH, name, "streak_current"
+    IniWrite "0", INI_PATH, name, "streak_best"
     IniWrite NowStamp(), INI_PATH, name, "created_at"
   }
 
@@ -243,10 +246,19 @@ MarkResult(result) {
   s := IniRead(INI_PATH, CURRENT_INSTANCE, "success", "0") + 0
   f := IniRead(INI_PATH, CURRENT_INSTANCE, "fail", "0") + 0
 
-  if (result = "success")
+  streakCur := IniRead(INI_PATH, CURRENT_INSTANCE, "streak_current", "0") + 0
+  streakBest := IniRead(INI_PATH, CURRENT_INSTANCE, "streak_best", "0") + 0
+
+  if (result = "success") {
     s += 1
-  else
+
+    streakCur += 1
+    if (streakCur > streakBest)
+      streakBest := streakCur
+  } else {
     f += 1
+    streakCur := 0
+  }
 
   total := s + f
   pct := (total > 0) ? Round((s / total) * 100, 2) : 0
@@ -254,7 +266,14 @@ MarkResult(result) {
   IniWrite s, INI_PATH, CURRENT_INSTANCE, "success"
   IniWrite f, INI_PATH, CURRENT_INSTANCE, "fail"
   IniWrite pct, INI_PATH, CURRENT_INSTANCE, "success_pct"
+
+  IniWrite streakCur, INI_PATH, CURRENT_INSTANCE, "streak_current"
+  IniWrite streakBest, INI_PATH, CURRENT_INSTANCE, "streak_best"
+
   IniWrite NowStamp(), INI_PATH, CURRENT_INSTANCE, "last_event"
 
   ResetPos()
+  if (TARGET_SUCCESS_STREAK > 0 && streakCur >= TARGET_SUCCESS_STREAK) {
+    ShowStreakPopup(streakCur)
+  }
 }

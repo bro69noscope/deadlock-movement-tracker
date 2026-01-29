@@ -51,8 +51,7 @@ NormalizeIni(path) {
     sectionNames.InsertAt(1, "__global__")
   }
 
-  ; preferred key order for instance sections
-  preferred := [
+  preferredOrder := [
     "created_at",
     "pos_line",
     "pos_saved_at",
@@ -60,8 +59,11 @@ NormalizeIni(path) {
     "success",
     "fail",
     "success_pct",
+    "streak_current",
+    "streak_best",
     "last_event"
   ]
+
 
   out := ""
 
@@ -84,7 +86,7 @@ NormalizeIni(path) {
 
     ; write preferred keys first
     written := Map()
-    for _, k in preferred {
+    for _, k in preferredOrder {
       if kv.Has(k) {
         out .= k "=" kv[k] "`n"
         written[k] := true
