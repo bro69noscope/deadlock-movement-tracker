@@ -207,14 +207,27 @@ NewInstance() {
   if (name = "")
     return
 
-  if !InstanceExists(name) {
-    IniWrite "0", INI_PATH, name, "success"
-    IniWrite "0", INI_PATH, name, "fail"
-    IniWrite "0", INI_PATH, name, "success_pct"
-    IniWrite "0", INI_PATH, name, "streak_current"
-    IniWrite "0", INI_PATH, name, "streak_best"
-    IniWrite NowStamp(), INI_PATH, name, "created_at"
+  if InstanceExists(name) {
+    choice := MsgBox(
+      "Instance '" name "' already exists.`n`n"
+      . "Replace it? This will overwrite/reset its stats and saved position.",
+      "Tracker",
+      "YesNo Icon!"
+    )
+    if (choice = "No")
+      return
+
+    ; Overwrite/reset the instance section
+    IniDelete INI_PATH, name
   }
+
+  ; (Re)create baseline fields
+  IniWrite "0", INI_PATH, name, "success"
+  IniWrite "0", INI_PATH, name, "fail"
+  IniWrite "0", INI_PATH, name, "success_pct"
+  IniWrite "0", INI_PATH, name, "streak_current"
+  IniWrite "0", INI_PATH, name, "streak_best"
+  IniWrite NowStamp(), INI_PATH, name, "created_at"
 
   SetCurrentInstance(name)
   SaveCurrentInstancePos()
