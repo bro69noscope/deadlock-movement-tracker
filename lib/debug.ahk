@@ -1,5 +1,5 @@
 #Include config.ahk
-#Include ../settings/user_config.ahk
+#Include ..\settings\user_config.ahk
 global DEBUG_LOG := DATA_DIR "\debug.log"
 Debug(msg) {
   if (!ENABLE_DEBUG)
