@@ -60,7 +60,6 @@ GetFileMTime(path) {
 }
 
 ReadLastPosAfterMTime(prevMTime, timeoutMs := 1500) {
-  global LASTPOS_PATH
   start := A_TickCount
 
   while (A_TickCount - start) <= timeoutMs {
@@ -80,7 +79,6 @@ ReadLastPosAfterMTime(prevMTime, timeoutMs := 1500) {
 }
 
 ReadLastPosWithRetry(timeoutMs := 600) {
-  global LASTPOS_PATH
   start := A_TickCount
 
   while (A_TickCount - start) <= timeoutMs {
@@ -97,8 +95,6 @@ ReadLastPosWithRetry(timeoutMs := 600) {
 }
 
 WriteMvposCfg(posLine) {
-  global MVTRACK_POS_PATH
-
   posLine := Trim(posLine)
   if (posLine = "") {
     Debug("WriteMvposCfg: posLine empty -> abort")
@@ -133,8 +129,6 @@ WriteMvposCfg(posLine) {
 ; Core: Save / Load position
 ; =========================
 SaveCurrentInstancePos() {
-  global CURRENT_INSTANCE, DEADLOCK_MARK_POS_HOTKEY, LASTPOS_PATH, INI_PATH
-
   if (CURRENT_INSTANCE = "") {
     Debug("SaveCurrentInstancePos: no current instance -> abort")
     return false
@@ -168,8 +162,6 @@ SaveCurrentInstancePos() {
 }
 
 LoadInstancePos(instanceName) {
-  global INI_PATH, DEADLOCK_MVTRACK_POS_TP_HOTKEY
-
   pos := IniRead(INI_PATH, instanceName, "pos_line", "")
   Debug("LoadInstancePos: instance=" instanceName " pos=" pos)
 
@@ -190,19 +182,17 @@ LoadInstancePos(instanceName) {
 ; Instance management
 ; =========================
 InstanceExists(name) {
-  global INI_PATH
   return (IniRead(INI_PATH, name, "created_at", "") != "")
 }
 
 SetCurrentInstance(name) {
-  global CURRENT_INSTANCE, INI_PATH
+  global CURRENT_INSTANCE
   CURRENT_INSTANCE := name
   IniWrite name, INI_PATH, "__global__", "current_instance"
   IniWrite NowStamp(), INI_PATH, name, "last_switch"
 }
 
 NewInstance() {
-  global CURRENT_INSTANCE, INI_PATH
   name := PromptName("New instance name:")
   if (name = "")
     return
@@ -234,7 +224,6 @@ NewInstance() {
 }
 
 SwitchInstance() {
-  global CURRENT_INSTANCE, INI_PATH
   name := PromptName("Switch to instance name:", CURRENT_INSTANCE)
   if (name = "")
     return
@@ -252,7 +241,6 @@ SwitchInstance() {
 ; Tracking counts
 ; =========================
 MarkResult(result) {
-  global CURRENT_INSTANCE, INI_PATH
   if (CURRENT_INSTANCE = "")
     return
 
