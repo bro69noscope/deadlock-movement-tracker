@@ -33,6 +33,7 @@ HotKey TRACKER_FAIL_KEY, (*) => MarkResult("fail")
 HotKey TRACKER_SUCCESS_KEY, (*) => MarkResult("success")
 HotKey TRACKER_SWITCH_POS_KEY, (*) => SwitchInstance()
 HotKey TRACKER_CREATE_POS_KEY, (*) => NewInstance()
+HotKey NORMALIZE_INI_KEY, (*) => NormalizeIni(INI_PATH)
 #HotIf
 
 ; =========================
