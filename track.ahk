@@ -273,7 +273,7 @@ MarkResult(result) {
   IniWrite NowStamp(), INI_PATH, CURRENT_INSTANCE, "last_event"
 
   ResetPos()
-  if (TARGET_SUCCESS_STREAK > 0 && streakCur >= TARGET_SUCCESS_STREAK) {
+  if (TARGET_SUCCESS_STREAK > 0 && streakCur == TARGET_SUCCESS_STREAK) {
     ShowStreakPopup(streakCur)
   }
 }
