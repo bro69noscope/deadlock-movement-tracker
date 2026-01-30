@@ -1,9 +1,9 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
-#Include lib\ini_normalizer.ahk
-#Include lib\instance.ahk
-#Include lib\result.ahk
+#Include core\ini_normalizer.ahk
+#Include core\instance.ahk
+#Include core\result.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
