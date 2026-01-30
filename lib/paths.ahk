@@ -1,5 +1,5 @@
-#include ..\settings\user_config.ahk
-#include config.ahk
+#Include ..\settings\user_config.ahk
+#Include config.ahk
 
 global INI_PATH := DATA_DIR "\instances.ini"
 DirCreate(DATA_DIR)

@@ -1,9 +1,10 @@
-#include helpers.ahk
-#include debug.ahk
-#include paths.ahk
-#include mvpos_writer.ahk
-#include lastpos_capture.ahk
-#include gui\prompt.ahk
+#Include helpers.ahk
+#Include debug.ahk
+#Include paths.ahk
+#Include mvpos_writer.ahk
+#Include lastpos_capture.ahk
+#Include history.ahk
+#Include gui\prompt.ahk
 global CURRENT_INSTANCE := ""
 
 InstanceExists(name) {
