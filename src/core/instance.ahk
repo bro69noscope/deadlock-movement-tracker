@@ -5,6 +5,7 @@
 #Include lastpos_capture.ahk
 #Include history.ahk
 #Include gui\prompt.ahk
+#Include gui\instance_list.ahk
 global CURRENT_INSTANCE := ""
 
 InstanceExists(name) {
@@ -43,7 +44,7 @@ NewInstance() {
 }
 
 SwitchInstance() {
-  name := PromptName("Switch to instance name:", CURRENT_INSTANCE)
+  name := ListInstances()
   if (name = "")
     return
 
