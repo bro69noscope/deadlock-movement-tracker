@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
+#Include ..\vendor\ahk-v2-libraries\Lib\Array.ahk
 #Include core\ini_normalizer.ahk
 #Include core\instance.ahk
 #Include core\result.ahk
