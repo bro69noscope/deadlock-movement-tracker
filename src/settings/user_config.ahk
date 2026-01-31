@@ -12,11 +12,11 @@ global TRACKER_SUCCESS_KEY := "F2"     ; succeeded the route, reset pos
 global TRACKER_SWITCH_POS_KEY := "F3"  ; switch to existing route start
 global TRACKER_CREATE_POS_KEY := "F4"  ; save new route start
 global TRACKER_FORGET_LAST_KEY := "F5" ; forget the last fail/success stat entry
-global DELETE_INSTANCE_KEY := "F6"    ; delete current instance
+global TRACKER_DELETE_INSTANCE_KEY := "F6"    ; delete current instance
 global TRACKER_EXIT_KEY := "F12"
 
 ; Developer hotkeys
-global NORMALIZE_INI_KEY := "F11"       ; make readable data file
+global EXPORT_PRETTY_INI_KEY := "F11"       ; make readable data file
 global RELOAD_SCRIPT_KEY := "F10"      ; reload script
 
 ; Set to true to include personal settings from settings\bros_settings.ahk

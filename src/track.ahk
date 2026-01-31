@@ -2,7 +2,7 @@
 #SingleInstance Force
 
 #Include ..\vendor\ahk-v2-libraries\Lib\Array.ahk
-#Include core\ini_normalizer.ahk
+#Include core\ini_export.ahk
 #Include core\instance.ahk
 #Include core\result.ahk
 
@@ -12,20 +12,21 @@ if INCLUDE_PERSONAL_SETTINGS {
 
 ; Define hotkeys
 #HotIf WinActive("ahk_exe deadlock.exe")
+; User
 HotKey TRACKER_FAIL_KEY, (*) => MarkResult("fail")
 HotKey TRACKER_SUCCESS_KEY, (*) => MarkResult("success")
 HotKey TRACKER_SWITCH_POS_KEY, (*) => SwitchInstance()
 HotKey TRACKER_CREATE_POS_KEY, (*) => NewInstance()
-HotKey NORMALIZE_INI_KEY, (*) => NormalizeIni(INI_PATH)
 HotKey TRACKER_FORGET_LAST_KEY, (*) => ForgetLastResult()
-HotKey DELETE_INSTANCE_KEY, (*) => DeleteInstance()
-HotKey RELOAD_SCRIPT_KEY, (*) => Reload()
+HotKey TRACKER_DELETE_INSTANCE_KEY, (*) => DeleteInstance()
 HotKey TRACKER_EXIT_KEY, (*) => ExitApp()
+; Dev
+HotKey RELOAD_SCRIPT_KEY, (*) => Reload()
+HotKey EXPORT_PRETTY_INI_KEY, (*) => ExportPrettyIniSnapshot()
 #HotIf
 
 ExitHandler(ExitReason, ExitCode) {
-  ; If NormalizeIni throws, don't block exit
-  try NormalizeIni(INI_PATH)
+  try ExportPrettyIniSnapshot()
 }
 
 OnExit(ExitHandler)
