@@ -80,17 +80,20 @@ DeleteInstance() {
   if (choice = "No")
     return false
 
-  ; If deleting current, clear it
   CURRENT_INSTANCE := ""
   IniWrite "", INI_PATH, "__global__", "current_instance"
 
-  ; remove section
   try IniDelete INI_PATH, name
 
-  ; remove history file
+  AppendGlobalEvent("delete_instance", name)
+
   h := HistoryPath(name)
   if FileExist(h) {
-    try FileDelete(h)
+    try {
+      FileDelete(h)
+    } catch as e {
+      Debug("DeleteInstance: FAILED to delete history file: " h " | " e.Message)
+    }
   }
 
   return true

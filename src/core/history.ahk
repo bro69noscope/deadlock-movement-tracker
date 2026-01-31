@@ -29,6 +29,12 @@ AppendHistory(instanceName, result) {
   FileAppend(line, GLOBAL_HISTORY, "UTF-8")
 }
 
+AppendGlobalEvent(eventType, instanceName) {
+  ts := NowStamp()
+  line := ts "," EscapeCsv(instanceName) "," eventType "`n"
+  FileAppend(line, GLOBAL_HISTORY, "UTF-8")
+}
+
 
 UndoHistory(instanceName) {
   path := HistoryPath(instanceName)
