@@ -17,6 +17,11 @@ NewInstance() {
   if (name = "")
     return
 
+  if (name = "__global__") {
+    MsgBox "That name is reserved.", "Tracker", 48
+    return false
+  }
+
   if InstanceExists(name) {
     choice := MsgBox(
       "Instance '" name "' already exists.`n`n"
