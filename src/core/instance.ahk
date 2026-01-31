@@ -212,16 +212,12 @@ LoadInstancePos(instanceName) {
   pos := IniRead(INI_PATH, instanceName, "pos_line", "")
   Debug("LoadInstancePos: instance=" instanceName " pos=" pos)
 
-  if (pos = "") {
-    Debug("LoadInstancePos: no saved pos -> abort")
+  if (pos = "")
     return false
-  }
 
   ok := WriteMvposCfg(pos)
-  Debug("LoadInstancePos: wrote cfg ok=" (ok ? "true" : "false"))
-
   Send DEADLOCK_MVTRACK_POS_TP_HOTKEY
-  Debug("Sent TP hotkey=" DEADLOCK_MVTRACK_POS_TP_HOTKEY)
+
   return ok
 }
 
@@ -238,29 +234,22 @@ SaveCurrentInstancePos() {
     return false
   }
 
-  Debug("SaveCurrentInstancePos: instance=" CURRENT_INSTANCE)
-  DebugFile("LASTPOS before", LASTPOS_PATH)
-
   before := GetFileMTime(LASTPOS_PATH)
   Debug("LASTPOS mtime before=" before)
 
   Send DEADLOCK_MARK_POS_HOTKEY
-  Debug("Sent MARK_POS_HOTKEY=" DEADLOCK_MARK_POS_HOTKEY)
 
   line := ReadLastPosAfterMTime(before, 1500)
   Debug("Captured lastpos line=" line)
 
-  if (line = "") {
-    Debug("SaveCurrentInstancePos: FAILED to capture fresh lastpos")
+  if (line = "")
     return false
-  }
+
 
   IniWrite line, INI_PATH, CURRENT_INSTANCE, "pos_line"
   IniWrite NowStamp(), INI_PATH, CURRENT_INSTANCE, "pos_saved_at"
-  Debug("Wrote INI pos_line for " CURRENT_INSTANCE)
 
   ; keep mvtrack_pos.cfg synced to the last captured position
   ok := WriteMvposCfg(line)
-  Debug("WriteMvposCfg returned " (ok ? "true" : "false"))
   return ok
 }
