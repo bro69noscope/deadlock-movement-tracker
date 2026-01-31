@@ -216,7 +216,7 @@ LoadInstancePos(instanceName) {
     return false
 
   ok := WriteMvposCfg(pos)
-  Send DEADLOCK_MVTRACK_POS_TP_HOTKEY
+  ResetInGamePos(100)
 
   return ok
 }

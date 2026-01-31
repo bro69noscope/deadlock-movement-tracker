@@ -14,10 +14,10 @@ GetFileMTime(path) {
   }
 }
 
-ResetInGamePos() {
+ResetInGamePos(sleepTime := 350) {
   ; Toggle noclip off and on to kill velocity
   Send DEADLOCK_NOCLIP_HOTKEY
-  Sleep 350
+  Sleep sleepTime
   Send DEADLOCK_NOCLIP_HOTKEY
   Send DEADLOCK_MVTRACK_POS_TP_HOTKEY
 }
