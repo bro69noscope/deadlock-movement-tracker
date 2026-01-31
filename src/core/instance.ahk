@@ -5,7 +5,7 @@
 #Include lastpos_capture.ahk
 #Include history.ahk
 #Include gui\prompt.ahk
-#Include gui\instance_list.ahk
+#Include gui\instance_picker.ahk
 global CURRENT_INSTANCE := ""
 
 InstanceExists(name) {

@@ -49,17 +49,30 @@ ListInstances() {
     lb2 := guiObj.__lb
     all2 := guiObj.__all
 
-    filter := StrLower(Trim(ed2.Value))
+    q := Trim(ed2.Value)
+    q := RegExReplace(q, "\s+")
+    q := StrLower(q)
 
     matches := []
-    if (filter = "") {
+
+    if (q = "") {
+      ; no filter -> show original list (already sorted)
       for _, name in all2
         matches.Push(name)
     } else {
+      pairs := []
+
       for _, name in all2 {
-        if InStr(StrLower(name), filter)
-          matches.Push(name)
+        sc := FuzzyScore(q, StrLower(name))
+        if (sc != "")
+          pairs.Push({ score: sc, name: name })
       }
+
+      ; sort by score desc, then name asc
+      pairs.Sort(ComparePairs)
+
+      for _, p in pairs
+        matches.Push(p.name)
     }
 
     lb2.Delete()
@@ -69,6 +82,64 @@ ListInstances() {
     }
     guiObj.__lbCount := matches.Length
   }
+
+  ComparePairs(a, b) {
+    if (a.score > b.score)
+      return -1
+    if (a.score < b.score)
+      return 1
+    return StrCompare(a.name, b.name, true)
+  }
+
+  ; returns integer score (higher better) or "" for no match
+  FuzzyScore(needle, hay) {
+    nLen := StrLen(needle)
+    hLen := StrLen(hay)
+    if (nLen = 0)
+      return 0
+    if (hLen = 0)
+      return ""
+    nIdx := 1
+    score := 0
+    consec := 0
+    firstPos := 0
+    lastPos := 0
+
+    Loop hLen {
+      cH := SubStr(hay, A_Index, 1)
+      cN := SubStr(needle, nIdx, 1)
+
+      if (cH = cN) {
+        if (firstPos = 0)
+          firstPos := A_Index
+
+        if (lastPos = A_Index - 1) {
+          consec += 1
+          score += 25 + (consec * 10)
+        } else {
+          consec := 0
+          score += 10
+        }
+
+        ; earlier starts are better
+        score += Max(0, 30 - firstPos)
+
+        lastPos := A_Index
+        nIdx += 1
+        if (nIdx > nLen)
+          break
+      }
+    }
+
+    if (nIdx <= nLen)
+      return ""  ; didn't match all chars in order
+
+    ; prefer tighter/shorter names a bit
+    score -= Floor(hLen / 2)
+
+    return score
+  }
+
 
   SelectCurrentGui(guiObj) {
     lb2 := guiObj.__lb
@@ -112,4 +183,3 @@ ListInstances() {
   WinWaitClose("ahk_id " hwnd)
   return Trim(g.__picked)
 }
-
