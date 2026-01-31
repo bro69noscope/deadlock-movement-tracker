@@ -71,7 +71,7 @@ DeleteInstance() {
   }
 
   choice := MsgBox(
-    "Delete instance '" name "'?`n`n"
+    "Delete '" name "'?`n`n"
     . "This will remove it from instances.ini"
     . (FileExist(HistoryPath(name)) ? " and delete its history log." : "."),
     "Tracker",
@@ -107,7 +107,7 @@ RepositionInstance() {
   }
 
   choice := MsgBox(
-    "Reposition instance '" name "' to current new pos ?`n`n",
+    "Move '" name "' to current pos ?`n`n",
     "Tracker",
     "YesNo Icon!"
   )
