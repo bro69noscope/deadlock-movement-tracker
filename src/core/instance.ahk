@@ -65,7 +65,7 @@ SwitchInstance() {
 DeleteInstance() {
   global CURRENT_INSTANCE
   name := CURRENT_INSTANCE
-  if (name = "" || name = "__global__") {
+  if name = "" {
     MsgBox "No current instance selected.", "Tracker", 48
     return false
   }
@@ -126,7 +126,7 @@ RenameInstance() {
   global CURRENT_INSTANCE
 
   oldName := CURRENT_INSTANCE
-  if (oldName = "" || oldName = "__global__") {
+  if oldName = "" {
     MsgBox "No current instance selected.", "Tracker", 48
     return false
   }
