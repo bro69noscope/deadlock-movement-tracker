@@ -16,8 +16,15 @@ ListInstances() {
     all.Push(s)
   }
 
-  if (all.Length = 0)
+  if (all.Length = 0) {
+    MsgBox(
+      "No instances found.`nPress " TRACKER_CREATE_POS_KEY
+      " to create a new instance.",
+      "Instance Picker",
+      0x30
+    )
     return ""
+  }
 
   ; Sort (provided by vendor/ahk-v2-libraries/Lib/Array.ahk)
   all.Sort((a, b) => StrCompare(a, b, true))
