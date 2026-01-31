@@ -6,7 +6,7 @@
 MarkResult(result) {
   name := CURRENT_INSTANCE
   if (name = "") {
-    MsgBox "No current instance selected.", "Tracker", 48
+    WarnNoInstanceSelected()
     return
   }
 

@@ -21,3 +21,12 @@ ResetInGamePos() {
   Send DEADLOCK_NOCLIP_HOTKEY
   Send DEADLOCK_MVTRACK_POS_TP_HOTKEY
 }
+
+WarnNoInstanceSelected() {
+  MsgBox(
+    "No current instance selected. `nPress " TRACKER_SWITCH_POS_KEY
+    " to select one.",
+    "Movement Tracker",
+    0x30
+  )
+}

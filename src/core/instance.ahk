@@ -66,7 +66,7 @@ DeleteInstance() {
   global CURRENT_INSTANCE
   name := CURRENT_INSTANCE
   if name = "" {
-    MsgBox "No current instance selected.", "Tracker", 48
+    WarnNoInstanceSelected()
     return false
   }
 
@@ -107,7 +107,7 @@ DeleteInstance() {
 RepositionInstance() {
   name := CURRENT_INSTANCE
   if (name = "") {
-    MsgBox "No current instance selected.", "Tracker", 48
+    WarnNoInstanceSelected()
     return false
   }
 
@@ -127,7 +127,7 @@ RenameInstance() {
 
   oldName := CURRENT_INSTANCE
   if oldName = "" {
-    MsgBox "No current instance selected.", "Tracker", 48
+    WarnNoInstanceSelected()
     return false
   }
 
