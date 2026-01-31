@@ -113,5 +113,3 @@ ListInstances() {
   return Trim(g.__picked)
 }
 
-Max(a, b) => (a > b ? a : b)
-Min(a, b) => (a < b ? a : b)
