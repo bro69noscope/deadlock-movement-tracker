@@ -61,7 +61,7 @@ DeleteInstance() {
   global CURRENT_INSTANCE
   name := CURRENT_INSTANCE
   if (name = "" || name = "__global__") {
-    MsgBox "No current instance selected to delete.", "Tracker", 48
+    MsgBox "No current instance selected.", "Tracker", 48
     return false
   }
 
