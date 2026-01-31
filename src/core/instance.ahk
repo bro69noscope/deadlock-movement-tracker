@@ -117,6 +117,91 @@ RepositionInstance() {
   SaveCurrentInstancePos()
 }
 
+RenameInstance() {
+  global CURRENT_INSTANCE
+
+  oldName := CURRENT_INSTANCE
+  if (oldName = "" || oldName = "__global__") {
+    MsgBox "No current instance selected.", "Tracker", 48
+    return false
+  }
+
+  if !InstanceExists(oldName) {
+    MsgBox "No such instance: " oldName, "Tracker", 48
+    return false
+  }
+
+  newName := PromptName("Rename instance:`n`nOld: " oldName "`nNew:", oldName)
+  newName := Trim(newName)
+
+  if (newName = "" || newName = oldName)
+    return false
+
+  if (newName = "__global__") {
+    MsgBox "That name is reserved.", "Tracker", 48
+    return false
+  }
+
+  if InstanceExists(newName) {
+    choice := MsgBox(
+      "Instance '" newName "' already exists.`n`n"
+      . "Replace it? This will overwrite its stats/pos (and its history file if any).",
+      "Tracker",
+      "YesNo Icon!"
+    )
+    if (choice = "No")
+      return false
+
+    try IniDelete INI_PATH, newName
+    hist := HistoryPath(newName)
+    if FileExist(hist) {
+      try FileDelete(hist)
+    }
+  }
+
+  secText := ""
+  try {
+    secText := IniRead(INI_PATH, oldName)
+  } catch {
+    secText := ""
+  }
+  for _, rawLine in StrSplit(secText, "`n", "`r") {
+    line := Trim(rawLine)
+    if (line = "")
+      continue
+    if RegExMatch(line, "^\s*[;#]")
+      continue
+    if RegExMatch(line, "^\s*([^=]+?)\s*=\s*(.*)\s*$", &m) {
+      k := Trim(m[1])
+      v := m[2]
+      IniWrite v, INI_PATH, newName, k
+    }
+  }
+
+  ; ensure last_event bump
+  IniWrite NowStamp(), INI_PATH, newName, "last_event"
+
+  try IniDelete INI_PATH, oldName
+
+  hOld := HistoryPath(oldName)
+  hNew := HistoryPath(newName)
+  if FileExist(hOld) {
+    try {
+      FileMove(hOld, hNew, 1)
+    } catch as e {
+      Debug("RenameInstance: FAILED to move history file: " hOld " -> " hNew " | " e.Message)
+    }
+  }
+
+  CURRENT_INSTANCE := newName
+  IniWrite newName, INI_PATH, "__global__", "current_instance"
+  IniWrite NowStamp(), INI_PATH, newName, "last_switch"
+
+  AppendGlobalEvent("rename_instance:" oldName "->" newName, newName)
+
+  return true
+}
+
 
 LoadInstancePos(instanceName) {
   pos := IniRead(INI_PATH, instanceName, "pos_line", "")

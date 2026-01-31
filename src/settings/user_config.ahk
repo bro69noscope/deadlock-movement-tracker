@@ -12,8 +12,9 @@ global TRACKER_SUCCESS_KEY := "F2"     ; succeeded the route, reset pos
 global TRACKER_SWITCH_POS_KEY := "F3"  ; switch to existing route start
 global TRACKER_CREATE_POS_KEY := "F4"  ; save new route start
 global TRACKER_FORGET_LAST_KEY := "F5" ; forget the last fail/success stat entry
-global TRACKER_DELETE_INSTANCE_KEY := "F6"    ; delete current instance
+global TRACKER_RENAME_INSTANCE_KEY := "F6" ; rename current instance
 global TRACKER_REPOSITION_INSTANCE_KEY := "F7" ; reposition current instance to current pos
+global TRACKER_DELETE_INSTANCE_KEY := "F8"    ; delete current instance
 global TRACKER_EXIT_KEY := "F12"
 
 ; Developer hotkeys
