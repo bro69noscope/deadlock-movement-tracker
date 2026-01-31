@@ -4,16 +4,19 @@
 #Include gui\streak_popup.ahk
 
 MarkResult(result) {
-  if (CURRENT_INSTANCE = "")
+  name := CURRENT_INSTANCE
+  if (name = "") {
+    MsgBox "No current instance selected.", "Tracker", 48
     return
+  }
 
-  AppendHistory(CURRENT_INSTANCE, result)
+  AppendHistory(name, result)
 
-  s := IniRead(INI_PATH, CURRENT_INSTANCE, "success", "0") + 0
-  f := IniRead(INI_PATH, CURRENT_INSTANCE, "fail", "0") + 0
+  s := IniRead(INI_PATH, name, "success", "0") + 0
+  f := IniRead(INI_PATH, name, "fail", "0") + 0
 
-  streakCur := IniRead(INI_PATH, CURRENT_INSTANCE, "streak_current", "0") + 0
-  streakBest := IniRead(INI_PATH, CURRENT_INSTANCE, "streak_best", "0") + 0
+  streakCur := IniRead(INI_PATH, name, "streak_current", "0") + 0
+  streakBest := IniRead(INI_PATH, name, "streak_best", "0") + 0
 
   if (result = "success") {
     s += 1
@@ -28,13 +31,13 @@ MarkResult(result) {
   total := s + f
   pct := (total > 0) ? Round((s / total) * 100, 2) : 0
 
-  IniWrite s, INI_PATH, CURRENT_INSTANCE, "success"
-  IniWrite f, INI_PATH, CURRENT_INSTANCE, "fail"
-  IniWrite pct, INI_PATH, CURRENT_INSTANCE, "success_pct"
+  IniWrite s, INI_PATH, name, "success"
+  IniWrite f, INI_PATH, name, "fail"
+  IniWrite pct, INI_PATH, name, "success_pct"
 
-  IniWrite streakCur, INI_PATH, CURRENT_INSTANCE, "streak_current"
-  IniWrite streakBest, INI_PATH, CURRENT_INSTANCE, "streak_best"
-  IniWrite NowStamp(), INI_PATH, CURRENT_INSTANCE, "last_event"
+  IniWrite streakCur, INI_PATH, name, "streak_current"
+  IniWrite streakBest, INI_PATH, name, "streak_best"
+  IniWrite NowStamp(), INI_PATH, name, "last_event"
 
   ResetInGamePos()
   if (TARGET_SUCCESS_STREAK > 0 && streakCur == TARGET_SUCCESS_STREAK) {
@@ -43,14 +46,15 @@ MarkResult(result) {
 }
 
 ForgetLastResult() {
-  if (CURRENT_INSTANCE = "")
+  name := CURRENT_INSTANCE
+  if (name = "")
     return
 
-  if !UndoHistory(CURRENT_INSTANCE) {
-    MsgBox "Nothing to forget for '" CURRENT_INSTANCE "'.", "Tracker", 48
+  if !UndoHistory(name) {
+    MsgBox "Nothing to forget for '" name "'.", "Tracker", 48
     return
   }
 
-  rebuilt := RebuildStatsFromHistory(CURRENT_INSTANCE)
+  rebuilt := RebuildStatsFromHistory(name)
   ResetInGamePos()
 }
