@@ -16,7 +16,6 @@ EscapeCsv(s) {
 }
 
 HistoryPath(instanceName) {
-  ; sanitize a bit for filenames
   safe := RegExReplace(instanceName, "[^\w\-. ]", "_")
   return INSTANCE_HISTORY_DIR "\" safe ".csv"
 }
