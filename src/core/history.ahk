@@ -2,20 +2,33 @@
 #Include helpers.ahk
 
 ; Directory for per-instance logs
-global HISTORY_DIR := DATA_DIR "\history"
-DirCreate(HISTORY_DIR)
+global INSTANCE_HISTORY_DIR := DATA_DIR "\history"
+global GLOBAL_HISTORY := DATA_DIR "\history_all.csv"
+DirCreate(INSTANCE_HISTORY_DIR)
+
+EscapeCsv(s) {
+  ; minimal CSV escaping: quote if contains comma/quote/newline
+  if InStr(s, ",") || InStr(s, '"') || InStr(s, "`n") || InStr(s, "`r") {
+    s := StrReplace(s, '"', '""')
+    return '"' s '"'
+  }
+  return s
+}
 
 HistoryPath(instanceName) {
   ; sanitize a bit for filenames
   safe := RegExReplace(instanceName, "[^\w\-. ]", "_")
-  return HISTORY_DIR "\" safe ".log"
+  return INSTANCE_HISTORY_DIR "\" safe ".csv"
 }
 
 AppendHistory(instanceName, result) {
-  path := HistoryPath(instanceName)
-  ; One entry per line (easy to trim / replay)
-  FileAppend(result "`n", path, "UTF-8")
+  instancePath := HistoryPath(instanceName)
+  ts := NowStamp()
+  line := ts "," EscapeCsv(instanceName) "," result "`n"
+  FileAppend(line, instancePath, "UTF-8")
+  FileAppend(line, GLOBAL_HISTORY, "UTF-8")
 }
+
 
 UndoHistory(instanceName) {
   path := HistoryPath(instanceName)
@@ -57,9 +70,13 @@ RebuildStatsFromHistory(instanceName) {
   if FileExist(path) {
     text := FileRead(path, "UTF-8")
     for _, raw in StrSplit(text, "`n", "`r") {
-      r := Trim(raw)
-      if (r = "")
+      rline := Trim(raw)
+      if (rline = "")
         continue
+      r := ""
+
+      parts := StrSplit(rline, ",")
+      r := Trim(parts[parts.Length])
 
       if (r = "success") {
         success += 1
@@ -71,6 +88,7 @@ RebuildStatsFromHistory(instanceName) {
         streakCur := 0
       }
     }
+
   }
 
   total := success + fail
