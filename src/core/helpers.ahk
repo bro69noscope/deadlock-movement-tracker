@@ -19,7 +19,7 @@ ResetInGamePos(sleepTime := 350) {
   Send DEADLOCK_NOCLIP_HOTKEY
   Sleep sleepTime
   Send DEADLOCK_NOCLIP_HOTKEY
-  Send DEADLOCK_MVTRACK_POS_TP_HOTKEY
+  Send DEADLOCK_MVTRACK_INTERNAL_HOTKEY
 }
 
 WarnNoInstanceSelected() {

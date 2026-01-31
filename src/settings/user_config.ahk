@@ -1,7 +1,11 @@
-; Hotkeys used inside the game
-global DEADLOCK_MARK_POS_HOTKEY := "o"       ; needs to match postools.cfg, lowercase
-global DEADLOCK_MVTRACK_POS_TP_HOTKEY := "i" ; needs to match postools.cfg, lowercase
-global DEADLOCK_NOCLIP_HOTKEY := "y"         ; needs to match the noclip bind in deadlock, lowercase
+; Deadlock console hotkeys
+global DEADLOCK_MARK_POS_HOTKEY := "o"
+global DEADLOCK_TELEPORT_HOTKEY := "h"
+global DEADLOCK_NOCLIP_HOTKEY := "l"
+global DEADLOCK_LOAD_MAP_HOTKEY := "8"
+global DEADLOCK_SWAP_TEAM_HOTKEY := "9"
+global DEADLOCK_SETUP_PRACTICE_HOTKEY := "0"
+global DEADLOCK_MVTRACK_INTERNAL_HOTKEY := "i"
 
 ; Possible different DeadLock install path (Don't change if default)
 global DEADLOCK_ROOT := "C:\Program Files (x86)\Steam\steamapps\common\Deadlock"
