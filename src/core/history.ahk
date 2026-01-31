@@ -37,9 +37,10 @@ AppendGlobalEvent(eventType, instanceName) {
 
 UndoHistory(instanceName) {
   path := HistoryPath(instanceName)
-  if !FileExist(path)
+  if !FileExist(path) {
     MsgBox "No history found for '" instanceName "'.", "Tracker", 48
-  return false
+    return false
+  }
 
   text := FileRead(path, "UTF-8")
   ; split into non-empty lines
