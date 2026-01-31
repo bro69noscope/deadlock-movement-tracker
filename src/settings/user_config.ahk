@@ -26,4 +26,4 @@ global INCLUDE_PERSONAL_SETTINGS := true
 global ENABLE_DEBUG := true
 
 ; Target success streak to reach, set to 0 to disable;
-global TARGET_SUCCESS_STREAK := 2
+global TARGET_SUCCESS_STREAK := 3
