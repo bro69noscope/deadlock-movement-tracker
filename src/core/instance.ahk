@@ -96,6 +96,24 @@ DeleteInstance() {
   return true
 }
 
+RepositionInstance() {
+  name := CURRENT_INSTANCE
+  if (name = "") {
+    MsgBox "No current instance selected.", "Tracker", 48
+    return false
+  }
+
+  choice := MsgBox(
+    "Reposition instance '" name "' to current new pos ?`n`n",
+    "Tracker",
+    "YesNo Icon!"
+  )
+  if (choice = "No")
+    return false
+
+  SaveCurrentInstancePos()
+}
+
 
 LoadInstancePos(instanceName) {
   pos := IniRead(INI_PATH, instanceName, "pos_line", "")

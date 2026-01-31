@@ -19,6 +19,7 @@ HotKey TRACKER_SWITCH_POS_KEY, (*) => SwitchInstance()
 HotKey TRACKER_CREATE_POS_KEY, (*) => NewInstance()
 HotKey TRACKER_FORGET_LAST_KEY, (*) => ForgetLastResult()
 HotKey TRACKER_DELETE_INSTANCE_KEY, (*) => DeleteInstance()
+HotKey TRACKER_REPOSITION_INSTANCE_KEY, (*) => RepositionInstance()
 HotKey TRACKER_EXIT_KEY, (*) => ExitApp()
 ; Dev
 HotKey RELOAD_SCRIPT_KEY, (*) => Reload()
