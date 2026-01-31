@@ -57,6 +57,46 @@ SwitchInstance() {
   LoadInstancePos(name)
 }
 
+DeleteInstance() {
+  global CURRENT_INSTANCE
+  name := CURRENT_INSTANCE
+  if (name = "" || name = "__global__") {
+    MsgBox "No current instance selected to delete.", "Tracker", 48
+    return false
+  }
+
+  if !InstanceExists(name) {
+    MsgBox "No such instance: " name, "Tracker", 48
+    return false
+  }
+
+  choice := MsgBox(
+    "Delete instance '" name "'?`n`n"
+    . "This will remove it from instances.ini"
+    . (FileExist(HistoryPath(name)) ? " and delete its history log." : "."),
+    "Tracker",
+    "YesNo Icon!"
+  )
+  if (choice = "No")
+    return false
+
+  ; If deleting current, clear it
+  CURRENT_INSTANCE := ""
+  IniWrite "", INI_PATH, "__global__", "current_instance"
+
+  ; remove section
+  try IniDelete INI_PATH, name
+
+  ; remove history file
+  h := HistoryPath(name)
+  if FileExist(h) {
+    try FileDelete(h)
+  }
+
+  return true
+}
+
+
 LoadInstancePos(instanceName) {
   pos := IniRead(INI_PATH, instanceName, "pos_line", "")
   Debug("LoadInstancePos: instance=" instanceName " pos=" pos)

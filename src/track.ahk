@@ -18,6 +18,7 @@ HotKey TRACKER_SWITCH_POS_KEY, (*) => SwitchInstance()
 HotKey TRACKER_CREATE_POS_KEY, (*) => NewInstance()
 HotKey NORMALIZE_INI_KEY, (*) => NormalizeIni(INI_PATH)
 HotKey TRACKER_FORGET_LAST_KEY, (*) => ForgetLastResult()
+HotKey DELETE_INSTANCE_KEY, (*) => DeleteInstance()
 HotKey RELOAD_SCRIPT_KEY, (*) => Reload()
 HotKey TRACKER_EXIT_KEY, (*) => ExitApp()
 #HotIf
