@@ -50,10 +50,7 @@ ForgetLastResult() {
   if (name = "")
     return
 
-  if !UndoHistory(name) {
-    MsgBox "Nothing to forget for '" name "'.", "Tracker", 48
-    return
-  }
+  UndoHistory(name)
 
   rebuilt := RebuildStatsFromHistory(name)
   ResetInGamePos()

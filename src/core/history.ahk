@@ -38,7 +38,8 @@ AppendGlobalEvent(eventType, instanceName) {
 UndoHistory(instanceName) {
   path := HistoryPath(instanceName)
   if !FileExist(path)
-    return false
+    MsgBox "No history found for '" instanceName "'.", "Tracker", 48
+  return false
 
   text := FileRead(path, "UTF-8")
   ; split into non-empty lines
@@ -49,8 +50,10 @@ UndoHistory(instanceName) {
       lines.Push(v)
   }
 
-  if (lines.Length = 0)
-    return false
+  if (lines.Length = 0) {
+    MsgBox "Reached end of sucess history to forget for '" instanceName "'.", "Tracker", 48
+    return true
+  }
 
   lines.Pop()
 
