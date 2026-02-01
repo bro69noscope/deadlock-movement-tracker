@@ -7,6 +7,7 @@
 #Include core\result.ahk
 #Include core\ps1_installer.ahk
 #Include core\cfg_installer.ahk
+#Include core\ps1_launcher.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
@@ -32,8 +33,10 @@ HotIf
 
 ExitHandler(ExitReason, ExitCode) {
   try ExportPrettyIniSnapshot()
+  try StopPoswatch()
 }
 
 EnsurePs1Installed()
 EnsureCfgInstalled()
 OnExit(ExitHandler)
+StartPoswatch()
