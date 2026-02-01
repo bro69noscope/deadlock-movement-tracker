@@ -12,6 +12,8 @@ if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
 }
 
+DebugBlank
+Debug("===Tracker started===")
 ; Define hotkeys
 HotIf (*) => WinActive("ahk_exe deadlock.exe")
 HotKey(TRACKER_FAIL_KEY, (*) => MarkResult("fail"))

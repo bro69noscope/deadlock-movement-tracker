@@ -24,3 +24,10 @@ DebugFile(label, path) {
   try mt := FileGetTime(path, "M")
   Debug(label ": exists=" exists " size=" size " mtime=" mt " path=" path)
 }
+
+DebugBlank() {
+  if (!ENABLE_DEBUG)
+    return
+  global DEBUG_LOG
+  FileAppend("`n", DEBUG_LOG, "UTF-8")
+}
