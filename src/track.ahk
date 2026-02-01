@@ -5,6 +5,8 @@
 #Include core\ini_export.ahk
 #Include core\instance.ahk
 #Include core\result.ahk
+#Include core\ps1_installer.ahk
+#Include core\cfg_installer.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
@@ -30,4 +32,6 @@ ExitHandler(ExitReason, ExitCode) {
   try ExportPrettyIniSnapshot()
 }
 
+EnsurePs1Installed()
+EnsureCfgInstalled()
 OnExit(ExitHandler)
