@@ -2,7 +2,7 @@
 #Include debug.ahk
 
 EnsureCfgInstalled() {
-  outPath := DEADLOCK_CFG_DIR "\dl-move-tracker.cfg"
+  outPath := MVTRACK_CFG_PATH
   txt := GetPosToolsCfgText()
   SPlitPath outPath, &fileName
 

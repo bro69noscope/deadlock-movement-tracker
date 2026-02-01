@@ -33,8 +33,7 @@ StopPoswatch() {
 
 
 StartPoswatch() {
-  ; TODO: make this path a variable, we use it in multiple places
-  ps1 := DEADLOCK_ROOT "\dl-move-tracker.ps1"
+  ps1 := MVTRACK_PS1_PATH
   pidFile := GetPoswatchPidPath()
 
   if !FileExist(ps1) {
@@ -43,7 +42,8 @@ StartPoswatch() {
   }
 
   if FileExist(pidFile) {
-    oldPidText := FileRead(pidFile, "UTF-8")
+    oldPidText := ""
+    try oldPidText := FileRead(pidFile, "UTF-8")
     if (IsPidRunning(oldPidText)) {
       Debug(A_ThisFunc ": already running pid=" Trim(oldPidText))
       return true
@@ -60,10 +60,15 @@ StartPoswatch() {
     return false
   }
 
+  base := RegExReplace(ps1, "\.ps1$", "")
+  logPath := base ".log"
+
   args := Format(
-    '-NoProfile -ExecutionPolicy Bypass -File "{1}" *> "{2}"',
+    '-NoProfile -ExecutionPolicy Bypass -File "{1}" -GameRoot "{2}" -OutPath "{3}" -LogFile "{4}"',
     ps1,
-    DEADLOCK_ROOT "\dl-move-tracker.stdout.log"
+    DEADLOCK_ROOT,
+    LASTPOS_PATH,
+    logPath
   )
 
 
