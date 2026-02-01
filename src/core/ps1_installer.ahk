@@ -55,6 +55,14 @@ GetPoswatchScriptText() {
 $GameRoot = Get-Location
 $Log  = Join-Path $GameRoot 'game\citadel\console.log'
 $Out  = Join-Path $GameRoot 'game\citadel\cfg\lastpos.cfg'
+$LogFile = Join-Path $GameRoot 'dl-move-tracker.log'
+
+function Log($msg) {
+  $ts = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+  Add-Content -Path $LogFile -Value "$ts | $msg"
+}
+
+Log 'Poswatch started. Watching ' + $Log
 
 $pat = 'setpos_exact ([\s0-9.-]*);'
 
@@ -62,12 +70,19 @@ if (-not (Test-Path $Out)) {
   Set-Content -Path $Out -Value 'setpos 0 0 0' -Encoding Ascii
 }
 
-Get-Content -Path $Log -Wait | ForEach-Object {
-  $m = [regex]::Match($_, $pat)
-  if ($m.Success) {
-    $s = $m.Value.Remove(0,12)
-    Set-Content -Path $Out -Value ('setpos ' + $s) -Encoding Ascii
+try {
+  Get-Content -Path $Log -Wait | ForEach-Object {
+    $m = [regex]::Match($_, $pat)
+    if ($m.Success) {
+      $s = $m.Value.Remove(0,12)
+      Set-Content -Path $Out -Value ('setpos ' + $s) -Encoding Ascii
+      Log "wrote lastpos.cfg"
+    }
   }
+}
+catch {
+  Log "ERROR: $($_.Exception.Message)"
+  throw
 }
 )"
 }
