@@ -20,6 +20,8 @@ if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
   ExitApp()
 }
 
+DirCreate(DATA_DIR)
+
 DebugBlank
 Debug("===Tracker started===")
 ; Define hotkeys
