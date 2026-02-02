@@ -11,6 +11,7 @@ SetWorkingDir(A_ScriptDir)
 #Include core\ps1_launcher.ahk
 #Include core\autoexec_installer.ahk
 #Include core\uninstaller.ahk
+#Include core\user_cfg_loader.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
@@ -25,6 +26,10 @@ DirCreate(DATA_DIR)
 
 DebugBlank
 Debug("===Tracker started===")
+
+; Load custom user config from ini
+LoadUserConfigFromIni()
+
 ; Define hotkeys
 HotIf (*) => WinActive("ahk_exe deadlock.exe")
 HotKey(TRACKER_FAIL_KEY, (*) => MarkResult("fail"))
