@@ -46,8 +46,8 @@ LoadUserConfigFromIni() {
   ; --- Flags ---
   global ENABLE_DEBUG, TARGET_SUCCESS_STREAK, INCLUDE_PERSONAL_SETTINGS
   TARGET_SUCCESS_STREAK := IniRead(ini, "tracker_settings", "target_success_streak", TARGET_SUCCESS_STREAK) + 0
-  ENABLE_DEBUG := (IniRead(ini, "dev", "enable_debug", ENABLE_DEBUG ? "1" : "0") = "1")
-  INCLUDE_PERSONAL_SETTINGS := (IniRead(ini, "dev", "include_bro_settings", INCLUDE_PERSONAL_SETTINGS ? "1" : "0") = "1")
+  ENABLE_DEBUG := StrLower((IniRead(ini, "dev", "enable_debug", ENABLE_DEBUG ? "true" : "false") = "true"))
+  INCLUDE_BRO_SETTINGS := (IniRead(ini, "dev", "include_bro_settings", INCLUDE_BRO_SETTINGS ? "true" : "false") = "true")
 
   return true
 }
