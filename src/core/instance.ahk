@@ -290,7 +290,10 @@ SaveCurrentInstancePos() {
         . "Reason: " r.reason "`n"
         . "Before mtime: " before "`n"
         . "Seen mtime: " seen "`n"
-        . "Seen text: " snippet,
+        . "Seen text: " snippet "`n"
+        . (r.reason == "timeout_no_mtime_change"
+          ? "This usually happens if you don't have the '-condebug' DeadLock launch option set"
+          : ""),
         "Movement Tracker",
         0x30
       )
