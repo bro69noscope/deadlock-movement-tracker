@@ -2,7 +2,7 @@
 #Include helpers.ahk
 
 ; Directory for per-instance logs
-global INSTANCE_HISTORY_DIR := DATA_DIR "\history"
+global INSTANCE_HISTORY_DIR := DATA_DIR "\instances_history"
 global GLOBAL_HISTORY := DATA_DIR "\history_all.csv"
 DirCreate(INSTANCE_HISTORY_DIR)
 
