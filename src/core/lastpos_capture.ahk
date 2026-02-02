@@ -40,20 +40,3 @@ ReadLastPosAfterMTime(prevMTime, timeoutMs := 1500) {
 
   return { ok: false, line: "", reason: "timeout_unknown", mtime: lastSeenMTime, text: lastSeenText, err: lastError }
 }
-
-
-ReadLastPosWithRetry(timeoutMs := 600) {
-  start := A_TickCount
-
-  while (A_TickCount - start) <= timeoutMs {
-    if FileExist(LASTPOS_PATH) {
-      try {
-        s := Trim(FileRead(LASTPOS_PATH))
-        if RegExMatch(s, "i)^\s*setpos\b")
-          return s
-      }
-    }
-    Sleep 50
-  }
-  return ""
-}
