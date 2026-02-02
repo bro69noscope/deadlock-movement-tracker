@@ -21,7 +21,7 @@ WriteMvposCfg(posLine) {
     FileAppend(posLine "`n", MVTRACK_POS_PATH)
 
     ; verify immediately by reading back the same path
-    verify := Trim(FileRead(MVTRACK_POS_PATH))
+    verify := Trim(FileRead(MVTRACK_POS_PATH), " `t`r`n")
     Debug("WriteMvposCfg WROTE: " verify)
     DebugFile("WriteMvposCfg AFTER", MVTRACK_POS_PATH)
     return true
