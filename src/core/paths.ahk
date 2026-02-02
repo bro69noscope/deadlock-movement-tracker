@@ -1,7 +1,7 @@
 #Include config.ahk
 
-global INI_PATH := DATA_DIR "\instances.ini"
-global STATE_INI_PATH := DATA_DIR "\state.ini"
+global INSTANCES_INI := DATA_DIR "\instances.ini"
+global STATE_INI := DATA_DIR "\state.ini"
 
 global DEADLOCK_CFG_DIR := CFG.deadlock_root "\game\citadel\cfg"
 global MVTRACK_PS1_PATH := CFG.deadlock_root "\mvtrack.ps1"

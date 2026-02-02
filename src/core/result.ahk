@@ -3,6 +3,8 @@
 #Include history.ahk
 #Include gui\streak_popup.ahk
 
+ini := INSTANCES_INI
+
 MarkResult(result) {
   name := CURRENT_INSTANCE
   if (name = "") {
@@ -12,11 +14,11 @@ MarkResult(result) {
 
   AppendHistory(name, result)
 
-  s := IniRead(INI_PATH, name, "success", "0") + 0
-  f := IniRead(INI_PATH, name, "fail", "0") + 0
+  s := IniRead(ini, name, "success", "0") + 0
+  f := IniRead(ini, name, "fail", "0") + 0
 
-  streakCur := IniRead(INI_PATH, name, "streak_current", "0") + 0
-  streakBest := IniRead(INI_PATH, name, "streak_best", "0") + 0
+  streakCur := IniRead(ini, name, "streak_current", "0") + 0
+  streakBest := IniRead(ini, name, "streak_best", "0") + 0
 
   if (result = "success") {
     s += 1
@@ -31,13 +33,13 @@ MarkResult(result) {
   total := s + f
   pct := (total > 0) ? Round((s / total) * 100, 2) : 0
 
-  IniWrite s, INI_PATH, name, "success"
-  IniWrite f, INI_PATH, name, "fail"
-  IniWrite pct, INI_PATH, name, "success_pct"
+  IniWrite s, ini, name, "success"
+  IniWrite f, ini, name, "fail"
+  IniWrite pct, ini, name, "success_pct"
 
-  IniWrite streakCur, INI_PATH, name, "streak_current"
-  IniWrite streakBest, INI_PATH, name, "streak_best"
-  IniWrite NowStamp(), INI_PATH, name, "last_event"
+  IniWrite streakCur, ini, name, "streak_current"
+  IniWrite streakBest, ini, name, "streak_best"
+  IniWrite NowStamp(), ini, name, "last_event"
 
   ResetInGamePos()
   if (CFG.target_success_streak > 0 && streakCur == CFG.target_success_streak) {

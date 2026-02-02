@@ -28,7 +28,7 @@ HasExecMvtrack(text) {
 
 EnsureAutoexecConfigured() {
   autoexec := DEADLOCK_CFG_DIR "\autoexec.cfg"
-  state := STATE_INI_PATH
+  state := STATE_INI
 
   txt := ""
   if FileExist(autoexec) {

@@ -6,10 +6,13 @@
 #Include history.ahk
 #Include gui\prompt.ahk
 #Include gui\instance_picker.ahk
+
 global CURRENT_INSTANCE := ""
 
+ini := INSTANCES_INI
+
 InstanceExists(name) {
-  return (IniRead(INI_PATH, name, "created_at", "") != "")
+  return (IniRead(ini, name, "created_at", "") != "")
 }
 
 NewInstance() {
@@ -33,16 +36,16 @@ NewInstance() {
       return
 
     ; Overwrite/reset the instance section
-    IniDelete INI_PATH, name
+    IniDelete ini, name
   }
 
   ; (Re)create baseline fields
-  IniWrite "0", INI_PATH, name, "success"
-  IniWrite "0", INI_PATH, name, "fail"
-  IniWrite "0", INI_PATH, name, "success_pct"
-  IniWrite "0", INI_PATH, name, "streak_current"
-  IniWrite "0", INI_PATH, name, "streak_best"
-  IniWrite NowStamp(), INI_PATH, name, "created_at"
+  IniWrite "0", ini, name, "success"
+  IniWrite "0", ini, name, "fail"
+  IniWrite "0", ini, name, "success_pct"
+  IniWrite "0", ini, name, "streak_current"
+  IniWrite "0", ini, name, "streak_best"
+  IniWrite NowStamp(), ini, name, "created_at"
 
   SetCurrentInstance(name)
   SaveCurrentInstancePos()
@@ -86,9 +89,9 @@ DeleteInstance() {
     return false
 
   CURRENT_INSTANCE := ""
-  IniWrite "", INI_PATH, "__global__", "current_instance"
+  IniWrite "", ini, "__global__", "current_instance"
 
-  try IniDelete INI_PATH, name
+  try IniDelete ini, name
 
   AppendGlobalEvent("delete_instance", name)
 
@@ -157,7 +160,7 @@ RenameInstance() {
     if (choice = "No")
       return false
 
-    try IniDelete INI_PATH, newName
+    try IniDelete ini, newName
     hist := HistoryPath(newName)
     if FileExist(hist) {
       try FileDelete(hist)
@@ -166,7 +169,7 @@ RenameInstance() {
 
   secText := ""
   try {
-    secText := IniRead(INI_PATH, oldName)
+    secText := IniRead(ini, oldName)
   } catch {
     secText := ""
   }
@@ -179,14 +182,14 @@ RenameInstance() {
     if RegExMatch(line, "^\s*([^=]+?)\s*=\s*(.*)\s*$", &m) {
       k := Trim(m[1])
       v := m[2]
-      IniWrite v, INI_PATH, newName, k
+      IniWrite v, ini, newName, k
     }
   }
 
   ; ensure last_event bump
-  IniWrite NowStamp(), INI_PATH, newName, "last_event"
+  IniWrite NowStamp(), ini, newName, "last_event"
 
-  try IniDelete INI_PATH, oldName
+  try IniDelete ini, oldName
 
   hOld := HistoryPath(oldName)
   hNew := HistoryPath(newName)
@@ -199,8 +202,8 @@ RenameInstance() {
   }
 
   CURRENT_INSTANCE := newName
-  IniWrite newName, INI_PATH, "__global__", "current_instance"
-  IniWrite NowStamp(), INI_PATH, newName, "last_switch"
+  IniWrite newName, ini, "__global__", "current_instance"
+  IniWrite NowStamp(), ini, newName, "last_switch"
 
   AppendGlobalEvent("rename_instance:" oldName "->" newName, newName)
 
@@ -213,14 +216,14 @@ LoadInstancePos(instanceName) {
   hasKey := false
 
   try {
-    secText := IniRead(INI_PATH, instanceName)
+    secText := IniRead(ini, instanceName)
     if RegExMatch(secText, "im)^\s*pos_line\s*=")
       hasKey := true
-    pos := IniRead(INI_PATH, instanceName, "pos_line", "")
+    pos := IniRead(ini, instanceName, "pos_line", "")
   } catch as e {
-    Debug(A_ThisFunc ": FAILED to read ini. instance=" instanceName " err=" e.Message " path=" INI_PATH)
+    Debug(A_ThisFunc ": FAILED to read ini. instance=" instanceName " err=" e.Message " path=" ini)
     if (CFG.enable_debug)
-      MsgBox("Failed to read instances.ini.`n`n" INI_PATH "`n`n" e.Message, "Movement Tracker", 0x30)
+      MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message, "Movement Tracker", 0x30)
     return false
   }
 
@@ -230,7 +233,7 @@ LoadInstancePos(instanceName) {
 
   if (pos = "") {
     reason := hasKey ? "pos_line_empty" : "pos_line_missing"
-    Debug(A_ThisFunc ": NO POS. instance=" instanceName " reason=" reason " path=" INI_PATH)
+    Debug(A_ThisFunc ": NO POS. instance=" instanceName " reason=" reason " path=" ini)
 
     if (CFG.enable_debug) {
       MsgBox(
@@ -256,8 +259,8 @@ LoadInstancePos(instanceName) {
 SetCurrentInstance(name) {
   global CURRENT_INSTANCE
   CURRENT_INSTANCE := name
-  IniWrite name, INI_PATH, "__global__", "current_instance"
-  IniWrite NowStamp(), INI_PATH, name, "last_switch"
+  IniWrite name, ini, "__global__", "current_instance"
+  IniWrite NowStamp(), ini, name, "last_switch"
 }
 
 SaveCurrentInstancePos() {
@@ -303,8 +306,8 @@ SaveCurrentInstancePos() {
 
   line := r.line
 
-  IniWrite line, INI_PATH, CURRENT_INSTANCE, "pos_line"
-  IniWrite NowStamp(), INI_PATH, CURRENT_INSTANCE, "pos_saved_at"
+  IniWrite line, ini, CURRENT_INSTANCE, "pos_line"
+  IniWrite NowStamp(), ini, CURRENT_INSTANCE, "pos_saved_at"
   ok := WriteMvposCfg(line)
   return ok
 }

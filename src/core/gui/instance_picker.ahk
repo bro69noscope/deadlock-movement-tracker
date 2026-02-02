@@ -3,7 +3,7 @@
 ListInstances() {
   txt := ""
   try {
-    txt := IniRead(INI_PATH)
+    txt := IniRead(INSTANCES_INI)
   } catch {
     txt := ""
   }

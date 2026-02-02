@@ -4,11 +4,12 @@
 ExportPrettyIniSnapshot(outPath := "") {
   if (outPath = "")
     outPath := DATA_DIR "\instances.pretty.ini"
+  ini := INSTANCES_INI
 
   ; -------- read section list --------
   sectionsText := ""
   try {
-    sectionsText := IniRead(INI_PATH)
+    sectionsText := IniRead(ini)
   } catch {
     sectionsText := ""
   }
@@ -22,7 +23,7 @@ ExportPrettyIniSnapshot(outPath := "") {
 
   ; __global__ first, rest sorted
   ordered := []
-  if HasSection(INI_PATH, "__global__")
+  if HasSection(ini, "__global__")
     ordered.Push("__global__")
 
   others := []
@@ -50,7 +51,7 @@ ExportPrettyIniSnapshot(outPath := "") {
 
   out := "; pretty snapshot (read-only)`n"
   out .= "; generated: " NowStamp() "`n"
-  out .= "; source: " INI_PATH "`n`n"
+  out .= "; source: " ini "`n`n"
 
   ; -------- per section --------
   for _, section in ordered {
@@ -58,7 +59,7 @@ ExportPrettyIniSnapshot(outPath := "") {
 
     secText := ""
     try {
-      secText := IniRead(INI_PATH, section)
+      secText := IniRead(ini, section)
     } catch {
       secText := ""
     }

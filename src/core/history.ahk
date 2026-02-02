@@ -72,6 +72,7 @@ UndoHistory(instanceName) {
 
 RebuildStatsFromHistory(instanceName) {
   path := HistoryPath(instanceName)
+  ini := INSTANCES_INI
 
   success := 0, fail := 0
   streakCur := 0, streakBest := 0
@@ -103,13 +104,12 @@ RebuildStatsFromHistory(instanceName) {
   total := success + fail
   pct := (total > 0) ? Round((success / total) * 100, 2) : 0
 
-  IniWrite success, INI_PATH, instanceName, "success"
-  IniWrite fail, INI_PATH, instanceName, "fail"
-  IniWrite pct, INI_PATH, instanceName, "success_pct"
-  IniWrite streakCur, INI_PATH, instanceName, "streak_current"
-  IniWrite streakBest, INI_PATH, instanceName, "streak_best"
-
-  IniWrite NowStamp(), INI_PATH, instanceName, "last_event"
+  IniWrite success, ini, instanceName, "success"
+  IniWrite fail, ini, instanceName, "fail"
+  IniWrite pct, ini, instanceName, "success_pct"
+  IniWrite streakCur, ini, instanceName, "streak_current"
+  IniWrite streakBest, ini, instanceName, "streak_best"
+  IniWrite NowStamp(), ini, instanceName, "last_event"
 
   return { success: success, fail: fail, pct: pct, streakCur: streakCur, streakBest: streakBest }
 }
