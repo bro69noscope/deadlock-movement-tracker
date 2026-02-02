@@ -11,19 +11,19 @@ global DEADLOCK_MVTRACK_INTERNAL_HOTKEY := "i"
 global DEADLOCK_ROOT := "C:\Program Files (x86)\Steam\steamapps\common\Deadlock"
 
 ; Tracker hotkeys
-global TRACKER_FAIL_KEY := "F1"        ; failed the route, reset pos
-global TRACKER_SUCCESS_KEY := "F2"     ; succeeded the route, reset pos
-global TRACKER_SWITCH_POS_KEY := "F3"  ; switch to existing route start
-global TRACKER_CREATE_POS_KEY := "F4"  ; save new route start
-global TRACKER_FORGET_LAST_KEY := "F5" ; forget the last fail/success stat entry
-global TRACKER_RENAME_INSTANCE_KEY := "F6" ; rename current instance
+global TRACKER_FAIL_KEY := "F1"                ; failed the route, reset pos
+global TRACKER_SUCCESS_KEY := "F2"             ; succeeded the route, reset pos
+global TRACKER_SWITCH_POS_KEY := "F3"          ; switch to existing route start
+global TRACKER_CREATE_POS_KEY := "F4"          ; save new route start
+global TRACKER_FORGET_LAST_KEY := "F5"         ; forget the last fail/success stat entry
+global TRACKER_RENAME_INSTANCE_KEY := "F6"     ; rename current instance
 global TRACKER_REPOSITION_INSTANCE_KEY := "F7" ; reposition current instance to current pos
-global TRACKER_DELETE_INSTANCE_KEY := "F8"    ; delete current instance
-global TRACKER_EXIT_KEY := "F12"
+global TRACKER_DELETE_INSTANCE_KEY := "F8"     ; delete current instance
+global TRACKER_EXIT_KEY := "F12"               ; exit the app
 
 ; Developer hotkeys
-global EXPORT_PRETTY_INI_KEY := "F11"       ; make readable data file
-global RELOAD_SCRIPT_KEY := "F10"      ; reload script
+global EXPORT_PRETTY_INI_KEY := "F11" ; make readable data file
+global RELOAD_SCRIPT_KEY := "F10"     ; reload script
 
 ; Set to true to include personal settings from settings\bros_settings.ahk
 global INCLUDE_PERSONAL_SETTINGS := true
