@@ -143,7 +143,7 @@ RenameInstance() {
     return false
 
   if (newName = "__global__") {
-    MsgBox "That name is reserved.", "Tracker", 48
+    MsgBox "That name is reserved:." newName, "Tracker", 48
     return false
   }
 
