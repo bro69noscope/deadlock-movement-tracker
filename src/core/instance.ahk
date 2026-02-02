@@ -97,7 +97,7 @@ DeleteInstance() {
     try {
       FileDelete(h)
     } catch as e {
-      Debug("DeleteInstance: FAILED to delete history file: " h " | " e.Message)
+      Debug(A_thisFunc ": FAILED to delete history file: " h " | " e.Message)
     }
   }
 
@@ -194,7 +194,7 @@ RenameInstance() {
     try {
       FileMove(hOld, hNew, 1)
     } catch as e {
-      Debug("RenameInstance: FAILED to move history file: " hOld " -> " hNew " | " e.Message)
+      Debug(A_ThisFunc ": FAILED to move history file: " hOld " -> " hNew " | " e.Message)
     }
   }
 
@@ -262,12 +262,12 @@ SetCurrentInstance(name) {
 
 SaveCurrentInstancePos() {
   if (CURRENT_INSTANCE = "") {
-    Debug("SaveCurrentInstancePos: no current instance -> abort")
+    Debug(A_thisFunc ": no current instance -> abort")
     return false
   }
 
   before := GetFileMTime(LASTPOS_PATH)
-  Debug("LASTPOS mtime before=" before)
+  Debug(A_ThisFunc ": LASTPOS mtime before=" before)
 
   WinActivate("ahk_exe deadlock.exe")
   Send DEADLOCK_MARK_POS_HOTKEY

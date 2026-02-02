@@ -4,7 +4,7 @@
 WriteMvposCfg(posLine) {
   posLine := Trim(posLine)
   if (posLine = "") {
-    Debug("WriteMvposCfg: posLine empty -> abort")
+    Debug(A_ThisFunc ": posLine empty -> abort")
     return false
   }
 
@@ -12,7 +12,7 @@ WriteMvposCfg(posLine) {
     posLine .= ";"
 
   try {
-    DebugFile("WriteMvposCfg BEFORE", MVTRACK_POS_PATH)
+    DebugFile(A_ThisFunc ": BEFORE", MVTRACK_POS_PATH)
 
     if FileExist(MVTRACK_POS_PATH)
       FileDelete(MVTRACK_POS_PATH)
@@ -22,12 +22,12 @@ WriteMvposCfg(posLine) {
 
     ; verify immediately by reading back the same path
     verify := Trim(FileRead(MVTRACK_POS_PATH), " `t`r`n")
-    Debug("WriteMvposCfg WROTE: " verify)
-    DebugFile("WriteMvposCfg AFTER", MVTRACK_POS_PATH)
+    Debug(A_ThisFunc ": WROTE: " verify)
+    DebugFile(A_ThisFunc ": AFTER", MVTRACK_POS_PATH)
     return true
   } catch as e {
-    Debug("WriteMvposCfg ERROR: " e.Message)
-    DebugFile("WriteMvposCfg ERROR PATH", MVTRACK_POS_PATH)
+    Debug(A_ThisFunc ": ERROR: " e.Message)
+    DebugFile(A_ThisFunc ": ERROR PATH", MVTRACK_POS_PATH)
     return false
   }
 }
