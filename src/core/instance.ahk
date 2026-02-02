@@ -272,7 +272,7 @@ SaveCurrentInstancePos() {
   WinActivate("ahk_exe deadlock.exe")
   Send DEADLOCK_MARK_POS_HOTKEY
 
-  r := ReadLastPosAfterMTime(before, 1500)
+  r := ReadLastPosAfterMTime(before, 500)
   if (!r.ok) {
     snippet := ""
     if r.HasOwnProp("text")

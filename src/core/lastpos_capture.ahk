@@ -1,5 +1,5 @@
 #Include paths.ahk
-ReadLastPosAfterMTime(prevMTime, timeoutMs := 1500) {
+ReadLastPosAfterMTime(prevMTime, timeoutMs) {
   start := A_TickCount
   lastSeenMTime := ""
   lastSeenText := ""
