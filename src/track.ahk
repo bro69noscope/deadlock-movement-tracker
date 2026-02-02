@@ -8,6 +8,7 @@
 #Include core\ps1_installer.ahk
 #Include core\cfg_installer.ahk
 #Include core\ps1_launcher.ahk
+#Include core\autoexec_installer.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
@@ -38,5 +39,6 @@ ExitHandler(ExitReason, ExitCode) {
 
 EnsurePs1Installed()
 EnsureCfgInstalled()
+EnsureAutoexecConfigured()
 OnExit(ExitHandler)
 StartPoswatch()

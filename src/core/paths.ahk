@@ -2,6 +2,7 @@
 #Include config.ahk
 
 global INI_PATH := DATA_DIR "\instances.ini"
+global STATE_INI_PATH := DATA_DIR "\state.ini"
 DirCreate(DATA_DIR)
 
 global DEADLOCK_CFG_DIR := DEADLOCK_ROOT "\game\citadel\cfg"
