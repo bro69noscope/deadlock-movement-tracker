@@ -9,9 +9,15 @@
 #Include core\cfg_installer.ahk
 #Include core\ps1_launcher.ahk
 #Include core\autoexec_installer.ahk
+#Include core\uninstaller.ahk
 
 if INCLUDE_PERSONAL_SETTINGS {
   #Include settings\bros_settings.ahk
+}
+
+if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
+  Uninstall()
+  ExitApp()
 }
 
 DebugBlank
