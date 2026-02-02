@@ -67,7 +67,7 @@ StartPoswatch() {
     '-NoProfile -ExecutionPolicy Bypass -File "{1}" -GameRoot "{2}" -OutPath "{3}" -LogFile "{4}"',
     ps1,
     DEADLOCK_ROOT,
-    LASTPOS_PATH,
+    LASTPOS_CFG_PATH,
     logPath
   )
 

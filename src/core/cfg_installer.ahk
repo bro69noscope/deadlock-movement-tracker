@@ -2,7 +2,7 @@
 #Include debug.ahk
 
 EnsureCfgInstalled() {
-  outPath := MVTRACK_CFG_PATH
+  outPath := MVTRACK_CFG_EXEC_PATH
   txt := GetPosToolsCfgText()
   SPlitPath outPath, &fileName
 

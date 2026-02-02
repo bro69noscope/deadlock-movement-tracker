@@ -266,7 +266,7 @@ SaveCurrentInstancePos() {
     return false
   }
 
-  before := GetFileMTime(LASTPOS_PATH)
+  before := GetFileMTime(LASTPOS_CFG_PATH)
   Debug(A_ThisFunc ": LASTPOS mtime before=" before)
 
   WinActivate("ahk_exe deadlock.exe")

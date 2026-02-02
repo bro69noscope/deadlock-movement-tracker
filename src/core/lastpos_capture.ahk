@@ -4,17 +4,18 @@ ReadLastPosAfterMTime(prevMTime, timeoutMs) {
   lastSeenMTime := ""
   lastSeenText := ""
   lastError := ""
+  lastpos := LASTPOS_CFG_PATH
 
   while (A_TickCount - start) <= timeoutMs {
-    if !FileExist(LASTPOS_PATH) {
-      lastError := "missing " LASTPOS_PATH
+    if !FileExist(lastpos) {
+      lastError := "missing " lastpos
       Sleep 50
       continue
     }
 
     try {
-      lastSeenMTime := FileGetTime(LASTPOS_PATH, "M")
-      lastSeenText := Trim(FileRead(LASTPOS_PATH))
+      lastSeenMTime := FileGetTime(lastpos, "M")
+      lastSeenText := Trim(FileRead(lastpos))
     } catch as e {
       lastError := "read error: " e.Message
       Sleep 50

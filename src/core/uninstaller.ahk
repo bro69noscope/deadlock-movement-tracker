@@ -100,10 +100,10 @@ RemoveAutoexecLines(&removedLines := "", &autoexecPath := "") {
 
 Uninstall() {
   title := "Movement Tracker Uninstall"
-  SplitPath MVTRACK_CFG_PATH, &mvTrackCfgFile
-  SplitPath MVTRACK_POS_PATH, &mvTrackPosFile
+  SplitPath MVTRACK_CFG_EXEC_PATH, &mvTrackCfgFile
+  SplitPath MVTRACK_CFG_POS_PATH, &mvTrackPosFile
   SplitPath MVTRACK_PS1_PATH, &mvTrackPs1File
-  SplitPath LASTPOS_PATH, &lastPosFile
+  SplitPath LASTPOS_CFG_PATH, &lastPosFile
 
   choice := MsgBox(
     "This will uninstall Movement Tracker files:" "`n"
@@ -131,10 +131,10 @@ Uninstall() {
   Debug("=== " A_ThisFunc ": starting uninstall; wipeData=" wipeData " ===")
   try StopPoswatch()
 
-  SafeDelete(MVTRACK_CFG_PATH)
-  SafeDelete(MVTRACK_POS_PATH)
+  SafeDelete(MVTRACK_CFG_EXEC_PATH)
+  SafeDelete(MVTRACK_CFG_POS_PATH)
   SafeDelete(MVTRACK_PS1_PATH)
-  SafeDelete(LASTPOS_PATH)
+  SafeDelete(LASTPOS_CFG_PATH)
   SafeDelete(RegExReplace(MVTRACK_PS1_PATH, "\.ps1$", ".log"))
   SafeDelete(DATA_DIR "\poswatch.pid")
 
