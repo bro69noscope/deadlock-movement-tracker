@@ -1,5 +1,7 @@
 #### Switch between different in game locations easily and track your progress attempting routes by marking your last try as successful/failed.
 
+https://github.com/user-attachments/assets/2150e524-b25d-4a55-8395-c64f735e47d8
+
 ## Setup
 
 ### Requirements
