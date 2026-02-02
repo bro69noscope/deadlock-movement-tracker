@@ -237,19 +237,39 @@ SaveCurrentInstancePos() {
   before := GetFileMTime(LASTPOS_PATH)
   Debug("LASTPOS mtime before=" before)
 
+  ; WinActivate("ahk_exe deadlock.exe") ;NOTE: potentially needed to uncomment to ensure Deadlock is focused
   Send DEADLOCK_MARK_POS_HOTKEY
 
-  line := ReadLastPosAfterMTime(before, 1500)
-  Debug("Captured lastpos line=" line)
+  r := ReadLastPosAfterMTime(before, 1500)
+  if (!r.ok) {
+    snippet := ""
+    if r.HasOwnProp("text")
+      snippet := SubStr(r.text, 1, 80)
 
-  if (line = "")
+    seen := r.HasOwnProp("mtime") ? r.mtime : ""
+    err := r.HasOwnProp("err") ? r.err : ""
+
+    Debug(A_ThisFunc ": FAILED"
+      " reason=" r.reason " before=" before " seen=" seen " err=" err " text='" snippet "'")
+
+    if (ENABLE_DEBUG) {
+      MsgBox(
+        "Failed to capture position.`n`n"
+        . "Reason: " r.reason "`n"
+        . "Before mtime: " before "`n"
+        . "Seen mtime: " seen "`n"
+        . "Seen text: " snippet,
+        "Movement Tracker",
+        0x30
+      )
+    }
     return false
+  }
 
+  line := r.line
 
   IniWrite line, INI_PATH, CURRENT_INSTANCE, "pos_line"
   IniWrite NowStamp(), INI_PATH, CURRENT_INSTANCE, "pos_saved_at"
-
-  ; keep mvtrack_pos.cfg synced to the last captured position
   ok := WriteMvposCfg(line)
   return ok
 }
