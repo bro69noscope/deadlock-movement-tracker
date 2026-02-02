@@ -12,7 +12,7 @@ ShowStreakPopup(streakCur) {
   g.MarginX := 16
   g.MarginY := 12
   g.SetFont("s11")
-  g.AddText(, "Reached success streak: " streakCur "`n`nPress SPACE to dismiss")
+  g.AddText(, "Success streak: " streakCur "`n`nPress SPACE to dismiss")
 
   __streakGui := g
   g.Show("AutoSize NA")
