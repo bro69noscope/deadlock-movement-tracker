@@ -1,5 +1,6 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+SetWorkingDir(A_ScriptDir)
 
 #Include ..\vendor\ahk-v2-libraries\Lib\Array.ahk
 #Include core\ini_export.ahk
