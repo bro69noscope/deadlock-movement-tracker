@@ -2,6 +2,22 @@
 #SingleInstance Force
 SetWorkingDir(A_ScriptDir)
 
+appName := "deadlock-movement-tracker"
+A_IconTip := appName
+iconPath := A_ScriptDir "\..\assets\icon.png"
+if FileExist(iconPath)
+  TraySetIcon(iconPath)
+
+tray := A_TrayMenu
+tray.Delete()
+tray.Add(appName, (*) => 0)  ; a non-clickable title line (still clickable but does nothing)
+tray.Disable(appName)
+tray.Add()
+tray.Add("Open user_settings.ini", (*) => Run('"' A_ScriptDir '\..\user_settings.ini"'))
+tray.Add("Reload", (*) => Reload())
+tray.Add()
+tray.Add("Exit", (*) => ExitApp())
+
 #Include ..\vendor\ahk-v2-libraries\Lib\Array.ahk
 #Include core\ini_export.ahk
 #Include core\instance.ahk
