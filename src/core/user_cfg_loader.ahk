@@ -44,7 +44,7 @@ LoadUserConfigFromIni() {
   TRACKER_EXIT_KEY := IniRead(ini, "tracker_hotkeys", "exit", TRACKER_EXIT_KEY)
 
   ; --- Flags ---
-  global ENABLE_DEBUG, TARGET_SUCCESS_STREAK, INCLUDE_PERSONAL_SETTINGS
+  global ENABLE_DEBUG, TARGET_SUCCESS_STREAK, INCLUDE_BRO_SETTINGS
   TARGET_SUCCESS_STREAK := IniRead(ini, "tracker_settings", "target_success_streak", TARGET_SUCCESS_STREAK) + 0
   ENABLE_DEBUG := StrLower((IniRead(ini, "dev", "enable_debug", ENABLE_DEBUG ? "true" : "false") = "true"))
   INCLUDE_BRO_SETTINGS := (IniRead(ini, "dev", "include_bro_settings", INCLUDE_BRO_SETTINGS ? "true" : "false") = "true")

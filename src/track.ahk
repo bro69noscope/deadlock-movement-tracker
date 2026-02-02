@@ -28,10 +28,7 @@ tray.Add("Exit", (*) => ExitApp())
 #Include core\autoexec_installer.ahk
 #Include core\uninstaller.ahk
 #Include core\user_cfg_loader.ahk
-
-if INCLUDE_PERSONAL_SETTINGS {
-  #Include settings\bros_settings.ahk
-}
+#Include settings\bros_settings.ahk
 
 if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
   Uninstall()
@@ -45,6 +42,10 @@ Debug("===Tracker started===")
 
 ; Load custom user config from ini
 LoadUserConfigFromIni()
+
+if INCLUDE_BRO_SETTINGS {
+  ApplyBroSettings()
+}
 
 ; Define hotkeys
 HotIf (*) => WinActive("ahk_exe deadlock.exe")

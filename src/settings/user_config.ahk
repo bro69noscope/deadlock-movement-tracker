@@ -26,7 +26,7 @@ global EXPORT_PRETTY_INI_KEY := "F11" ; make readable data file
 global RELOAD_SCRIPT_KEY := "F10"     ; reload script
 
 ; Set to true to include personal settings from settings\bros_settings.ahk
-global INCLUDE_PERSONAL_SETTINGS := true
+global INCLUDE_BRO_SETTINGS := true
 
 ; Set to true to enable debugging logs if encoutering issues
 global ENABLE_DEBUG := true
