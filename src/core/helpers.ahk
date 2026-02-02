@@ -16,6 +16,7 @@ GetFileMTime(path) {
 
 ResetInGamePos(sleepTime := 350) {
   ; Toggle noclip off and on to kill velocity
+  WinActivate("ahk_exe  deadlock.exe")
   Send CFG.noclip
   Sleep sleepTime
   Send CFG.noclip
