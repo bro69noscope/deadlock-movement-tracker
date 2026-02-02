@@ -209,17 +209,49 @@ RenameInstance() {
 
 
 LoadInstancePos(instanceName) {
-  pos := IniRead(INI_PATH, instanceName, "pos_line", "")
-  Debug("LoadInstancePos: instance=" instanceName " pos=" pos)
+  pos := ""
+  hasKey := false
 
-  if (pos = "")
+  try {
+    secText := IniRead(INI_PATH, instanceName)
+    if RegExMatch(secText, "im)^\s*pos_line\s*=")
+      hasKey := true
+    pos := IniRead(INI_PATH, instanceName, "pos_line", "")
+  } catch as e {
+    Debug(A_ThisFunc ": FAILED to read ini. instance=" instanceName " err=" e.Message " path=" INI_PATH)
+    if (ENABLE_DEBUG)
+      MsgBox("Failed to read instances.ini.`n`n" INI_PATH "`n`n" e.Message, "Movement Tracker", 0x30)
     return false
+  }
+
+  pos := StrReplace(pos, "`r", "")
+  pos := StrReplace(pos, "`n", "")
+  pos := Trim(pos)
+
+  if (pos = "") {
+    reason := hasKey ? "pos_line_empty" : "pos_line_missing"
+    Debug(A_ThisFunc ": NO POS. instance=" instanceName " reason=" reason " path=" INI_PATH)
+
+    if (ENABLE_DEBUG) {
+      MsgBox(
+        "No saved position for '" instanceName "'.`n`n"
+        . "Reason: " reason "`n"
+        . "Fix: reposition it with " TRACKER_REPOSITION_INSTANCE_KEY
+        . " (or recreate with " TRACKER_CREATE_POS_KEY ").",
+        "Movement Tracker",
+        0x30
+      )
+    }
+    return false
+  }
+
+  Debug(A_ThisFunc ": instance=" instanceName " pos=" pos)
 
   ok := WriteMvposCfg(pos)
   ResetInGamePos(100)
-
   return ok
 }
+
 
 SetCurrentInstance(name) {
   global CURRENT_INSTANCE
