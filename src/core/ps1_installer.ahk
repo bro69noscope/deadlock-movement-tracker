@@ -6,7 +6,6 @@ EnsurePs1Installed() {
   txt := GetPoswatchScriptText()
   SplitPath outPath, &fileName
 
-  ; If already exists with same content, do nothing
   if FileExist(outPath) {
     try {
       existing := FileRead(outPath)

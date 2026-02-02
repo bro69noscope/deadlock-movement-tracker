@@ -5,7 +5,6 @@ global __streakSpaceBound := false
 ShowStreakPopup(streakCur) {
   global __streakGui, __streakGuiHwnd, __streakSpaceBound
 
-  ; Close previous popup if any
   DismissStreakPopup(false)
 
   g := Gui("+AlwaysOnTop +ToolWindow -MinimizeBox", "Tracker")
@@ -20,7 +19,6 @@ ShowStreakPopup(streakCur) {
 
   g.OnEvent("Close", (*) => DismissStreakPopup(true))
 
-  ; Bind SPACE only while popup exists
   Hotkey "Space", TryDismissStreakBySpace, "On"
   __streakSpaceBound := true
 }
@@ -35,7 +33,6 @@ TryDismissStreakBySpace(*) {
 DismissStreakPopup(focusBack := true) {
   global __streakGui, __streakGuiHwnd, __streakSpaceBound
 
-  ; Stop intercepting SPACE
   if (__streakSpaceBound) {
     Hotkey "Space", "Off"
     __streakSpaceBound := false

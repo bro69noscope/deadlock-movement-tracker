@@ -6,7 +6,6 @@ ExportPrettyIniSnapshot(outPath := "") {
     outPath := DATA_DIR "\instances.pretty.ini"
   ini := INSTANCES_INI
 
-  ; -------- read section list --------
   sectionsText := ""
   try {
     sectionsText := IniRead(ini)
@@ -53,7 +52,6 @@ ExportPrettyIniSnapshot(outPath := "") {
   out .= "; generated: " NowStamp() "`n"
   out .= "; source: " ini "`n`n"
 
-  ; -------- per section --------
   for _, section in ordered {
     out .= "[" section "]`n"
 
@@ -98,7 +96,6 @@ ExportPrettyIniSnapshot(outPath := "") {
     out .= "`n"
   }
 
-  ; -------- atomic UTF-8 write --------
   tmp := outPath ".tmp"
   try {
     FileDelete(tmp)

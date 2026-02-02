@@ -21,7 +21,6 @@ SafeDirDelete(dir) {
   if !DirExist(dir)
     return true
   try {
-    ; 1 = recursive
     DirDelete(dir, 1)
     Debug(A_ThisFunc ": deleted dir " dir)
     return true
