@@ -269,7 +269,7 @@ SaveCurrentInstancePos() {
   before := GetFileMTime(LASTPOS_PATH)
   Debug("LASTPOS mtime before=" before)
 
-  ; WinActivate("ahk_exe deadlock.exe") ;NOTE: potentially needed to uncomment to ensure Deadlock is focused
+  WinActivate("ahk_exe deadlock.exe")
   Send DEADLOCK_MARK_POS_HOTKEY
 
   r := ReadLastPosAfterMTime(before, 1500)
