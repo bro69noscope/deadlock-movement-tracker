@@ -275,7 +275,7 @@ SaveCurrentInstancePos() {
   WinActivate("ahk_exe deadlock.exe")
   Send CFG.mark_pos
 
-  r := ReadLastPosAfterMTime(before, 500)
+  r := ReadLastPosAfterMTime(before, 2000)
   if (!r.ok) {
     snippet := ""
     if r.HasOwnProp("text")
