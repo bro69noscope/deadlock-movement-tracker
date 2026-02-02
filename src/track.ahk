@@ -26,7 +26,7 @@ HotKey(TRACKER_FORGET_LAST_KEY, (*) => ForgetLastResult())
 HotKey(TRACKER_DELETE_INSTANCE_KEY, (*) => DeleteInstance())
 HotKey(TRACKER_REPOSITION_INSTANCE_KEY, (*) => RepositionInstance())
 HotKey(TRACKER_RENAME_INSTANCE_KEY, (*) => RenameInstance())
-HotKey(TRACKER_EXIT_KEY, (*) => ExitApp())
+HotKey(TRACKER_EXIT_KEY, (*) => ConfirmExit())
 ; Dev
 HotKey(RELOAD_SCRIPT_KEY, (*) => Reload())
 HotKey(EXPORT_PRETTY_INI_KEY, (*) => ExportPrettyIniSnapshot())

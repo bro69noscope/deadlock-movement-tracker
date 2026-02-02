@@ -30,3 +30,13 @@ WarnNoInstanceSelected() {
     0x30
   )
 }
+
+ConfirmExit() {
+  choice := MsgBox(
+    "Exit Movement Tracker?",
+    "Movement Tracker",
+    "YesNo Icon!"
+  )
+  if (choice = "Yes")
+    ExitApp()
+}
