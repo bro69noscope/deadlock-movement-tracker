@@ -11,21 +11,22 @@
 ---
 ### Download
 - Click Code → Download ZIP on GitHub, or clone the repository
-- Extract it somewhere simple, for example: `C:\Games\deadlock-movement-tracker\`
+- Extract it wherever you want
 
 ---
 
 ### Configure Deadlock path and hotkeys
-1. Open `user_settings.ini` (located in the repository root).
-2. Set the Deadlock install path if different that the default below:
+1. Locate `user_settings.ini` (located in the repository root)
+2. If you've installed Deadlock in a different location that the steam default, change:
 ```
     [deadlock]
     root=C:\Program Files (x86)\Steam\steamapps\common\Deadlock
  ```
 
-3. Optional (recommended):
+3. Recommended:
 Create a copy of `user_settings.ini` named `user_settings.local.ini` for personal
-overrides: You can keep the defaults saved this way. The `.local.` file takes priority
+overrides. You can keep the defaults saved this way. The `.local.` file takes priority,
+adjust your keybinds and settings in this one.
 
 ---
 
@@ -51,8 +52,8 @@ Accept the prompt unless you already manage these lines manually.
 
 ---
 
-### Using the tracker (default hotkeys)
-You can change these in `user_settings.ini`.
+### Using the tracker (some default hotkeys)
+You can change them in `user_settings.ini`.
 
 - F4 — Save current position as a new route start
 - F3 — Switch to an existing route start
@@ -71,3 +72,9 @@ If positions are not saved or restored correctly:
   (or manually added `sv_cheats 1` and `exec mvtrack.cfg`)
 - Check that the `root=` path in `user_settings.ini` is correct
 - Enable debug logging and send the contents in: `src\logs\debug.log`
+
+### Uninstalling
+
+- Run `uninstall.ahk` in the repository root.
+- After that you can delete the whole repository directory.
+- (If you want to keep your instances data for later use, save `src/tracker_data`)
