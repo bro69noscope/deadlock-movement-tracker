@@ -61,14 +61,15 @@ GetPosToolsCfgText() {
     "alias setpos  " "exec lastpos.cfg" "`n"
     "`n"
     "// User key bindings`n"
-    "bind " "" DEADLOCK_MARK_POS_HOTKEY "" " " "getpos_exact" "`n"
-    "bind " "" DEADLOCK_TELEPORT_HOTKEY "" " " "exec lastpos.cfg" "`n"
-    "bind " "" DEADLOCK_NOCLIP_HOTKEY "" " " "noclip" "`n"
-    "bind " "" DEADLOCK_LOAD_PRACTICE_MAP_HOTKEY "" " " "map dl_midtown" "`n"
-    "bind " "" DEADLOCK_SWAP_TEAM_HOTKEY "" " " "train_team_toggle" "`n"
-    "bind " "" DEADLOCK_SETUP_PRACTICE_HOTKEY "" " " "train_start" "`n"
+    "bind " "" CFG.mark_pos "" " " "getpos_exact" "`n"
+    "bind " "" CFG.teleport "" " " "exec lastpos.cfg" "`n"
+    "bind " "" CFG.noclip "" " " "noclip" "`n"
+    "bind " "" CFG.load_practice_map "" " " "map dl_midtown" "`n"
+    "bind " "" CFG.swap_team "" " " "train_team_toggle" "`n"
+    "bind " "" CFG.setup_practice "" " " "train_start" "`n"
     "`n"
     "// Used programmatically by deadlock-movement-tracker only`n"
-    "bind " "" DEADLOCK_MVTRACK_INTERNAL_HOTKEY "" " " "exec mvtrack_pos.cfg" "`n"
+    "bind " "" CFG.mvtrack_internal "" " " "exec mvtrack_pos.cfg" "`n"
+
   )
 }

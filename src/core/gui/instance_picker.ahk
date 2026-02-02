@@ -18,7 +18,7 @@ ListInstances() {
 
   if (all.Length = 0) {
     MsgBox(
-      "No instances found.`nPress " TRACKER_CREATE_POS_KEY
+      "No instances found.`nPress " CFG.new
       " to create a new instance.",
       "Instance Picker",
       0x30

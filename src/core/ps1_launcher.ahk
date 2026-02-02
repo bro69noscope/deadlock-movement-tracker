@@ -66,7 +66,7 @@ StartPoswatch() {
   args := Format(
     '-NoProfile -ExecutionPolicy Bypass -File "{1}" -GameRoot "{2}" -OutPath "{3}" -LogFile "{4}"',
     ps1,
-    DEADLOCK_ROOT,
+    CFG.deadlock_root,
     LASTPOS_CFG_PATH,
     logPath
   )
@@ -75,7 +75,7 @@ StartPoswatch() {
   cmd := Format('"{1}" {2}', exe, args)
 
   try {
-    Run(cmd, DEADLOCK_ROOT, "Hide", &pid)
+    Run(cmd, CFG.deadlock_root, "Hide", &pid)
     if FileExist(pidFile)
       FileDelete(pidFile)
     FileAppend(pid, pidFile, "UTF-8")

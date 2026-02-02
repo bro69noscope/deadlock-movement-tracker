@@ -1,1 +1,85 @@
 global DATA_DIR := A_ScriptDir "\tracker_data"
+
+global CFG := {
+  ; Deadlock
+  deadlock_root: "C:\Program Files (x86)\Steam\steamapps\common\Deadlock",
+  ; Deadlock hotkeys
+  mark_pos: "o",
+  teleport: "h",
+  noclip: "l",
+  load_practice_map: "8",
+  swap_team: "9",
+  setup_practice: "0",
+  mvtrack_internal: "i",
+  ; Tracker hotkeys
+  fail: "F1",
+  success: "F2",
+  switch: "F3",
+  new: "F4",
+  forget: "F5",
+  rename: "F6",
+  reposition: "F7",
+  delete: "F8",
+  exit: "F9",
+  ; Dev hotkeys
+  export_pretty_ini: "F11",
+  reload_script: "F10",
+  ; Flags
+  enable_debug: false,
+  include_bro_settings: false,
+  ; Settings
+  target_success_streak: 3
+}
+
+ReadBoolIni(ini, section, key, defaultBool) {
+  v := StrLower(Trim(IniRead(ini, section, key, defaultBool ? "true" : "false")))
+  return (v = "true")
+}
+
+ReadIntIni(ini, section, key, defaultInt) {
+  return IniRead(ini, section, key, defaultInt) + 0
+}
+
+LoadUserConfigFromIni() {
+  base := A_ScriptDir "\..\user_settings.ini"
+  override := A_ScriptDir "\..\user_settings.local.ini"
+
+  if !FileExist(base) {
+    MsgBox "Missing config: " base, "Movement Tracker", 0x30
+    return false
+  }
+
+  ini := FileExist(override) ? override : base
+
+  ; Deadlock
+  CFG.deadlock_root := IniRead(ini, "deadlock", "root", CFG.deadlock_root)
+
+  ; Deadlock hotkeys
+  CFG.mark_pos := IniRead(ini, "deadlock_hotkeys", "mark_pos", CFG.mark_pos)
+  CFG.teleport := IniRead(ini, "deadlock_hotkeys", "teleport", CFG.teleport)
+  CFG.noclip := IniRead(ini, "deadlock_hotkeys", "noclip", CFG.noclip)
+  CFG.load_practice_map := IniRead(ini, "deadlock_hotkeys", "load_practice_map", CFG.load_practice_map)
+  CFG.swap_team := IniRead(ini, "deadlock_hotkeys", "swap_team", CFG.swap_team)
+  CFG.setup_practice := IniRead(ini, "deadlock_hotkeys", "setup_practice", CFG.setup_practice)
+  CFG.mvtrack_internal := IniRead(ini, "deadlock_hotkeys", "mvtrack_internal", CFG.mvtrack_internal)
+
+  ; Tracker hotkeys
+  CFG.fail := IniRead(ini, "tracker_hotkeys", "fail", CFG.fail)
+  CFG.success := IniRead(ini, "tracker_hotkeys", "success", CFG.success)
+  CFG.switch := IniRead(ini, "tracker_hotkeys", "switch", CFG.switch)
+  CFG.new := IniRead(ini, "tracker_hotkeys", "new", CFG.new)
+  CFG.forget := IniRead(ini, "tracker_hotkeys", "forget", CFG.forget)
+  CFG.rename := IniRead(ini, "tracker_hotkeys", "rename", CFG.rename)
+  CFG.reposition := IniRead(ini, "tracker_hotkeys", "reposition", CFG.reposition)
+  CFG.delete := IniRead(ini, "tracker_hotkeys", "delete", CFG.delete)
+  CFG.exit := IniRead(ini, "tracker_hotkeys", "exit", CFG.exit)
+
+  ; Settings
+  CFG.target_success_streak := ReadIntIni(ini, "tracker_settings", "target_success_streak", CFG.target_success_streak)
+
+  ; Dev flags (true/false in ini)
+  CFG.enable_debug := ReadBoolIni(ini, "dev", "enable_debug", CFG.enable_debug)
+  CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
+
+  return true
+}

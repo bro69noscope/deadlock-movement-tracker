@@ -219,7 +219,7 @@ LoadInstancePos(instanceName) {
     pos := IniRead(INI_PATH, instanceName, "pos_line", "")
   } catch as e {
     Debug(A_ThisFunc ": FAILED to read ini. instance=" instanceName " err=" e.Message " path=" INI_PATH)
-    if (ENABLE_DEBUG)
+    if (CFG.enable_debug)
       MsgBox("Failed to read instances.ini.`n`n" INI_PATH "`n`n" e.Message, "Movement Tracker", 0x30)
     return false
   }
@@ -232,12 +232,12 @@ LoadInstancePos(instanceName) {
     reason := hasKey ? "pos_line_empty" : "pos_line_missing"
     Debug(A_ThisFunc ": NO POS. instance=" instanceName " reason=" reason " path=" INI_PATH)
 
-    if (ENABLE_DEBUG) {
+    if (CFG.enable_debug) {
       MsgBox(
         "No saved position for '" instanceName "'.`n`n"
         . "Reason: " reason "`n"
-        . "Fix: reposition it with " TRACKER_REPOSITION_INSTANCE_KEY
-        . " (or recreate with " TRACKER_CREATE_POS_KEY ").",
+        . "Fix: reposition it with " CFG.reposition
+        . " (or recreate with " CFG.new ").",
         "Movement Tracker",
         0x30
       )
@@ -270,7 +270,7 @@ SaveCurrentInstancePos() {
   Debug(A_ThisFunc ": LASTPOS mtime before=" before)
 
   WinActivate("ahk_exe deadlock.exe")
-  Send DEADLOCK_MARK_POS_HOTKEY
+  Send CFG.mark_pos
 
   r := ReadLastPosAfterMTime(before, 500)
   if (!r.ok) {
@@ -284,7 +284,7 @@ SaveCurrentInstancePos() {
     Debug(A_ThisFunc ": FAILED"
       " reason=" r.reason " before=" before " seen=" seen " err=" err " text='" snippet "'")
 
-    if (ENABLE_DEBUG) {
+    if (CFG.enable_debug) {
       MsgBox(
         "Failed to capture position.`n`n"
         . "Reason: " r.reason "`n"

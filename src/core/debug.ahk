@@ -1,5 +1,4 @@
 #Include config.ahk
-#Include ..\settings\user_config.ahk
 global DEBUG_LOG := A_ScriptDir "\logs\debug.log"
 global UNINSTALL_LOG := A_ScriptDir "\logs\uninstall.log"
 global DEBUG_UNINSTALL := false
@@ -17,8 +16,7 @@ EnsureLogDirExists() {
 }
 
 Debug(msg) {
-  global DEBUG_UNINSTALL, ENABLE_DEBUG
-  if (!DEBUG_UNINSTALL && !ENABLE_DEBUG)
+  if (!DEBUG_UNINSTALL && !CFG.enable_debug)
     return
 
   EnsureLogDirExists()
@@ -34,7 +32,7 @@ Debug(msg) {
 
 ; Logs a file's existence + size + mtime (helps detect wrong paths)
 DebugFile(label, path) {
-  if (!ENABLE_DEBUG)
+  if (!CFG.enable_debug)
     return
   exists := FileExist(path) ? "yes" : "no"
   size := ""
@@ -46,8 +44,7 @@ DebugFile(label, path) {
 
 
 DebugBlank() {
-  global DEBUG_UNINSTALL, ENABLE_DEBUG
-  if (!DEBUG_UNINSTALL && !ENABLE_DEBUG)
+  if (!DEBUG_UNINSTALL && !CFG.enable_debug)
     return
 
   EnsureLogDirExists()

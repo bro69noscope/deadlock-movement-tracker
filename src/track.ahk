@@ -27,7 +27,6 @@ tray.Add("Exit", (*) => ExitApp())
 #Include core\ps1_launcher.ahk
 #Include core\autoexec_installer.ahk
 #Include core\uninstaller.ahk
-#Include core\user_cfg_loader.ahk
 #Include settings\bros_settings.ahk
 
 if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
@@ -43,24 +42,24 @@ Debug("===Tracker started===")
 ; Load custom user config from ini
 LoadUserConfigFromIni()
 
-if INCLUDE_BRO_SETTINGS {
+if CFG.include_bro_settings {
   ApplyBroSettings()
 }
 
 ; Define hotkeys
 HotIf (*) => WinActive("ahk_exe deadlock.exe")
-HotKey(TRACKER_FAIL_KEY, (*) => MarkResult("fail"))
-HotKey(TRACKER_SUCCESS_KEY, (*) => MarkResult("success"))
-HotKey(TRACKER_SWITCH_POS_KEY, (*) => SwitchInstance())
-HotKey(TRACKER_CREATE_POS_KEY, (*) => NewInstance())
-HotKey(TRACKER_FORGET_LAST_KEY, (*) => ForgetLastResult())
-HotKey(TRACKER_DELETE_INSTANCE_KEY, (*) => DeleteInstance())
-HotKey(TRACKER_REPOSITION_INSTANCE_KEY, (*) => RepositionInstance())
-HotKey(TRACKER_RENAME_INSTANCE_KEY, (*) => RenameInstance())
-HotKey(TRACKER_EXIT_KEY, (*) => ConfirmExit())
+HotKey(CFG.fail, (*) => MarkResult("fail"))
+HotKey(CFG.success, (*) => MarkResult("success"))
+HotKey(CFG.switch, (*) => SwitchInstance())
+HotKey(CFG.new, (*) => NewInstance())
+HotKey(CFG.forget, (*) => ForgetLastResult())
+HotKey(CFG.delete, (*) => DeleteInstance())
+HotKey(CFG.reposition, (*) => RepositionInstance())
+HotKey(CFG.rename, (*) => RenameInstance())
+HotKey(CFG.exit, (*) => ConfirmExit())
 ; Dev
-HotKey(RELOAD_SCRIPT_KEY, (*) => Reload())
-HotKey(EXPORT_PRETTY_INI_KEY, (*) => ExportPrettyIniSnapshot())
+HotKey(CFG.reload_script, (*) => Reload())
+HotKey(CFG.export_pretty_ini, (*) => ExportPrettyIniSnapshot())
 HotIf
 
 ExitHandler(ExitReason, ExitCode) {

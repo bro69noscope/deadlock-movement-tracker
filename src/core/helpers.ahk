@@ -1,4 +1,4 @@
-#Include ..\settings\user_config.ahk
+#Include config.ahk
 
 NowStamp() {
   t := A_Now
@@ -16,15 +16,15 @@ GetFileMTime(path) {
 
 ResetInGamePos(sleepTime := 350) {
   ; Toggle noclip off and on to kill velocity
-  Send DEADLOCK_NOCLIP_HOTKEY
+  Send CFG.noclip
   Sleep sleepTime
-  Send DEADLOCK_NOCLIP_HOTKEY
-  Send DEADLOCK_MVTRACK_INTERNAL_HOTKEY
+  Send CFG.noclip
+  Send CFG.mvtrack_internal
 }
 
 WarnNoInstanceSelected() {
   MsgBox(
-    "No current instance selected. `nPress " TRACKER_SWITCH_POS_KEY
+    "No current instance selected. `nPress " CFG.new
     " to select one.",
     "Movement Tracker",
     0x30

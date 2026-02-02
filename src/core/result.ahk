@@ -40,7 +40,7 @@ MarkResult(result) {
   IniWrite NowStamp(), INI_PATH, name, "last_event"
 
   ResetInGamePos()
-  if (TARGET_SUCCESS_STREAK > 0 && streakCur == TARGET_SUCCESS_STREAK) {
+  if (CFG.target_success_streak > 0 && streakCur == CFG.target_success_streak) {
     ShowStreakPopup(streakCur)
   }
 }
