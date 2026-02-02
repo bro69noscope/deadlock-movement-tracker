@@ -64,7 +64,7 @@ GetPosToolsCfgText() {
     "bind " "" DEADLOCK_MARK_POS_HOTKEY "" " " "getpos_exact" "`n"
     "bind " "" DEADLOCK_TELEPORT_HOTKEY "" " " "exec lastpos.cfg" "`n"
     "bind " "" DEADLOCK_NOCLIP_HOTKEY "" " " "noclip" "`n"
-    "bind " "" DEADLOCK_LOAD_MAP_HOTKEY "" " " "map dl_midtown" "`n"
+    "bind " "" DEADLOCK_LOAD_PRACTICE_MAP_HOTKEY "" " " "map dl_midtown" "`n"
     "bind " "" DEADLOCK_SWAP_TEAM_HOTKEY "" " " "train_team_toggle" "`n"
     "bind " "" DEADLOCK_SETUP_PRACTICE_HOTKEY "" " " "train_start" "`n"
     "`n"
