@@ -2,6 +2,12 @@ global __streakGui := 0
 global __streakGuiHwnd := 0
 global __streakSpaceBound := false
 
+StreakSpaceHotIf(*) {
+  global __streakGuiHwnd
+  return WinActive("ahk_exe deadlock.exe")
+    || (__streakGuiHwnd && WinActive("ahk_id " __streakGuiHwnd))
+}
+
 ShowStreakPopup(streakCur) {
   global __streakGui, __streakGuiHwnd, __streakSpaceBound
 
@@ -16,12 +22,15 @@ ShowStreakPopup(streakCur) {
   __streakGui := g
   g.Show("AutoSize NA")
   __streakGuiHwnd := g.Hwnd
-
   g.OnEvent("Close", (*) => DismissStreakPopup(true))
 
+  HotIf(StreakSpaceHotIf)
   Hotkey "Space", TryDismissStreakBySpace, "On"
+  HotIf()
+
   __streakSpaceBound := true
 }
+
 
 TryDismissStreakBySpace(*) {
   global __streakGuiHwnd
@@ -34,14 +43,15 @@ DismissStreakPopup(focusBack := true) {
   global __streakGui, __streakGuiHwnd, __streakSpaceBound
 
   if (__streakSpaceBound) {
-    Hotkey "Space", "Off"
+    HotIf(StreakSpaceHotIf)
+    Hotkey "Space", TryDismissStreakBySpace, "Off"
+    HotIf()
+
     __streakSpaceBound := false
   }
 
   if IsObject(__streakGui) {
-    try {
-      __streakGui.Destroy()
-    }
+    try __streakGui.Destroy()
   }
 
   __streakGui := 0
