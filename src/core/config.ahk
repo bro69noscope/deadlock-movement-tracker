@@ -11,6 +11,10 @@ global CFG := {
   swap_team: "9",
   setup_practice: "0",
   mvtrack_internal: "'",
+  enable_fast_stam: "k",
+  disable_fast_stam: "l",
+  set_host_timescale_fast: ",",
+  set_host_timescale_normal: ".",
   ; Tracker hotkeys
   fail: "F1",
   success: "F2",
@@ -28,7 +32,8 @@ global CFG := {
   enable_debug: false,
   include_bro_settings: false,
   ; Settings
-  target_success_streak: 3
+  target_success_streak: 3,
+  practice_without_infinite_stamina: true
 }
 
 ReadBoolIni(ini, section, key, defaultBool) {

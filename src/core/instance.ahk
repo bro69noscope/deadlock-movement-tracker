@@ -49,6 +49,8 @@ NewInstance() {
 
   SetCurrentInstance(name)
   SaveCurrentInstancePos()
+  ; resetpos for visual feedback + stamina reset when infinite stam is off
+  ResetInGamePos()
 }
 
 SwitchInstance() {
@@ -251,7 +253,7 @@ LoadInstancePos(instanceName) {
   Debug(A_ThisFunc ": instance=" instanceName " pos=" pos)
 
   ok := WriteMvposCfg(pos)
-  ResetInGamePos(100)
+  ResetInGamePos()
   return ok
 }
 
