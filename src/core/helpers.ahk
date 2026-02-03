@@ -23,6 +23,7 @@ ResetInGamePos(sleepTime := 350) {
   }
   Send CFG.noclip
   Sleep sleepTime
+  WinActivate("ahk_exe  deadlock.exe")
   Send CFG.noclip
   Send CFG.mvtrack_internal
   if CFG.practice_without_infinite_stamina {
