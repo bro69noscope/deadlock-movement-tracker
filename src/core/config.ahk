@@ -6,11 +6,11 @@ global CFG := {
   ; Deadlock hotkeys
   mark_pos: "o",
   teleport: "h",
-  noclip: "l",
+  noclip: "u",
   load_practice_map: "8",
   swap_team: "9",
   setup_practice: "0",
-  mvtrack_internal: "i",
+  mvtrack_internal: "'",
   ; Tracker hotkeys
   fail: "F1",
   success: "F2",
