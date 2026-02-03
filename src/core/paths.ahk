@@ -1,5 +1,9 @@
 #Include config.ahk
 
+global PROJECT_ROOT := A_ScriptDir "\.."
+global SRC_ROOT := A_ScriptDir
+global DATA_DIR := SRC_ROOT "\tracker_data"
+
 global INSTANCES_INI := DATA_DIR "\instances.ini"
 global STATE_INI := DATA_DIR "\state.ini"
 

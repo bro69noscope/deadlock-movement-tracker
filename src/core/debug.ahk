@@ -1,11 +1,11 @@
 #Include config.ahk
-global DEBUG_LOG := A_ScriptDir "\logs\debug.log"
-global UNINSTALL_LOG := A_ScriptDir "\logs\uninstall.log"
+#Include paths.ahk
+global DEBUG_LOG_PATH := PROJECT_ROOT "\logs\debug.log"
+global UNINSTALL_LOG_PATH := PROJECT_ROOT "\logs\uninstall.log"
 global DEBUG_UNINSTALL := false
 
 GetLogPath() {
-  global DEBUG_UNINSTALL, DEBUG_LOG, UNINSTALL_LOG
-  return DEBUG_UNINSTALL ? UNINSTALL_LOG : DEBUG_LOG
+  return DEBUG_UNINSTALL ? UNINSTALL_LOG_PATH : DEBUG_LOG_PATH
 }
 
 EnsureLogDirExists() {

@@ -1,5 +1,3 @@
-global DATA_DIR := A_ScriptDir "\tracker_data"
-
 global CFG := {
   ; Deadlock
   deadlock_root: "C:\Program Files (x86)\Steam\steamapps\common\Deadlock",

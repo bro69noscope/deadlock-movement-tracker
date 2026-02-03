@@ -36,11 +36,11 @@ if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
 
 DirCreate(DATA_DIR)
 
-DebugBlank
-Debug("===Tracker started===")
-
 ; Load custom user config from ini
 LoadUserConfigFromIni()
+
+DebugBlank
+Debug("===Tracker start===")
 
 if CFG.include_bro_settings {
   ApplyBroSettings()

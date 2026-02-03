@@ -88,7 +88,7 @@ RemoveAutoexecLines(&removedLines := "", &autoexecPath := "") {
     FileMove(tmp, autoexec, 1)
 
     Debug(A_ThisFunc ": removed " removed " line(s) from " autoexec)
-    Debug(A_ThisFunc ": removed lines:`n" removedLines)
+    Debug(A_ThisFunc ": removed lines:`n" Trim(removedLines))
     return true
   } catch as e {
     Debug(A_ThisFunc ": FAILED write autoexec: " e.Message " path=" autoexec)
@@ -126,8 +126,8 @@ Uninstall() {
   ) = "Yes")
 
   global DEBUG_UNINSTALL := true
-  DebugBlank()
-  Debug("=== " A_ThisFunc ": starting uninstall; wipeData=" wipeData " ===")
+  Debug("=== Uninstall started ===")
+  Debug(A_ThisFunc ": wipeData=" wipeData)
   try StopPoswatch()
 
   SafeDelete(MVTRACK_CFG_EXEC_PATH)
