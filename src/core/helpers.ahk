@@ -20,10 +20,11 @@ ResetInGamePos() {
   noclip := CFG.noclip
 
   WinActivate("ahk_exe  deadlock.exe")
+  Send CFG.set_host_timescale_fast
   if limitStam
     Send CFG.enable_fast_stamina
+
   ; kill momentum
-  Send CFG.set_host_timescale_fast
   Send noclip
   Sleep sleepTime
 
