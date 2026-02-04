@@ -14,24 +14,25 @@ GetFileMTime(path) {
   }
 }
 
-ResetInGamePos(sleepTime := 350) {
-  ; Toggle noclip off and on to kill velocity
-  slowStam := CFG.practice_without_infinite_stamina
-  WinActivate("ahk_exe  deadlock.exe")
-  if slowStam {
-    Send CFG.enable_fast_stamina
-    Send CFG.set_host_timescale_fast
-  }
-  Send CFG.noclip
-  Sleep sleepTime
-  WinActivate("ahk_exe  deadlock.exe")
-  Send CFG.noclip
-  Send CFG.mvtrack_internal
+ResetInGamePos() {
+  sleepTime := CFG.reset_position_duration
+  limitStam := CFG.practice_without_infinite_stamina
+  noclip := CFG.noclip
 
-  if slowStam {
+  WinActivate("ahk_exe  deadlock.exe")
+  if limitStam
+    Send CFG.enable_fast_stamina
+  ; kill momentum
+  Send CFG.set_host_timescale_fast
+  Send noclip
+  Sleep sleepTime
+
+  WinActivate("ahk_exe  deadlock.exe")
+  if limitStam
     Send CFG.disable_fast_stamina
-    Send CFG.set_host_timescale_normal
-  }
+  Send CFG.set_host_timescale_normal
+  Send noclip
+  Send CFG.mvtrack_internal
 }
 
 WarnNoInstanceSelected() {

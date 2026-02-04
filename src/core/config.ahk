@@ -33,7 +33,9 @@ global CFG := {
   include_bro_settings: false,
   ; Settings
   target_success_streak: 3,
-  practice_without_infinite_stamina: true
+  practice_without_infinite_stamina: true,
+  reset_position_duration: 350,
+  host_timescale_factor: 10
 }
 
 ReadBoolIni(ini, section, key, defaultBool) {
@@ -72,7 +74,6 @@ LoadUserConfigFromIni() {
   CFG.set_host_timescale_fast := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_fast", CFG.set_host_timescale_fast)
   CFG.set_host_timescale_normal := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_normal", CFG.set_host_timescale_normal)
 
-
   ; Tracker hotkeys
   CFG.fail := IniRead(ini, "tracker_hotkeys", "fail", CFG.fail)
   CFG.success := IniRead(ini, "tracker_hotkeys", "success", CFG.success)
@@ -87,8 +88,10 @@ LoadUserConfigFromIni() {
   ; Settings
   CFG.target_success_streak := ReadIntIni(ini, "tracker_settings", "target_success_streak", CFG.target_success_streak)
   CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_settings", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
+  CFG.reset_position_duration := ReadIntIni(ini, "tracker_settings", "reset_position_duration", CFG.reset_position_duration)
+  CFG.host_timescale_factor := 3500 / CFG.reset_position_duration
 
-  ; Dev flags (true/false in ini)
+  ; Dev
   CFG.enable_debug := ReadBoolIni(ini, "dev", "enable_debug", CFG.enable_debug)
   CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
 

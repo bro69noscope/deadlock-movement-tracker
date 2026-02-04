@@ -69,7 +69,7 @@ GetPosToolsCfgText() {
     "bind " "" CFG.setup_practice "" " " "train_start" "`n"
     "bind " "" CFG.enable_fast_stamina "" " " "citadel_enable_fast_stamina" "`n"
     "bind " "" CFG.disable_fast_stamina "" " " "citadel_disable_fast_stamina" "`n"
-    "bind " "" CFG.set_host_timescale_fast "" " " "host_timescale 10" "`n"
+    "bind " "" CFG.set_host_timescale_fast "" " " "host_timescale " CFG.host_timescale_factor "" "`n"
     "bind " "" CFG.set_host_timescale_normal "" " " "host_timescale 1" "`n"
     "`n"
     "// Used programmatically by deadlock-movement-tracker only`n"
