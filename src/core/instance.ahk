@@ -4,6 +4,7 @@
 #Include mvpos_writer.ahk
 #Include lastpos_capture.ahk
 #Include history.ahk
+#Include reset_pos.ahk
 #Include gui\prompt.ahk
 #Include gui\instance_picker.ahk
 
