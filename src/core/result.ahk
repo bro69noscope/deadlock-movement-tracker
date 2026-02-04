@@ -42,7 +42,7 @@ MarkResult(result) {
 
   ResetInGamePos()
   if (CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak) {
-    ShowStreakPopup(streakCur)
+    StreakPopup.Show(streakCur)
   }
 }
 
