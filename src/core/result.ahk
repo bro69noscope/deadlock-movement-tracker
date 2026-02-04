@@ -3,9 +3,8 @@
 #Include history.ahk
 #Include gui\streak_popup.ahk
 
-ini := INSTANCES_INI
-
 MarkResult(result) {
+  ini := INSTANCES_INI
   name := CURRENT_INSTANCE
   if (name = "") {
     WarnNoInstanceSelected()

@@ -10,13 +10,13 @@
 
 global CURRENT_INSTANCE := ""
 
-ini := INSTANCES_INI
 
 InstanceExists(name) {
-  return (IniRead(ini, name, "created_at", "") != "")
+  return (IniRead(INSTANCES_INI, name, "created_at", "") != "")
 }
 
 NewInstance() {
+  ini := INSTANCES_INI
   name := PromptName("New instance name:")
   if (name = "")
     return
@@ -69,6 +69,7 @@ SwitchInstance() {
 }
 
 DeleteInstance() {
+  ini := INSTANCES_INI
   global CURRENT_INSTANCE
   name := CURRENT_INSTANCE
   if name = "" {
@@ -154,6 +155,7 @@ RenameInstance() {
   }
 
   if InstanceExists(newName) {
+    ini := INSTANCES_INI
     choice := MsgBox(
       "Instance '" newName "' already exists.`n`n"
       . "Replace it? This will overwrite its stats/pos (and its history file if any).",
@@ -215,6 +217,7 @@ RenameInstance() {
 
 
 LoadInstancePos(instanceName) {
+  ini := INSTANCES_INI
   pos := ""
   hasKey := false
 
@@ -259,11 +262,13 @@ LoadInstancePos(instanceName) {
 SetCurrentInstance(name) {
   global CURRENT_INSTANCE
   CURRENT_INSTANCE := name
+  ini := INSTANCES_INI
   IniWrite name, ini, "__global__", "current_instance"
   IniWrite NowStamp(), ini, name, "last_switch"
 }
 
 SaveCurrentInstancePos() {
+  ini := INSTANCES_INI
   if (CURRENT_INSTANCE = "") {
     Debug(A_thisFunc ": no current instance -> abort")
     return false
