@@ -4,7 +4,6 @@ global __streakGuiHwnd := 0
 global __streakSpaceBound := false
 
 StreakSpaceHotIf(*) {
-  global __streakGuiHwnd
   return WinActive("ahk_exe deadlock.exe")
     || (__streakGuiHwnd && WinActive("ahk_id " __streakGuiHwnd))
 }
@@ -83,7 +82,6 @@ ShowStreakPopup(streakCur) {
 }
 
 TryDismissStreakBySpace(*) {
-  global __streakGuiHwnd
   if (__streakGuiHwnd && WinExist("ahk_id " __streakGuiHwnd))
     DismissStreakPopup(true)
 }
