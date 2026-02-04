@@ -69,9 +69,9 @@ SwitchInstance() {
 }
 
 DeleteInstance() {
-  ini := INSTANCES_INI
   global CURRENT_INSTANCE
   name := CURRENT_INSTANCE
+  ini := INSTANCES_INI
   if name = "" {
     WarnNoInstanceSelected()
     return false
@@ -131,6 +131,7 @@ RepositionInstance() {
 
 RenameInstance() {
   global CURRENT_INSTANCE
+  ini := INSTANCES_INI
 
   oldName := CURRENT_INSTANCE
   if oldName = "" {
@@ -155,7 +156,6 @@ RenameInstance() {
   }
 
   if InstanceExists(newName) {
-    ini := INSTANCES_INI
     choice := MsgBox(
       "Instance '" newName "' already exists.`n`n"
       . "Replace it? This will overwrite its stats/pos (and its history file if any).",
