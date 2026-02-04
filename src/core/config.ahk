@@ -86,7 +86,7 @@ LoadUserConfigFromIni() {
 
   ; Settings
   CFG.target_success_streak := ReadIntIni(ini, "tracker_settings", "target_success_streak", CFG.target_success_streak)
-  CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_hotkeys", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
+  CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_settings", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
 
   ; Dev flags (true/false in ini)
   CFG.enable_debug := ReadBoolIni(ini, "dev", "enable_debug", CFG.enable_debug)
