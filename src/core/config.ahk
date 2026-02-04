@@ -11,8 +11,8 @@ global CFG := {
   swap_team: "9",
   setup_practice: "0",
   mvtrack_internal: "'",
-  enable_fast_stam: "k",
-  disable_fast_stam: "l",
+  enable_fast_stamina: "k",
+  disable_fast_stamina: "l",
   set_host_timescale_fast: ",",
   set_host_timescale_normal: ".",
   ; Tracker hotkeys
@@ -67,6 +67,11 @@ LoadUserConfigFromIni() {
   CFG.swap_team := IniRead(ini, "deadlock_hotkeys", "swap_team", CFG.swap_team)
   CFG.setup_practice := IniRead(ini, "deadlock_hotkeys", "setup_practice", CFG.setup_practice)
   CFG.mvtrack_internal := IniRead(ini, "deadlock_hotkeys", "mvtrack_internal", CFG.mvtrack_internal)
+  CFG.enable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "enable_fast_stamina", CFG.enable_fast_stamina)
+  CFG.disable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "disable_fast_stamina", CFG.disable_fast_stamina)
+  CFG.set_host_timescale_fast := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_fast", CFG.set_host_timescale_fast)
+  CFG.set_host_timescale_normal := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_normal", CFG.set_host_timescale_normal)
+
 
   ; Tracker hotkeys
   CFG.fail := IniRead(ini, "tracker_hotkeys", "fail", CFG.fail)
@@ -81,6 +86,7 @@ LoadUserConfigFromIni() {
 
   ; Settings
   CFG.target_success_streak := ReadIntIni(ini, "tracker_settings", "target_success_streak", CFG.target_success_streak)
+  CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_hotkeys", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
 
   ; Dev flags (true/false in ini)
   CFG.enable_debug := ReadBoolIni(ini, "dev", "enable_debug", CFG.enable_debug)

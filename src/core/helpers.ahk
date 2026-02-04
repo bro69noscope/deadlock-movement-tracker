@@ -16,9 +16,10 @@ GetFileMTime(path) {
 
 ResetInGamePos(sleepTime := 350) {
   ; Toggle noclip off and on to kill velocity
+  slowStam := CFG.practice_without_infinite_stamina
   WinActivate("ahk_exe  deadlock.exe")
-  if CFG.practice_without_infinite_stamina {
-    Send CFG.enable_fast_stam
+  if slowStam {
+    Send CFG.enable_fast_stamina
     Send CFG.set_host_timescale_fast
   }
   Send CFG.noclip
@@ -26,8 +27,9 @@ ResetInGamePos(sleepTime := 350) {
   WinActivate("ahk_exe  deadlock.exe")
   Send CFG.noclip
   Send CFG.mvtrack_internal
-  if CFG.practice_without_infinite_stamina {
-    Send CFG.disable_fast_stam
+
+  if slowStam {
+    Send CFG.disable_fast_stamina
     Send CFG.set_host_timescale_normal
   }
 }
