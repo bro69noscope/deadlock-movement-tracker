@@ -27,7 +27,7 @@ global CFG := {
   export_pretty_ini: "F11",
   reload_script: "F10",
   ; Flags
-  enable_debug: false,
+  logging_level: "debug",
   include_bro_settings: false,
   ; Settings
   target_success_streak: 3,
@@ -90,7 +90,13 @@ LoadUserConfigFromIni() {
   CFG.host_timescale_factor := 3500 / CFG.reset_position_duration
 
   ; Dev
-  CFG.enable_debug := ReadBoolIni(ini, "dev", "enable_debug", CFG.enable_debug)
+  CFG.logging_level := IniRead(ini, "dev", "logging_level", CFG.logging_level)
+  CFG.logging_level := StrUpper(CFG.logging_level)
+
+  validLevels := Map("DEBUG", 1, "INFO", 1, "WARN", 1, "ERROR", 1, "FATAL", 1)
+  if !validLevels.Has(CFG.logging_level) {
+    CFG.logging_level := "DEBUG"
+  }
   CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
 
   return true

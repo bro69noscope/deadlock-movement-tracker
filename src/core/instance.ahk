@@ -224,8 +224,7 @@ LoadInstancePos(instanceName) {
     pos := IniRead(ini, instanceName, "pos_line", "")
   } catch as e {
     Debug(A_ThisFunc ": FAILED to read ini. instance=" instanceName " err=" e.Message " path=" ini)
-    if (CFG.enable_debug)
-      MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message, "Movement Tracker", 0x30)
+    MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message, "Movement Tracker", 0x30)
     return false
   }
 
@@ -237,16 +236,14 @@ LoadInstancePos(instanceName) {
     reason := hasKey ? "pos_line_empty" : "pos_line_missing"
     Debug(A_ThisFunc ": NO POS. instance=" instanceName " reason=" reason " path=" ini)
 
-    if (CFG.enable_debug) {
-      MsgBox(
-        "No saved position for '" instanceName "'.`n`n"
-        . "Reason: " reason "`n"
-        . "Fix: reposition it with " CFG.reposition
-        . " (or recreate with " CFG.new ").",
-        "Movement Tracker",
-        0x30
-      )
-    }
+    MsgBox(
+      "No saved position for '" instanceName "'.`n`n"
+      . "Reason: " reason "`n"
+      . "Fix: reposition it with " CFG.reposition
+      . " (or recreate with " CFG.new ").",
+      "Movement Tracker",
+      0x30
+    )
     return false
   }
 
@@ -289,20 +286,18 @@ SaveCurrentInstancePos() {
     Debug(A_ThisFunc ": FAILED"
       " reason=" r.reason " before=" before " seen=" seen " err=" err " text='" snippet "'")
 
-    if (CFG.enable_debug) {
-      MsgBox(
-        "Failed to capture position.`n`n"
-        . "Reason: " r.reason "`n"
-        . "Before mtime: " before "`n"
-        . "Seen mtime: " seen "`n"
-        . "Seen text: " snippet "`n"
-        . (r.reason == "timeout_no_mtime_change"
-          ? "This usually happens if you don't have the '-condebug' DeadLock launch option set"
-          : ""),
-        "Movement Tracker",
-        0x30
-      )
-    }
+    MsgBox(
+      "Failed to capture position.`n`n"
+      . "Reason: " r.reason "`n"
+      . "Before mtime: " before "`n"
+      . "Seen mtime: " seen "`n"
+      . "Seen text: " snippet "`n"
+      . (r.reason == "timeout_no_mtime_change"
+        ? "This usually happens if you don't have the '-condebug' DeadLock launch option set"
+        : ""),
+      "Movement Tracker",
+      0x30
+    )
     return false
   }
 

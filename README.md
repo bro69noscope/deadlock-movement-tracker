@@ -72,7 +72,7 @@ If positions are not saved or restored correctly:
 - Ensure you accepted the `autoexec.cfg` modification
   (or manually added `sv_cheats 1` and `exec mvtrack.cfg`)
 - Check that the `root=` path in `user_settings.ini` is correct
-- Enable debug logging in `user_settings.ini` and open an issue/send a discord msg with the contents in: `src\logs\debug.log`
+- Open an issue/send me a discord msg with the contents in: `logs\debug.log`
 - Keep in mind conflicts could be possible if you run your own scripts in `autoexec.cfg` that also bind the same keys as this script in deadlock
 
 ### Uninstalling
