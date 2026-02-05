@@ -627,6 +627,7 @@ SetCurrentInstance(baseName, variation := "") {
 }
 
 SaveCurrentInstancePos() {
+  ; TODO: we might have to tell user to wait until this is over as this can take some time.
   ini := INSTANCES_INI
   if CURRENT_INSTANCE = "" {
     Debug(A_thisFunc ": no current instance -> abort")
