@@ -2,6 +2,7 @@
 
 global PROJECT_ROOT := A_ScriptDir "\.."
 global SRC_ROOT := A_ScriptDir
+;TODO: rename this to INSTANCE_DTA_DIR for clarity
 global DATA_DIR := SRC_ROOT "\tracker_data"
 global GUI_DIR := SRC_ROOT "\core\gui"
 
