@@ -253,7 +253,7 @@ LoadInstancePos(instanceName) {
   Debug(A_ThisFunc ": instance=" instanceName " pos=" pos)
 
   ok := WriteMvposCfg(pos)
-  ResetInGamePos()
+  ResetInGamePos(name)
   return ok
 }
 

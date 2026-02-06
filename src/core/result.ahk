@@ -40,7 +40,7 @@ MarkResult(result) {
   IniWrite streakBest, ini, name, "streak_best"
   IniWrite NowStamp(), ini, name, "last_event"
 
-  ResetInGamePos()
+  ResetInGamePos(name)
   if (CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak) {
     StreakPopup.Show(streakCur)
   }
@@ -56,5 +56,5 @@ ForgetLastResult() {
   UndoHistory(name)
 
   rebuilt := RebuildStatsFromHistory(name)
-  ResetInGamePos()
+  ResetInGamePos(name)
 }

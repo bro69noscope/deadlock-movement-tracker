@@ -30,7 +30,10 @@ global CFG := {
   target_success_streak: 3,
   practice_without_infinite_stamina: true,
   reset_position_duration: 350,
-  host_timescale_factor: 10
+  host_timescale_factor: 10,
+  randomize_reset_pos: true,
+  randomize_reset_units: 20,
+  no_randomize_prefixes: ""
 }
 
 ReadBoolIni(ini, section, key, defaultBool) {
@@ -85,6 +88,9 @@ LoadUserConfigFromIni() {
   CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_settings", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
   CFG.reset_position_duration := ReadIntIni(ini, "tracker_settings", "reset_position_duration", CFG.reset_position_duration)
   CFG.host_timescale_factor := 3500 / CFG.reset_position_duration
+  CFG.randomize_reset_pos := ReadBoolIni(ini, "tracker_settings", "randomize_reset_pos", CFG.randomize_reset_pos)
+  CFG.randomize_reset_units := ReadIntIni(ini, "tracker_settings", "randomize_reset_units", CFG.randomize_reset_units)
+  CFG.no_randomize_prefixes := IniRead(ini, "tracker_settings", "no_randomize_prefixes", CFG.no_randomize_prefixes)
 
   ; Dev
   CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
