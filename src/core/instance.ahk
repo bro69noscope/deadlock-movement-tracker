@@ -218,14 +218,15 @@ LoadInstancePos(instanceName) {
   ini := INSTANCES_INI
   pos := ""
   hasKey := false
+  name := instanceName
 
   try {
-    secText := IniRead(ini, instanceName)
+    secText := IniRead(ini, name)
     if RegExMatch(secText, "im)^\s*pos_line\s*=")
       hasKey := true
-    pos := IniRead(ini, instanceName, "pos_line", "")
+    pos := IniRead(ini, name, "pos_line", "")
   } catch as e {
-    Debug(A_ThisFunc ": FAILED to read ini. instance=" instanceName " err=" e.Message " path=" ini)
+    Debug(A_ThisFunc ": FAILED to read ini. instance=" name " err=" e.Message " path=" ini)
     MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message, "Movement Tracker", 0x30)
     return false
   }
@@ -236,10 +237,10 @@ LoadInstancePos(instanceName) {
 
   if (pos = "") {
     reason := hasKey ? "pos_line_empty" : "pos_line_missing"
-    Debug(A_ThisFunc ": NO POS. instance=" instanceName " reason=" reason " path=" ini)
+    Debug(A_ThisFunc ": NO POS. instance=" name " reason=" reason " path=" ini)
 
     MsgBox(
-      "No saved position for '" instanceName "'.`n`n"
+      "No saved position for '" name "'.`n`n"
       . "Reason: " reason "`n"
       . "Fix: reposition it with " CFG.reposition
       . " (or recreate with " CFG.new ").",
