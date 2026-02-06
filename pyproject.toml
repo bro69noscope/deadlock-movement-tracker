@@ -1,3 +1,7 @@
 [tool.basedpyright]
 venvPath = "vendor"
 venv = "pyvenv"
+reportUnusedImport = false
+reportImplicitStringConcatenation = false
+reportUnusedCallResult = false
+typeCheckingMode = "basic"
