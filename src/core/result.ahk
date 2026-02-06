@@ -48,8 +48,10 @@ MarkResult(result) {
 
 ForgetLastResult() {
   name := CURRENT_INSTANCE
-  if (name = "")
+  if (name = "") {
+    WarnNoInstanceSelected()
     return
+  }
 
   UndoHistory(name)
 
