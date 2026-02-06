@@ -60,7 +60,7 @@ SwitchInstance() {
     return
 
   if !InstanceExists(name) {
-    MsgBox "No such instance: " name "`n`nCreate it first with F4 (New).", "Tracker", 48
+    MsgBox "No such instance: " name "`n`nCreate it first with " CFG.new, "Tracker", 48
     return
   }
 
