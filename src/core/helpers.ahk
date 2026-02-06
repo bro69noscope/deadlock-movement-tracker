@@ -16,8 +16,8 @@ GetFileMTime(path) {
 
 WarnNoInstanceSelected() {
   MsgBox(
-    "No current instance selected. `nPress " CFG.new
-    " to select one.",
+    "No current instance selected. `nPress " CFG.new " to create one / "
+    CFG.switch " to select one.",
     "Movement Tracker",
     0x30
   )
