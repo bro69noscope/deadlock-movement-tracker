@@ -57,9 +57,6 @@ HotKey(CFG.delete, (*) => DeleteInstance())
 HotKey(CFG.reposition, (*) => RepositionInstance())
 HotKey(CFG.rename, (*) => RenameInstance())
 HotKey(CFG.exit, (*) => ConfirmExit())
-; Dev
-HotKey(CFG.reload_script, (*) => Reload())
-HotKey(CFG.export_pretty_ini, (*) => ExportPrettyIniSnapshot())
 HotIf
 
 ExitHandler(ExitReason, ExitCode) {

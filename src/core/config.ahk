@@ -23,9 +23,6 @@ global CFG := {
   reposition: "F7",
   delete: "F8",
   exit: "F9",
-  ; Dev hotkeys
-  export_pretty_ini: "F11",
-  reload_script: "F10",
   ; Flags
   logging_level: "debug",
   include_bro_settings: false,
