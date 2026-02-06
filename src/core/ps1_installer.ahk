@@ -79,8 +79,8 @@ try {
   Get-Content -Path $Log -Wait | ForEach-Object {
     $m = [regex]::Match($_, $pat)
     if ($m.Success) {
-      $s = $m.Value.Remove(0,12)
-      Set-Content -Path $Out -Value ('setpos ' + $s) -Encoding Ascii
+      $s = $m.Value.Substring(12).Trim().TrimEnd(';')
+      Set-Content -Path $Out -Value ("setpos $s") -Encoding Ascii
       Log ('wrote ' + $s + ' in ' + $Out)
     }
   }
