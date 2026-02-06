@@ -5,10 +5,14 @@ class StreakPopup {
   static hwnd := 0
   static spaceBound := false
 
-  ; HotIf predicate: active in Deadlock OR while this popup is focused
-  static SpaceHotIf(*) {
+  static _SpaceHotIf(*) {
     return WinActive("ahk_exe deadlock.exe")
       || (StreakPopup.hwnd && WinActive("ahk_id " StreakPopup.hwnd))
+  }
+
+  static _TryDismissBySpace(*) {
+    if (StreakPopup.hwnd && WinExist("ahk_id " StreakPopup.hwnd))
+      StreakPopup.Dismiss(true)
   }
 
   static _CountSuccessInLastN(csvPath, n) {
@@ -78,23 +82,16 @@ class StreakPopup {
     StreakPopup.hwnd := g.Hwnd
     g.OnEvent("Close", (*) => StreakPopup.Dismiss(true))
 
-    ; Stable HotIf + one hotkey
-    HotIf(StreakPopup.SpaceHotIf)
-    Hotkey("Space", StreakPopup.TryDismissBySpace, "On")
+    HotIf(StreakPopup._SpaceHotIf)
+    Hotkey("Space", StreakPopup._TryDismissBySpace, "On")
     HotIf()
-
     StreakPopup.spaceBound := true
-  }
-
-  static TryDismissBySpace(*) {
-    if (StreakPopup.hwnd && WinExist("ahk_id " StreakPopup.hwnd))
-      StreakPopup.Dismiss(true)
   }
 
   static Dismiss(focusBack := true) {
     if (StreakPopup.spaceBound) {
-      HotIf(StreakPopup.SpaceHotIf)
-      Hotkey("Space", StreakPopup.TryDismissBySpace, "Off")
+      HotIf(StreakPopup._SpaceHotIf)
+      Hotkey("Space", StreakPopup._TryDismissBySpace, "Off")
       HotIf()
       StreakPopup.spaceBound := false
     }
