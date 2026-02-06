@@ -87,14 +87,15 @@ LoadUserConfigFromIni() {
   CFG.host_timescale_factor := 3500 / CFG.reset_position_duration
 
   ; Dev
+  CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
+
+  ; Dev: Logging
   CFG.logging_level := IniRead(ini, "dev", "logging_level", CFG.logging_level)
   CFG.logging_level := StrUpper(CFG.logging_level)
-
   validLevels := Map("DEBUG", 1, "INFO", 1, "WARN", 1, "ERROR", 1, "FATAL", 1)
   if !validLevels.Has(CFG.logging_level) {
     CFG.logging_level := "DEBUG"
   }
-  CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
 
   return true
 }
