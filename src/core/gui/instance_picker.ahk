@@ -173,10 +173,11 @@ ListInstances() {
   g.Show()
   ed.Focus()
 
-  hwnd := g.Hwnd  ; valid now
+  hwnd := g.Hwnd
 
-  ; hotkeys active only when this gui is active
-  HotIf((*) => WinActive("ahk_id " hwnd))
+  hotIfFn := (*) => WinActive("ahk_id " hwnd)
+
+  HotIf(hotIfFn)
   Hotkey("Enter", (*) => SelectCurrentGui(g), "On")
   Hotkey("Escape", (*) => CancelGui(g), "On")
   Hotkey("Up", (*) => (
@@ -187,6 +188,16 @@ ListInstances() {
   ), "On")
   HotIf()
 
-  WinWaitClose("ahk_id " hwnd)
+  try {
+    WinWaitClose("ahk_id " hwnd)
+  } finally {
+    HotIf(hotIfFn)
+    Hotkey("Enter", "Off")
+    Hotkey("Escape", "Off")
+    Hotkey("Up", "Off")
+    Hotkey("Down", "Off")
+    HotIf()
+  }
+
   return Trim(g.__picked)
 }
