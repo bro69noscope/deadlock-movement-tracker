@@ -53,8 +53,9 @@ ForgetLastResult() {
     return
   }
 
-  UndoHistory(name)
+  didForget := UndoHistory(name)
 
   rebuilt := RebuildStatsFromHistory(name)
-  ResetInGamePos(name)
+  if didForget
+    ResetInGamePos(name)
 }

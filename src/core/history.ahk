@@ -53,7 +53,7 @@ UndoHistory(instanceName) {
 
   if (lines.Length = 0) {
     MsgBox "Reached end of sucess history to forget for '" instanceName "'.", "Tracker", 48
-    return true
+    return false
   }
 
   lines.Pop()
