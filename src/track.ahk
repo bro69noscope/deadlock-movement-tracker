@@ -10,13 +10,13 @@ if FileExist(iconPath)
 
 tray := A_TrayMenu
 tray.Delete()
-tray.Add(appName, (*) => 0)  ; a non-clickable title line (still clickable but does nothing)
+tray.Add(appName, (*) => 0)
 tray.Disable(appName)
 tray.Add()
 tray.Add("Open user_settings.ini", (*) => Run('"' A_ScriptDir '\..\user_settings.ini"'))
 tray.Add("Reload", (*) => Reload())
 tray.Add()
-tray.Add("Exit", (*) => ExitApp())
+tray.Add("Exit", (*) => ConfirmExit())
 
 #Include ..\vendor\ahk-v2-libraries\Lib\Array.ahk
 #Include core\ini_export.ahk
@@ -27,7 +27,18 @@ tray.Add("Exit", (*) => ExitApp())
 #Include core\ps1_launcher.ahk
 #Include core\autoexec_installer.ahk
 #Include core\uninstaller.ahk
+#Include core\route_timer.ahk
 #Include settings\bros_settings.ahk
+#Include core\gui\graph_daemon.ahk
+#Include core\gui\graph_popup.ahk
+
+ExitHandler(ExitReason, ExitCode) {
+  try ExportPrettyIniSnapshot()
+  try StopPoswatch()
+  try StopGraphDaemon()
+}
+
+OnExit(ExitHandler)
 
 if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
   Uninstall()
@@ -36,17 +47,14 @@ if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
 
 DirCreate(DATA_DIR)
 
-; Load custom user config from ini
 LoadUserConfigFromIni()
 
 DebugBlank
 Debug("===Tracker start===")
 
-if CFG.include_bro_settings {
+if CFG.include_bro_settings
   ApplyBroSettings()
-}
 
-; Define hotkeys
 HotIf (*) => WinActive("ahk_exe deadlock.exe")
 HotKey(CFG.fail, (*) => MarkResult("fail"))
 HotKey(CFG.success, (*) => MarkResult("success"))
@@ -57,15 +65,15 @@ HotKey(CFG.delete, (*) => DeleteInstance())
 HotKey(CFG.reposition, (*) => RepositionInstance())
 HotKey(CFG.rename, (*) => RenameInstance())
 HotKey(CFG.exit, (*) => ConfirmExit())
+HotKey(CFG.graph, (*) => GraphPopup.Show())
+HotKey(CFG.add_variation, (*) => AddVariation())
+HotKey(CFG.change_variation, (*) => ChangeVariation())
 HotIf
 
-ExitHandler(ExitReason, ExitCode) {
-  try ExportPrettyIniSnapshot()
-  try StopPoswatch()
-}
-
+RouteTimer.StartVisibilityWatcher()
+EnsureGraphDaemon()
+GraphDaemon_Warmup()
 EnsurePs1Installed()
 EnsureCfgInstalled()
 EnsureAutoexecConfigured()
-OnExit(ExitHandler)
 StartPoswatch()

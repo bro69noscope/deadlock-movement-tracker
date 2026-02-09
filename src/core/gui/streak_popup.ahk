@@ -49,8 +49,8 @@ class StreakPopup {
     StreakPopup.Dismiss(false)
 
     ini := INSTANCES_INI
-    cur := CURRENT_INSTANCE
-    csvPath := INSTANCE_HISTORY_DIR "\" cur ".csv"
+    cur := GetCurrentRouteKey()
+    csvPath := HistoryPath(cur)
 
     s := IniRead(ini, cur, "success", "0") + 0
     f := IniRead(ini, cur, "fail", "0") + 0

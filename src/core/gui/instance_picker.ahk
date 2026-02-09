@@ -1,6 +1,6 @@
 #Include ..\paths.ahk
 
-ListInstances() {
+ListInstances(variationSeparator) {
   txt := ""
   try {
     txt := IniRead(INSTANCES_INI)
@@ -13,6 +13,9 @@ ListInstances() {
     s := Trim(raw)
     if (s = "" || s = "__global__")
       continue
+    if InStr(s, variationSeparator)
+      continue
+
     all.Push(s)
   }
 

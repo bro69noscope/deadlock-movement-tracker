@@ -1,3 +1,4 @@
+#Include route_timer.ahk
 #Include config.ahk
 #Include mvpos_writer.ahk
 
@@ -104,4 +105,5 @@ ResetInGamePos(current_instance) {
   Send CFG.set_host_timescale_normal
   Send noclip
   Send CFG.mvtrack_internal
+  RouteTimer.Arm()
 }

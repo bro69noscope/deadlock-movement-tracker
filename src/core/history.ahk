@@ -6,6 +6,21 @@ global INSTANCE_HISTORY_DIR := DATA_DIR "\instances_history"
 global GLOBAL_HISTORY := DATA_DIR "\history_all.csv"
 DirCreate(INSTANCE_HISTORY_DIR)
 
+CopyIniSection(ini, from, to) {
+  secText := IniRead(ini, from)
+  for _, raw in StrSplit(secText, "`n", "`r") {
+    if RegExMatch(raw, "^\s*([^=]+?)\s*=\s*(.*)\s*$", &m)
+      IniWrite m[2], ini, to, Trim(m[1])
+  }
+}
+
+MoveHistory(from, to) {
+  hFrom := HistoryPath(from)
+  hTo := HistoryPath(to)
+  if FileExist(hFrom)
+    FileMove(hFrom, hTo, 1)
+}
+
 EscapeCsv(s) {
   ; minimal CSV escaping: quote if contains comma/quote/newline
   if InStr(s, ",") || InStr(s, '"') || InStr(s, "`n") || InStr(s, "`r") {
@@ -16,7 +31,7 @@ EscapeCsv(s) {
 }
 
 HistoryPath(instanceName) {
-  safe := RegExReplace(instanceName, "[^\w\-. ]", "_")
+  safe := RegExReplace(instanceName, "[^\w\-. @]", "_")
   return INSTANCE_HISTORY_DIR "\" safe ".csv"
 }
 

@@ -22,7 +22,10 @@ global CFG := {
   rename: "F6",
   reposition: "F7",
   delete: "F8",
-  exit: "F9",
+  exit: "F12",
+  add_variation: "F9",
+  change_variation: "F10",
+  graph: "F11",
   ; Flags
   logging_level: "debug",
   include_bro_settings: false,
@@ -82,6 +85,9 @@ LoadUserConfigFromIni() {
   CFG.reposition := IniRead(ini, "tracker_hotkeys", "reposition", CFG.reposition)
   CFG.delete := IniRead(ini, "tracker_hotkeys", "delete", CFG.delete)
   CFG.exit := IniRead(ini, "tracker_hotkeys", "exit", CFG.exit)
+  CFG.graph := IniRead(ini, "tracker_hotkeys", "graph", CFG.graph)
+  CFG.add_variation := IniRead(ini, "tracker_hotkeys", "add_variation", CFG.add_variation)
+  CFG.change_variation := IniRead(ini, "tracker_hotkeys", "change_variation", CFG.change_variation)
 
   ; Settings
   CFG.target_success_streak := ReadIntIni(ini, "tracker_settings", "target_success_streak", CFG.target_success_streak)

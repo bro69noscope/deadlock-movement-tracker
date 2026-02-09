@@ -1,11 +1,13 @@
 #Include instance.ahk
 #Include helpers.ahk
 #Include history.ahk
+#Include route_timer.ahk
 #Include gui\streak_popup.ahk
 
 MarkResult(result) {
   ini := INSTANCES_INI
-  name := CURRENT_INSTANCE
+  durMs := RouteTimer.Stop()
+  name := GetCurrentRouteKey()
   if (name = "") {
     WarnNoInstanceSelected()
     return
@@ -47,7 +49,7 @@ MarkResult(result) {
 }
 
 ForgetLastResult() {
-  name := CURRENT_INSTANCE
+  name := GetCurrentRouteKey()
   if (name = "") {
     WarnNoInstanceSelected()
     return
