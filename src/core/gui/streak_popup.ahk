@@ -78,7 +78,7 @@ class StreakPopup {
     g.AddText("y+10", "Press SPACE to dismiss")
 
     StreakPopup.gui := g
-    g.Show("AutoSize NA")
+    g.Show("AutoSize NA y300")
     StreakPopup.hwnd := g.Hwnd
     g.OnEvent("Close", (*) => StreakPopup.Dismiss(true))
 
