@@ -44,10 +44,9 @@ class GraphPopup {
           Debug("GraphPopup: python:`n" stderrText)
         }
       }
-      Debug("GraphPopup: daemon resp=" resp)
-
       return false
     }
+    Debug("GraphPopup: daemon resp=" resp)
 
 
     if !FileExist(png) || (FileGetSize(png) = 0)
