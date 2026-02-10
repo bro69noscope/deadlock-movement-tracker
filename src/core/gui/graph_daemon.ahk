@@ -34,20 +34,20 @@ GraphDaemon_Warmup() {
   try FileDelete(err)
 }
 
-GraphDaemon_Render(csv, png, err, title := "", timeoutMs := 3000) {
+GraphDaemon_Render(csv, png, errOut, title := "", timeoutMs := 3000) {
   id := A_NowUTC "_" A_TickCount
   reqPath := GRAPH_REQ_DIR "\" id ".json"
   resPath := GRAPH_RES_DIR "\" id ".json"
 
   try FileDelete(resPath)
-  try FileDelete(err)
+  try FileDelete(errOut)
   try FileDelete(png)
 
   json :=
     "{"
     . '"csv":"' JsonEscape(csv) '",'
     . '"png":"' JsonEscape(png) '",'
-    . '"err":"' JsonEscape(err) '",'
+    . '"err":"' JsonEscape(errOut) '",'
     . '"title":"' JsonEscape(title) '"'
     . "}"
 
