@@ -16,7 +16,6 @@ GraphDaemon_Warmup() {
   png := dummyDir "\warmup.png"
   err := dummyDir "\warmup.err"
 
-  ; tiny valid CSV
   if !FileExist(csv) {
     FileAppend(
       "0,init,success`n"
@@ -28,7 +27,6 @@ GraphDaemon_Warmup() {
 
   GraphDaemon_Render(csv, png, err, "warmup", 5000)
 
-  ; cleanup (best-effort)
   try FileDelete(csv)
   try FileDelete(png)
   try FileDelete(err)
@@ -70,11 +68,9 @@ StopGraphDaemon(timeoutMs := 1000) {
   pid := 0
   try pid := Integer(Trim(FileRead(GRAPH_PID_PATH, "UTF-8")))
 
-  ; Signal stop (create/overwrite STOP)
   try FileDelete(GRAPH_STOP_PATH)
   try FileAppend("1", GRAPH_STOP_PATH, "UTF-8")
 
-  ; Wait a bit for graceful exit
   t0 := A_TickCount
   while (A_TickCount - t0 < timeoutMs) {
     if !(pid && ProcessExist(pid)) {
@@ -83,12 +79,10 @@ StopGraphDaemon(timeoutMs := 1000) {
     Sleep 25
   }
 
-  ; Hard kill if still alive
   if (pid && ProcessExist(pid)) {
     try ProcessClose(pid)
   }
 
-  ; Cleanup
   try FileDelete(GRAPH_PID_PATH)
   try FileDelete(GRAPH_STOP_PATH)
 }
@@ -98,11 +92,8 @@ EnsureGraphDaemon() {
   if !FileExist(pythonExe)
     return false
 
-  ; Ensure dirs
-  DirCreate(GRAPH_REQ_DIR)  ; creates parents too
+  DirCreate(GRAPH_REQ_DIR)
   DirCreate(GRAPH_RES_DIR)
-
-  ; If STOP file was left behind, remove it or daemon will exit immediately
   try FileDelete(GRAPH_STOP_PATH)
 
   ; Fast path: daemon already running
