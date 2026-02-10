@@ -36,16 +36,27 @@ class GraphPopup {
     if (resp = "")
       return false
 
-    ; if daemon returned error, log it (optional)
     if !InStr(resp, '"ok": true') {
+      loggedErr := false
+
       if FileExist(err) {
         stderrText := Trim(FileRead(err, "UTF-8"))
-        if (stderrText != "")
+        if (stderrText != "") {
+          stderrText := NormalizeNewlines(stderrText)
           Debug("GraphPopup: python:`n" stderrText)
+          loggedErr := true
+        }
       }
-      Debug("GraphPopup: daemon resp=" resp)
+
+      if (loggedErr) {
+        Debug("GraphPopup: daemon failed; resp=" resp)
+      } else {
+        Debug("GraphPopup: daemon resp=" resp)
+      }
+
       return false
     }
+
 
     if !FileExist(png) || (FileGetSize(png) = 0)
       return false

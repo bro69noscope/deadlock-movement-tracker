@@ -19,6 +19,9 @@ def _run_render(
         if isinstance(e.code, int):
             return int(e.code)
         return 0
+    except Exception:
+        Path(err_path).write_text(traceback.format_exc(), encoding="utf-8")
+        raise
     finally:
         sys.argv = old_argv
 
