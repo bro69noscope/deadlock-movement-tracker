@@ -5,6 +5,7 @@ import sys
 import time
 import traceback
 from pathlib import Path
+# pyright: reportAny=false
 
 
 def _run_render(
