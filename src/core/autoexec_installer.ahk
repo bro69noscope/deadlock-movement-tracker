@@ -21,8 +21,6 @@ HasSvCheats1(text) {
 }
 
 HasExecMvtrack(text) {
-  ; accept exec mvtrack.cfg (optionally quoted)
-  ; exec "mvtrack.cfg"
   return CfgHasLine(text, 'exec\s+"?mvtrack\.cfg"?')
 }
 

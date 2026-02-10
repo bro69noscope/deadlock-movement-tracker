@@ -272,7 +272,6 @@ NewInstance() {
   InitRouteStats(name)
   SetCurrentInstance(name)
   SaveCurrentInstancePos()
-  ; resetpos for visual feedback + stamina reset when infinite stam is off
   RouteTimer.Arm()
 }
 
