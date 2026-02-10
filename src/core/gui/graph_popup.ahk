@@ -1,5 +1,6 @@
 #Include graph_daemon.ahk
 #Include ..\instance.ahk
+#Include ..\..\..\vendor\JXON_ahk2\_JXON.ahk
 
 class GraphPopup {
   static gui := 0
@@ -29,25 +30,36 @@ class GraphPopup {
 
     csv := HistoryPath(cur)
     png := A_Temp "\mvtrack_graph.png"
-    err := A_Temp "\graph_stderr.txt"
     Debug("GraphPopup: cur='" cur "' csv='" csv "' global='" GLOBAL_HISTORY "'")
 
-    resp := GraphDaemon_Render(csv, png, err, cur, 5000)
-    if (resp = "")
+    respJson := GraphDaemon_Render(csv, png, cur, 5000)
+    if (respJson = "")
       return false
 
-    if !InStr(resp, '"ok": true') {
-      if FileExist(err) {
-        stderrText := Trim(FileRead(err, "UTF-8"))
-        if (stderrText != "") {
-          stderrText := NormalizeNewlines(stderrText)
-          Debug("GraphPopup: python:`n" stderrText)
-        }
-      }
+    try resp := Jxon_Load(&respJson)
+    catch {
+      Debug("Invalid JSON from daemon:")
+      Debug(respJson)
       return false
     }
-    Debug("GraphPopup: daemon resp=" resp)
 
+    error := resp.Has("error") && resp["error"] != ""
+
+    Debug(
+      "GraphPopup: daemon resp ok=" resp["ok"]
+      " code=" resp["code"]
+      (error ? " got error" : "")
+    )
+
+    if error {
+      for _, line in StrSplit(resp["error"], "`n") {
+        Debug("python | " line)
+      }
+    } else if resp.Has("stderr") && resp["stderr"] != "" {
+      for _, line in StrSplit(resp["stderr"], "`n") {
+        Debug("python stderr | " line)
+      }
+    }
 
     if !FileExist(png) || (FileGetSize(png) = 0)
       return false

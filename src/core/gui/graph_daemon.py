@@ -1,3 +1,5 @@
+import contextlib
+import io
 import json
 import os
 import runpy
@@ -5,24 +7,22 @@ import sys
 import time
 import traceback
 from pathlib import Path
+
 # pyright: reportAny=false
 
 
 def _run_render(
-    render_script: Path, csv_path: str, out_path: str, title: str, err_path: str
-) -> int:
+    render_script: Path, csv_path: str, out_path: str, title: str
+) -> tuple[int, str]:
     old_argv = sys.argv[:]
-    sys.argv = [str(render_script), csv_path, out_path, title, err_path]
+    sys.argv = [str(render_script), csv_path, out_path, title]
+    buf = io.StringIO()
     try:
-        runpy.run_path(str(render_script), run_name="__main__")
-        return 0
+        with contextlib.redirect_stderr(buf):
+            runpy.run_path(str(render_script), run_name="__main__")
+        return 0, buf.getvalue()
     except SystemExit as e:
-        if isinstance(e.code, int):
-            return int(e.code)
-        return 0
-    except Exception:
-        Path(err_path).write_text(traceback.format_exc(), encoding="utf-8")
-        raise
+        return int(e.code) if isinstance(e.code, int) else 0, buf.getvalue()
     finally:
         sys.argv = old_argv
 
@@ -39,21 +39,20 @@ def process_request(
         data = json.loads(req_path.read_text(encoding="utf-8-sig"))
         csv_path = data["csv"]
         out_path = data["png"]
-        err_path = data["err"]
         title = data.get("title", "Unknown")
 
-        try:
-            Path(err_path).unlink()
-        except Exception:
-            pass
-
-        code = _run_render(render_script, csv_path, out_path, title, err_path)
+        code, stderr = _run_render(render_script, csv_path, out_path, title)
 
         ok = code == 0 and Path(out_path).exists() and Path(out_path).stat().st_size > 0
 
-        res = {"ok": bool(ok), "code": int(code)}
+        res = {"ok": bool(ok), "code": int(code), "stderr": stderr}
+
     except Exception:
-        res = {"ok": False, "code": 99, "error": traceback.format_exc()}
+        res = {
+            "ok": False,
+            "code": 99,
+            "error": traceback.format_exc(),
+        }
 
     res_path.write_text(json.dumps(res, ensure_ascii=False), encoding="utf-8")
 

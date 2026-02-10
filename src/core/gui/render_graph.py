@@ -1,9 +1,8 @@
 import sys
-from pathlib import Path
 import traceback
 
-import pandas as pd
 import matplotlib
+import pandas as pd
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -17,14 +16,13 @@ def main() -> int:
     csv_path = sys.argv[1]
     out_path = sys.argv[2]
     instance_name = sys.argv[3]
-    err_path = sys.argv[4] if len(sys.argv) >= 5 else ""
-    df = None
 
     try:
         df = pd.read_csv(csv_path, names=["ts", "instance", "result"])
     except Exception:
-        if err_path:
-            Path(err_path).write_text(traceback.format_exc(), encoding="utf-8")
+        # Let the daemon capture it
+        traceback.print_exc()
+        df = None
 
     plt.figure(figsize=(6, 3))
 
