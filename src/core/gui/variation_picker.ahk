@@ -76,6 +76,7 @@ PickVariationForBase(baseName) {
   hotIfFn := (*) => WinActive("ahk_id " hwnd)
 
   HotIf(hotIfFn)
+  ; FIX:change this ugly __main__ weird strict value to something more robust and cleaner
   Hotkey("0", (*) => (g.__picked := "__main__", g.Destroy()), "On")
   Loop shownKeys.Length {
     idx := A_Index
