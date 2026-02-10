@@ -1,12 +1,12 @@
 #Include paths.ahk
 #Include debug.ahk
+#Include helpers.ahk
 #Include gui\yes_no_dontask.ahk
 
 NormalizeCfgText(text) {
   if (SubStr(text, 1, 1) = Chr(0xFEFF))
     text := SubStr(text, 2)
-  text := StrReplace(text, "`r`n", "`n")
-  text := StrReplace(text, "`r", "`n")
+  text := NormalizeNewlines(text)
   return text
 }
 

@@ -41,3 +41,9 @@ JsonEscape(s) {
   s := StrReplace(s, "`t", "\t")
   return s
 }
+
+NormalizeNewlines(s) {
+  s := StrReplace(s, "`r`n", "`n")
+  s := StrReplace(s, "`r", "`n")
+  return s
+}
