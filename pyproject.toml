@@ -1,7 +1,6 @@
 [tool.basedpyright]
-venvPath = "vendor"
-venv = "pyvenv"
 reportUnusedImport = false
 reportImplicitStringConcatenation = false
 reportUnusedCallResult = false
-typeCheckingMode = "basic"
+# typeCheckingMode = "basic"
+ignore = ["**/Python*/Lib/**", "**/python*/lib/**", "**/site-packages/**"]
