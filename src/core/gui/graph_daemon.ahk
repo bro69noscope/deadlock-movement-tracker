@@ -94,7 +94,7 @@ StopGraphDaemon(timeoutMs := 1000) {
 }
 
 EnsureGraphDaemon() {
-  pythonExe := PROJECT_ROOT "\vendor\pyvenv\Scripts\python.exe"
+  pythonExe := PROJECT_ROOT "\.venv\Scripts\python.exe"
   if !FileExist(pythonExe)
     return false
 
