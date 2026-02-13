@@ -1,5 +1,6 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+A_MaxHotkeysPerInterval := 1000
 SetWorkingDir(A_ScriptDir)
 
 appName := "deadlock-movement-tracker"
