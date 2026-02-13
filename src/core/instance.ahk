@@ -181,7 +181,12 @@ ChangeVariation() {
 }
 
 InstanceExists(name) {
-  return (IniRead(INSTANCES_INI, name, "created_at", "") != "")
+  try {
+    IniRead(INSTANCES_INI, name)
+    return true
+  } catch {
+    return false
+  }
 }
 
 RenameVariation(base, oldVar, newVar) {
