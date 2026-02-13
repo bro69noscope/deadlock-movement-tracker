@@ -32,7 +32,10 @@ class GraphPopup {
     png := A_Temp "\mvtrack_graph.png"
     Debug("GraphPopup: cur='" cur "' csv='" csv "' global='" GLOBAL_HISTORY "'")
 
-    title := GetDisplayName(cur)
+    title := GetDisplayName(CURRENT_INSTANCE)
+    if CURRENT_VARIATION != ""
+      title .= VARIATION_SEPARATOR GetDisplayName(GetCurrentRouteKey())
+
     respJson := GraphDaemon_Render(csv, png, title, 5000)
     if (respJson = "")
       return false
