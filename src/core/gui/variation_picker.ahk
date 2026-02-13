@@ -1,5 +1,7 @@
 ; variations are stored in base section as: v1|v2|v3
 #Include ..\paths.ahk
+#Include ..\helpers.ahk
+#Include ..\state.ahk
 
 ReadVariations(baseName) {
   ini := INSTANCES_INI
@@ -23,9 +25,17 @@ PickVariationForBase(baseName) {
   if (vars.Length = 0)
     return ""
 
-  shown := []
-  Loop Min(9, vars.Length)
-    shown.Push(vars[A_Index])
+  shownKeys := []
+  shownLabels := []
+
+  Loop Min(9, vars.Length) {
+    varKey := vars[A_Index]
+    shownKeys.Push(varKey)
+
+    routeKey := baseName VARIATION_SEPARATOR varKey
+    varLabel := GetDisplayName(routeKey)
+    shownLabels.Push(varLabel)
+  }
 
   msg := "Select variation for:`n`n " baseName
 
@@ -33,7 +43,8 @@ PickVariationForBase(baseName) {
   g.MarginX := 12
   g.MarginY := 10
   g.__picked := "__cancel__"
-  g.__shown := shown
+  g.__shownKeys := shownKeys
+  g.__shownLabels := shownLabels
 
   g.AddText("w360", msg)
   g.SetFont("s9")
@@ -44,14 +55,14 @@ PickVariationForBase(baseName) {
     .OnEvent("Click", (*) => (g.__picked := "__main__", g.Destroy()))
 
   PickIdx(guiObj, idx, *) {
-    arr := guiObj.__shown
-    guiObj.__picked := arr[idx]
+    keys := guiObj.__shownKeys
+    guiObj.__picked := keys[idx]
     guiObj.Destroy()
   }
 
-  Loop shown.Length {
+  Loop shownLabels.Length {
     idx := A_Index
-    label := idx ": " shown[idx]
+    label := idx ": " shownLabels[idx]
     b := g.AddButton("xm y+6 w" BTN_WIDTH, label)
     b.OnEvent("Click", PickIdx.Bind(g, idx))
   }
@@ -66,7 +77,7 @@ PickVariationForBase(baseName) {
 
   HotIf(hotIfFn)
   Hotkey("0", (*) => (g.__picked := "__main__", g.Destroy()), "On")
-  Loop shown.Length {
+  Loop shownKeys.Length {
     idx := A_Index
     Hotkey("" idx, PickIdx.Bind(g, idx), "On")
   }
@@ -78,7 +89,7 @@ PickVariationForBase(baseName) {
   } finally {
     HotIf(hotIfFn)
     Hotkey("0", "Off")
-    Loop shown.Length
+    Loop shownKeys.Length
       Hotkey("" A_Index, "Off")
     Hotkey("Escape", "Off")
     HotIf()

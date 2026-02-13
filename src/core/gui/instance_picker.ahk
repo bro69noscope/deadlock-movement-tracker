@@ -1,4 +1,5 @@
 #Include ..\paths.ahk
+#Include ..\helpers.ahk
 
 ListInstances(variationSeparator) {
   txt := ""
@@ -30,23 +31,30 @@ ListInstances(variationSeparator) {
   }
 
   ; Sort (provided by vendor/ahk-v2-libraries/Lib/Array.ahk)
-  all.Sort((a, b) => StrCompare(a, b, true))
+  all.Sort((a, b) => (
+    StrCompare(GetDisplayName(a), GetDisplayName(b), true)
+  ))
 
   g := Gui("+AlwaysOnTop +ToolWindow -MinimizeBox", "Instances")
   g.MarginX := 12
   g.MarginY := 10
-
-  ; stash state on the gui object (no closure capture needed)
   g.__picked := ""
   g.__all := all
 
   g.AddText(, "Search:")
   ed := g.AddEdit("w380")
   g.AddText("y+6", "Instances (Enter = select, Esc = cancel):")
-  lb := g.AddListBox("w380 r14", all)
+
+  display := []
+  for _, key in all
+    display.Push(GetDisplayName(key))
+
+  g.__keys := all
+
+  lb := g.AddListBox("w380 r14", display)
   lb.Choose(1)
 
-  g.__lbCount := all.Length
+  g.__lbCount := display.Length
   g.__ed := ed
   g.__lb := lb
 
@@ -63,34 +71,45 @@ ListInstances(variationSeparator) {
     q := RegExReplace(q, "\s+")
     q := StrLower(q)
 
-    matches := []
+    pairsOut := []
 
     if (q = "") {
-      ; no filter -> show original list (already sorted)
-      for _, name in all2
-        matches.Push(name)
+      for _, key in all2
+        pairsOut.Push({ key: key, label: GetDisplayName(key) })
     } else {
-      pairs := []
-
-      for _, name in all2 {
-        sc := FuzzyScore(q, StrLower(name))
+      scored := []
+      for _, key in all2 {
+        label := GetDisplayName(key)
+        sc := FuzzyScore(q, StrLower(label))
         if (sc != "")
-          pairs.Push({ score: sc, name: name })
+          scored.Push({ score: sc, key: key, label: label })
       }
 
-      ; sort by score desc, then name asc
-      pairs.Sort(ComparePairs)
+      scored.Sort((a, b) => (
+        a.score > b.score ? -1
+        : a.score < b.score ? 1
+        : StrCompare(a.label, b.label, true)
+      ))
 
-      for _, p in pairs
-        matches.Push(p.name)
+      for _, it in scored
+        pairsOut.Push({ key: it.key, label: it.label })
+    }
+
+    ; update listbox + keys mapping
+    newLabels := []
+    newKeys := []
+    for _, it in pairsOut {
+      newLabels.Push(it.label)
+      newKeys.Push(it.key)
     }
 
     lb2.Delete()
-    if (matches.Length) {
-      lb2.Add(matches)
+    guiObj.__keys := newKeys
+    if (newLabels.Length) {
+      lb2.Add(newLabels)
       lb2.Choose(1)
     }
-    guiObj.__lbCount := matches.Length
+    guiObj.__lbCount := newLabels.Length
   }
 
   ComparePairs(a, b) {
@@ -152,11 +171,10 @@ ListInstances(variationSeparator) {
 
 
   SelectCurrentGui(guiObj) {
-    lb2 := guiObj.__lb
-    t := lb2.Text
-    if (t = "")
+    idx := guiObj.__lb.Value
+    if (idx <= 0)
       return
-    guiObj.__picked := t
+    guiObj.__picked := guiObj.__keys[idx]
     guiObj.Destroy()
   }
 

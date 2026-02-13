@@ -85,11 +85,12 @@ GetCurrentRouteKey() {
 
 WriteVariations(baseName, vars) {
   ini := INSTANCES_INI
-  ; dedupe + keep order
+
   seen := Map()
   cleaned := []
+
   for _, v in vars {
-    v := Trim(v)
+    v := CanonKey(v)
     if (v = "")
       continue
     if !seen.Has(v) {
@@ -131,8 +132,8 @@ AddVariation() {
       continue
     }
 
-    varName := v.name
-    routeKey := base VARIATION_SEPARATOR varName
+    varKey := CanonKey(v.name)
+    routeKey := base VARIATION_SEPARATOR varKey
 
     if InstanceExists(routeKey) {
       MsgBox("Variation already exists: " routeKey "`n`nPick a different name.", "Tracker", 48)
@@ -143,11 +144,11 @@ AddVariation() {
   }
 
   vars := ReadVariations(base)
-  vars.Push(varName)
+  vars.Push(varKey)
   WriteVariations(base, vars)
 
   InitRouteStats(routeKey)
-  SetCurrentInstance(base, varName)
+  SetCurrentInstance(base, varKey)
   SaveCurrentInstancePos()
   return true
 }
@@ -215,6 +216,7 @@ RenameVariation(base, oldVar, newVar) {
   }
 
   CopyIniSection(ini, oldKey, newKey)
+  SetDisplayName(newKey, newVar)
   IniWrite NowStamp(), ini, newKey, "last_event"
   try IniDelete(ini, oldKey)
   MoveHistory(oldKey, newKey)
@@ -252,7 +254,8 @@ NewInstance() {
       continue
     }
 
-    name := v.name
+    display := v.name
+    key := CanonKey(display)
 
     if InstanceExists(name) {
       choice := MsgBox(
@@ -271,8 +274,9 @@ NewInstance() {
     break
   }
 
-  InitRouteStats(name)
-  SetCurrentInstance(name)
+  InitRouteStats(key)
+  SetDisplayName(key, display)
+  SetCurrentInstance(key)
   SaveCurrentInstancePos()
   RouteTimer.Arm()
 }
@@ -444,15 +448,26 @@ RenameInstance() {
   }
 
   if (var != "") {
+    full := base VARIATION_SEPARATOR var
+    varName := GetDisplayName(full)
+    baseName := GetDisplayName(base)
+
     while true {
       newVar := PromptName(
-        "Rename variation:`n`nBase: " base VARIATION_SEPARATOR "`nOld: " var "`nNew:",
-        var
+        "Rename variation:`n`nBase: " baseName VARIATION_SEPARATOR "`nOld: " varName "`nNew:",
+        varName
       )
       newVar := Trim(newVar)
 
-      if (newVar = "" || StrLower(newVar) = StrLower(var))
+      if (newVar = "" || newVar == varName)
+      { MsgBox "No changes made to variation name.", "Tracker", 48
         return false
+      }
+
+      if (StrLower(newVar) = StrLower(varName)) {
+        SetDisplayName(base VARIATION_SEPARATOR var, newVar)
+        return true
+      }
 
       v := ValidateInstanceName(newVar)
       if (!v.ok) {
@@ -478,8 +493,13 @@ RenameInstance() {
     newName := PromptName("Rename instance:`n`nOld: " oldName "`nNew:", oldName)
     newName := Trim(newName)
 
-    if (newName = "" || newName = oldName)
+    if (newName = "" || newName == oldName)
       return false
+
+    if (StrLower(newName) = StrLower(oldName)) {
+      SetDisplayName(base, newName)
+      return true
+    }
 
     v := ValidateInstanceName(newName)
     if (!v.ok) {
@@ -544,7 +564,7 @@ LoadInstancePos(instanceName) {
     Debug(A_ThisFunc ": NO POS. instance=" name " reason=" reason " path=" ini)
 
     MsgBox(
-      "No saved position for '" name "'.`n`n"
+      "No saved position for '" GetDisplayName(name) "'.`n`n"
       . "Reason: " reason "`n"
       . "Fix: reposition it with " CFG.reposition
       . " (or recreate with " CFG.new ").",
@@ -566,7 +586,7 @@ SetCurrentInstance(baseName, variation := "") {
   ini := INSTANCES_INI
 
   CURRENT_INSTANCE := baseName
-  CURRENT_VARIATION := Trim(variation)
+  CURRENT_VARIATION := StrLower(Trim(variation))
 
   IniWrite baseName, ini, "__global__", "current_instance"
   IniWrite CURRENT_VARIATION, ini, "__global__", "current_variation"

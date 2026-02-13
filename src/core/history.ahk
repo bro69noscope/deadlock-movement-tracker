@@ -31,7 +31,8 @@ EscapeCsv(s) {
 }
 
 HistoryPath(instanceName) {
-  safe := RegExReplace(instanceName, "[^\w\-. @]", "_")
+  key := CanonKey(instanceName)
+  safe := RegExReplace(key, "[^\w\-. @]", "_")
   return INSTANCE_HISTORY_DIR "\" safe ".csv"
 }
 

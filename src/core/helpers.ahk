@@ -1,4 +1,5 @@
 #Include config.ahk
+#Include paths.ahk
 
 NowStamp() {
   t := A_Now
@@ -46,4 +47,21 @@ NormalizeNewlines(s) {
   s := StrReplace(s, "`r`n", "`n")
   s := StrReplace(s, "`r", "`n")
   return s
+}
+
+CanonKey(name) {
+  return StrLower(Trim(name))
+}
+
+GetDisplayName(sectionName) {
+  try {
+    dn := Trim(IniRead(INSTANCES_INI, sectionName, "display_name", ""))
+    return (dn != "") ? dn : sectionName
+  } catch {
+    return sectionName
+  }
+}
+
+SetDisplayName(sectionName, displayName) {
+  IniWrite displayName, INSTANCES_INI, sectionName, "display_name"
 }
