@@ -8,10 +8,7 @@
 #Include gui\prompt.ahk
 #Include gui\instance_picker.ahk
 #Include gui\variation_picker.ahk
-
-global CURRENT_INSTANCE := ""
-global VARIATION_SEPARATOR := " @ "
-global CURRENT_VARIATION := ""
+#Include state.ahk
 
 RenameBaseAndVariations(oldBase, newBase) {
   ini := INSTANCES_INI

@@ -1,0 +1,3 @@
+global CURRENT_INSTANCE := ""
+global VARIATION_SEPARATOR := " @ "
+global CURRENT_VARIATION := ""
