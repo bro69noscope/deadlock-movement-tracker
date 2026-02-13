@@ -29,6 +29,7 @@ tray.Add("Exit", (*) => ConfirmExit())
 #Include core\autoexec_installer.ahk
 #Include core\uninstaller.ahk
 #Include core\route_timer.ahk
+#Include core\migrations.ahk
 #Include settings\bros_settings.ahk
 #Include core\gui\graph_daemon.ahk
 #Include core\gui\graph_popup.ahk
@@ -52,6 +53,7 @@ LoadUserConfigFromIni()
 
 DebugBlank
 Debug("===Tracker start===")
+RunMigrations()
 
 if CFG.include_bro_settings
   ApplyBroSettings()
