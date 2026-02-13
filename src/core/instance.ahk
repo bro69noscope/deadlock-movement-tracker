@@ -148,6 +148,7 @@ AddVariation() {
   WriteVariations(base, vars)
 
   InitRouteStats(routeKey)
+  SetDisplayName(routeKey, name)
   SetCurrentInstance(base, varKey)
   SaveCurrentInstancePos()
   return true
