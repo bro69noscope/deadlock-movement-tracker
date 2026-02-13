@@ -1,4 +1,5 @@
 import sys
+import textwrap
 import traceback
 
 import matplotlib
@@ -6,6 +7,10 @@ import pandas as pd
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+
+def wrap_title(title: str, width: int) -> str:
+    return "\n".join(textwrap.wrap(title, width=width))
 
 
 # pyright: reportUnknownMemberType=false
@@ -26,6 +31,9 @@ def main() -> int:
 
     plt.figure(figsize=(6, 3))
 
+    wrappped = wrap_title(f"Success Over Time — {instance_name}", 60)
+    plt.title(wrappped)
+
     if df is None or df.empty:
         plt.text(
             0.5,
@@ -38,7 +46,6 @@ def main() -> int:
             transform=plt.gca().transAxes,
         )
         plt.ylim(0, 1)
-        plt.title(f"Success Over Time — {instance_name}")
     else:
         succ = (
             df["result"].astype(str).str.strip().str.lower().eq("success").astype(int)
@@ -49,7 +56,6 @@ def main() -> int:
         plt.ylim(0, 1)
         plt.xlabel("Attempt")
         plt.ylabel("Success rate")
-        plt.title(f"Success Over Time — {instance_name}")
         plt.grid(alpha=0.3)
 
     plt.tight_layout()
