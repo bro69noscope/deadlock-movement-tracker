@@ -16,6 +16,8 @@ RenameBaseAndVariations(oldBase, newBase) {
   vars := ReadVariations(oldBase)
 
   CopyIniSection(ini, oldBase, newBase)
+  SetDisplayName(newBase, newBase)
+
   IniWrite NowStamp(), ini, newBase, "last_event"
   IniDelete ini, oldBase
 
