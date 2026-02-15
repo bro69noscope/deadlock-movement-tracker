@@ -465,9 +465,7 @@ RenameInstance() {
       newVar := Trim(newVar)
 
       if (newVar = "" || newVar == varName)
-      { MsgBox "No changes made to variation name.", "Tracker", 48
         return false
-      }
 
       if (StrLower(newVar) = StrLower(varName)) {
         SetDisplayName(base VARIATION_SEPARATOR var, newVar)
