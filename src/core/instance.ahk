@@ -108,7 +108,7 @@ WriteVariations(baseName, vars) {
   IniWrite s, ini, baseName, "variations"
 }
 
-AddVariation() {
+NewVariation() {
   base := Trim(CURRENT_INSTANCE)
   if (base = "") {
     WarnNoInstanceSelected()
@@ -156,7 +156,7 @@ AddVariation() {
   return true
 }
 
-ChangeVariation() {
+SwitchVariation() {
   base := CURRENT_INSTANCE
   if (base = "") {
     WarnNoInstanceSelected()
@@ -359,7 +359,7 @@ DeleteInstance() {
 
     CURRENT_VARIATION := ""
     if vars.Length > 1
-      ChangeVariation()
+      SwitchVariation()
     return true
   }
 

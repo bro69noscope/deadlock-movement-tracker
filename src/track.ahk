@@ -69,8 +69,8 @@ HotKey(CFG.reposition, (*) => RepositionInstance())
 HotKey(CFG.rename, (*) => RenameInstance())
 HotKey(CFG.exit, (*) => ConfirmExit())
 HotKey(CFG.graph, (*) => GraphPopup.Show())
-HotKey(CFG.add_variation, (*) => AddVariation())
-HotKey(CFG.change_variation, (*) => ChangeVariation())
+HotKey(CFG.add_variation, (*) => NewVariation())
+HotKey(CFG.change_variation, (*) => SwitchVariation())
 HotIf
 
 RouteTimer.StartVisibilityWatcher()
