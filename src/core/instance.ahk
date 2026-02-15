@@ -357,7 +357,9 @@ DeleteInstance() {
 
     AppendGlobalEvent("delete_variation:" base "->" var, routeKey)
 
-    ChangeVariation()
+    CURRENT_VARIATION := ""
+    if vars.Length > 1
+      ChangeVariation()
     return true
   }
 
