@@ -168,7 +168,7 @@ SwitchVariation() {
     return false
 
   if pickedVar == "" {
-    MsgBox "No variation for: '" base "'`nCreate one with " CFG.add_variation, "Tracker", 48
+    MsgBox "No variation for: '" base "'`nCreate one with " CFG.new_variation, "Tracker", 48
     return false
   }
 
