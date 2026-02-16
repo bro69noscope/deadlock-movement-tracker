@@ -127,6 +127,7 @@ ResetInGamePos(current_instance) {
     Send CFG.disable_fast_cooldowns
 
   if randomize {
+    ; FIX: this will fail with the temporary instance
     RandomizeResetPos(current_instance)
     Perf.Step(A_ThisFunc ": RandomizePos done")
   }
