@@ -22,7 +22,8 @@ ShouldSkipRandomize(instanceName) {
   for _, p in prefixes {
     esc := RegExReplace(p, "([.^$*+?()[\]{}|\\])", "\$1")
     if RegExMatch(instanceName, "i)^" esc) {
-      Debug(A_ThisFunc ": instanceName='" instanceName "' matches no-randomize prefix='" p "'")
+      Debug(A_ThisFunc
+        ": instanceName='" instanceName "' matches no-randomize prefix='" p "'")
       return true
     }
   }
@@ -52,7 +53,9 @@ RandomizeResetPos(instanceName) {
   Perf.Step(A_ThisFunc ": parsed pos_line")
 
   if parts.Length < 4 {
-    Debug(A_ThisFunc ": expected 'setpos x y ...' but got parts.Length=" parts.Length " line='" line "'")
+    Debug(A_ThisFunc
+      ": expected 'setpos x y ...' but got parts.Length=" parts.Length
+      " line='" line "'")
     return
   }
 
@@ -61,7 +64,8 @@ RandomizeResetPos(instanceName) {
     return
   }
 
-  if !RegExMatch(parts[2], "^-?\d+(\.\d+)?$") || !RegExMatch(parts[3], "^-?\d+(\.\d+)?$") {
+  if !RegExMatch(parts[2], "^-?\d+(\.\d+)?$")
+    || !RegExMatch(parts[3], "^-?\d+(\.\d+)?$") {
     Debug(A_ThisFunc ": expected numeric X/Y but got '" parts[2] "', '" parts[3] "'")
     return
   }
@@ -82,11 +86,13 @@ RandomizeResetPos(instanceName) {
 
   Perf.Step(A_ThisFunc ": did pos_line randomization maths")
   WriteMvposCfg(rnd)
-  Debug(A_ThisFunc ": randomized pos_line for instance=" instanceName " base=" base " rnd=" rnd)
+  Debug(A_ThisFunc
+    ": randomized pos_line for instance=" instanceName " base=" base " rnd=" rnd)
 }
 
 ResetInGamePos(current_instance) {
-  sleepTime := CFG.throttle_timescale ? CFG.host_timescale_factor * 25 : CFG.reset_position_duration
+  sleepTime := CFG.throttle_timescale ? CFG.host_timescale_factor * 25 :
+    CFG.reset_position_duration
   limitStam := CFG.practice_without_infinite_stamina
   noclip := CFG.noclip
   randomize := CFG.randomize_reset_pos

@@ -86,7 +86,8 @@ UndoHistory(instanceName, timeScale := 1) {
   }
 
   if (lines.Length = 0) {
-    MsgBox "Reached end of sucess history to forget for '" instanceName "'.", "Tracker", 48
+    MsgBox "Reached end of sucess history to forget for '" instanceName "'.",
+      "Tracker", 48
     return false
   }
 
@@ -153,5 +154,6 @@ RebuildStatsFromHistory(instanceName, timeScale := 1) {
   }
 
   IniWrite NowStamp(), ini, instanceName, "last_event"
-  return { success: success, fail: fail, pct: pct, streakCur: streakCur, streakBest: streakBest }
+  return { success: success, fail: fail, pct: pct, streakCur: streakCur, streakBest:
+    streakBest }
 }

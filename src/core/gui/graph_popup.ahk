@@ -41,7 +41,8 @@ class GraphPopup {
     ; unique png every time to avoid caching
     png := A_Temp "\mvtrack_graph_" A_TickCount ".png"
 
-    Debug("GraphPopup: cur='" cur "' csv='" csv "' ts=" ts " png='" png "' title='" title "'")
+    Debug("GraphPopup: cur='" cur "' csv='" csv "' ts=" ts " png='" png "' title='"
+      title "'")
 
     respJson := GraphDaemon_Render(csv, png, title, timeoutMs)
     if (respJson = "")

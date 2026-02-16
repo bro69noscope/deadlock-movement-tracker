@@ -68,10 +68,10 @@ EnsureAutoexecConfigured() {
 
   res := ConfirmWithDontAskAgain(
     "Movement Tracker",
-    "Your Deadlock autoexec.cfg is missing some lines required for the tracker to run:`n`n"
-    . pretty
-    . "`nAutomatically add the required line(s) now?`n`n"
-    . autoexec
+    "Your Deadlock autoexec.cfg is missing some lines required for the tracker to run:"
+    "`n`n" pretty
+    "`nAutomatically add the required line(s) now?`n`n"
+    autoexec
   )
 
   if (res.result = "No") {
@@ -111,13 +111,12 @@ EnsureAutoexecConfigured() {
     return true
 
   } catch as e {
-    err := ""
-    try err := "Message: " e.Message "`nWhat: " e.What "`nExtra: " e.Extra "`nFile: " e.File "`nLine: " e.Line
+    err := "Message: " e.Message "`nWhat: " e.What "`nStack:`n" e.Stack
     Debug(A_ThisFunc ": FAILED`n" err)
     MsgBox(
       "Failed to update autoexec.cfg.`n`n"
       . autoexec "`n`n"
-      . err,
+      . e.Message,
       "Movement Tracker",
       0x30
     )

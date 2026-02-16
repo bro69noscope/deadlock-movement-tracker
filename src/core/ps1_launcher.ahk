@@ -63,15 +63,16 @@ StartPoswatch() {
   base := RegExReplace(ps1, "\.ps1$", "")
   logPath := base ".log"
 
-  args := Format(
-    '-NoProfile -ExecutionPolicy Bypass -File "{1}" -GameRoot "{2}" -OutPath "{3}" -LogFile "{4}"',
-    ps1,
-    CFG.deadlock_root,
-    LASTPOS_CFG_PATH,
-    logPath
-  )
+  ps1Args :=
+    (
+      '-NoProfile -ExecutionPolicy Bypass '
+      '-File "{1}" '
+      '-GameRoot "{2}" '
+      '-OutPath "{3}" '
+      '-LogFile "{4}"'
+    )
 
-
+  args := Format(ps1Args, ps1, CFG.deadlock_root, LASTPOS_CFG_PATH, logPath)
   cmd := Format('"{1}" {2}', exe, args)
 
   try {

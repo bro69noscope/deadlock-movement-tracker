@@ -30,13 +30,13 @@ EnsurePs1Installed() {
     Debug(A_ThisFunc ": wrote " outPath)
     return true
   } catch as e {
-    err := ""
-    try err := "Message: " e.Message "`nWhat: " e.What "`nExtra: " e.Extra "`nFile: " e.File "`nLine: " e.Line
+    err := "Message: " e.Message "`nWhat: " e.What "`nStack:`n" e.Stack
     Debug(A_ThisFunc ": FAILED`n" err)
+
     MsgBox(
       "Write failed.`n`n"
       . outPath "`n`n"
-      . err,
+      . e.Message,
       "Movement Tracker",
       0x30
     )

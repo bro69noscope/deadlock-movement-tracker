@@ -79,7 +79,8 @@ TempHopMove(oldPath, newPath) {
     return true
 
   } catch as e {
-    Debug("TempHopMove FAILED: " e.Message " old='" oldPath "' new='" newPath "' tmp='" tmp "'")
+    Debug(A_ThisFunc
+      " FAILED: " e.Message " old='" oldPath "' new='" newPath "' tmp='" tmp "'")
     return false
   }
 }

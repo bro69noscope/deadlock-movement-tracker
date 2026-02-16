@@ -66,7 +66,8 @@ ValidateInstanceName(name) {
     return { ok: false, reason: "contains_pipe (|)" }
 
   if InStr(name, VARIATION_SEPARATOR)
-    return { ok: false, reason: "contains_variation_separator (" VARIATION_SEPARATOR ")" }
+    return { ok: false, reason: "contains_variation_separator (" VARIATION_SEPARATOR ")"
+    }
 
   return { ok: true, name: name }
 }
@@ -138,7 +139,8 @@ NewVariation() {
     routeKey := base VARIATION_SEPARATOR varKey
 
     if InstanceExists(routeKey) {
-      MsgBox("Variation already exists: " routeKey "`n`nPick a different name.", "Tracker", 48)
+      MsgBox("Variation already exists: " routeKey "`n`nPick a different name.",
+        "Tracker", 48)
       continue
     }
 
@@ -168,7 +170,8 @@ SwitchVariation() {
     return false
 
   if pickedVar == "" {
-    MsgBox "No variation for: '" base "'`nCreate one with " CFG.new_variation, "Tracker", 48
+    MsgBox "No variation for: '" base "'`nCreate one with " CFG.new_variation,
+      "Tracker", 48
     return false
   }
 
@@ -354,7 +357,8 @@ DeleteInstance() {
 
     try DeleteHistoryFiles(routeKey)
     catch as e
-      Debug(A_ThisFunc ": FAILED to delete variation history files: " routeKey " | " e.Message)
+      Debug(A_ThisFunc
+        ": FAILED to delete variation history files: " routeKey " | " e.Message)
 
     AppendGlobalEvent("delete_variation:" baseName "->" varName, routeKey)
 
@@ -404,8 +408,8 @@ DeleteInstance() {
 
     try DeleteHistoryFiles(routeKey)
     catch as e
-      Debug(A_ThisFunc ": FAILED to delete variation history files: " routeKey " | " e.Message)
-
+      Debug(A_ThisFunc
+        ": FAILED to delete variation history files: " routeKey " | " e.Message)
   }
 
   try IniDelete(ini, base)
@@ -455,7 +459,10 @@ RenameInstance() {
 
     while true {
       newVar := PromptName(
-        "Rename variation:`n`nBase: " baseName VARIATION_SEPARATOR "`nOld: " varName "`nNew:",
+        "Rename variation:"
+        "`n`nBase: " baseName VARIATION_SEPARATOR
+        "`nOld: " varName
+        "`nNew:",
         varName
       )
       newVar := Trim(newVar)
@@ -510,7 +517,7 @@ RenameInstance() {
     if InstanceExists(newName) {
       choice := MsgBox(
         "Instance '" newName "' already exists.`n`n"
-        . "Replace it? This will overwrite its stats/pos (and its history file if any).",
+        "Replace it? This will overwrite its stats/pos (and its history file if any).",
         "Tracker",
         "YesNo Icon!"
       )
@@ -550,8 +557,12 @@ LoadInstancePos(instanceName) {
       hasKey := true
     pos := IniRead(ini, name, "pos_line", "")
   } catch as e {
-    Debug(A_ThisFunc ": FAILED to read ini. instance=" name " err=" e.Message " path=" ini)
-    MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message, "Movement Tracker", 0x30)
+    Debug(A_ThisFunc
+      ": FAILED to read ini. instance=" name " err=" e.Message " path=" ini)
+
+    MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message,
+      "Movement Tracker", 0x30)
+
     return false
   }
   Perf.Step(A_ThisFunc ": read ini pos_line")
