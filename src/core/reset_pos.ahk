@@ -86,8 +86,6 @@ RandomizeResetPos(instanceName) {
 }
 
 ResetInGamePos(current_instance) {
-  ; PERF: this function is called inside MarkResult.
-  ; We log deltas relative to the last Perf.Step() call.
   sleepTime := CFG.throttle_timescale ? CFG.host_timescale_factor * 25 : CFG.reset_position_duration
   limitStam := CFG.practice_without_infinite_stamina
   noclip := CFG.noclip
