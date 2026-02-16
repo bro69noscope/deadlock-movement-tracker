@@ -31,7 +31,6 @@ tray.Add("Exit", (*) => ConfirmExit())
 #Include core\route_timer.ahk
 #Include core\migrations.ahk
 #Include core\timescale.ahk
-#Include settings\bros_settings.ahk
 #Include core\gui\graph_daemon.ahk
 #Include core\gui\graph_popup.ahk
 
@@ -57,9 +56,6 @@ Debug("===Tracker start===")
 if CFG.throttle_timescale
   Debug("Currently using slow repostion speed due to apparent inGame limitation")
 RunMigrations()
-
-if CFG.include_bro_settings
-  ApplyBroSettings()
 
 HotIf (*) => WinActive("ahk_exe deadlock.exe")
 HotKey(CFG.fail, (*) => MarkResult("fail"))

@@ -34,7 +34,6 @@ global CFG := {
   norm_host_timescale: "!Left",
   ; Flags
   logging_level: "debug",
-  include_bro_settings: false,
   ; Settings
   target_success_streak: 3,
   practice_without_infinite_stamina: true,
@@ -118,10 +117,7 @@ LoadUserConfigFromIni() {
   CFG.randomize_reset_units := ReadIntIni(ini, "tracker_settings", "randomize_reset_units", CFG.randomize_reset_units)
   CFG.no_randomize_prefixes := IniRead(ini, "tracker_settings", "no_randomize_prefixes", CFG.no_randomize_prefixes)
 
-  ; Dev
-  CFG.include_bro_settings := ReadBoolIni(ini, "dev", "include_bro_settings", CFG.include_bro_settings)
-
-  ; Dev: Logging
+  ; Logging
   CFG.logging_level := IniRead(ini, "dev", "logging_level", CFG.logging_level)
   CFG.logging_level := StrUpper(CFG.logging_level)
   validLevels := Map("DEBUG", 1, "INFO", 1, "WARN", 1, "ERROR", 1, "FATAL", 1)
