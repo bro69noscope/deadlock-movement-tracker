@@ -2,19 +2,21 @@ global CFG := {
   ; Deadlock
   deadlock_root: "C:\Program Files (x86)\Steam\steamapps\common\Deadlock",
   ; Deadlock hotkeys
-  mark_pos: "o",
-  teleport: "h",
   noclip: "u",
   load_practice_map: "8",
   swap_team: "9",
   setup_practice: "0",
-  mvtrack_internal: "'",
-  mvtrack_ts_internal: "/",
   enable_fast_stamina: "k",
   disable_fast_stamina: "l",
   set_host_timescale_fast: ",",
   set_host_timescale_normal: ".",
+  mvtrack_mark_pos: "F13",
+  mvtrack_teleport: "F14",
+  mvtrack_teleport_temp: "F15",
+  mvtrack_set_timescale: "F16",
   ; Tracker hotkeys
+  mark_temp_pos: "``",
+  temp_pos_teleport: "h",
   fail: "F1",
   success: "F2",
   switch: "F3",
@@ -69,10 +71,7 @@ LoadUserConfigFromIni() {
   CFG.deadlock_root := IniRead(ini, "deadlock", "root", CFG.deadlock_root)
 
   ; Deadlock hotkeys
-  CFG.mark_pos := IniRead(ini, "deadlock_hotkeys", "mark_pos", CFG.mark_pos)
-  CFG.teleport := IniRead(ini, "deadlock_hotkeys", "teleport", CFG.teleport)
   CFG.noclip := IniRead(ini, "deadlock_hotkeys", "noclip", CFG.noclip)
-  CFG.mvtrack_internal := IniRead(ini, "deadlock_hotkeys", "mvtrack_internal", CFG.mvtrack_internal)
 
   CFG.load_practice_map := IniRead(ini, "deadlock_hotkeys", "load_practice_map", CFG.load_practice_map)
   CFG.swap_team := IniRead(ini, "deadlock_hotkeys", "swap_team", CFG.swap_team)
@@ -80,10 +79,14 @@ LoadUserConfigFromIni() {
 
   CFG.enable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "enable_fast_stamina", CFG.enable_fast_stamina)
   CFG.disable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "disable_fast_stamina", CFG.disable_fast_stamina)
+
   CFG.set_host_timescale_fast := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_fast", CFG.set_host_timescale_fast)
   CFG.set_host_timescale_normal := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_normal", CFG.set_host_timescale_normal)
 
   ; Tracker hotkeys
+  CFG.temp_pos_teleport := IniRead(ini, "deadlock_hotkeys", "temp_pos_teleport", CFG.temp_pos_teleport)
+  CFG.mark_temp_pos := IniRead(ini, "deadlock_hotkeys", "mark_temp_pos", CFG.mark_temp_pos)
+
   CFG.fail := IniRead(ini, "tracker_hotkeys", "fail", CFG.fail)
   CFG.success := IniRead(ini, "tracker_hotkeys", "success", CFG.success)
   CFG.switch := IniRead(ini, "tracker_hotkeys", "switch", CFG.switch)
@@ -95,6 +98,7 @@ LoadUserConfigFromIni() {
   CFG.exit := IniRead(ini, "tracker_hotkeys", "exit", CFG.exit)
 
   CFG.graph := IniRead(ini, "tracker_hotkeys", "graph", CFG.graph)
+
   CFG.new_variation := IniRead(ini, "tracker_hotkeys", "new_variation", CFG.new_variation)
   CFG.switch_variation := IniRead(ini, "tracker_hotkeys", "switch_variation", CFG.switch_variation)
 

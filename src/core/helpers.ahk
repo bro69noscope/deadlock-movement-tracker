@@ -65,3 +65,15 @@ GetDisplayName(sectionName) {
 SetDisplayName(sectionName, displayName) {
   IniWrite displayName, INSTANCES_INI, sectionName, "display_name"
 }
+
+SendSmartKey(key) {
+  ; Helper to send F13 and above keys. Supports regular hotkey syntax otherwise.
+  ; Without this, we can get behavior where F15 becomes three sends "F, 1, 5"
+  if RegExMatch(key, "i)^([\^\!\+#]*)(F\d+)$", &m) {
+    mods := m[1]
+    fkey := m[2]
+    Send mods "{" fkey "}"
+  } else {
+    Send key
+  }
+}

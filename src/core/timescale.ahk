@@ -59,7 +59,7 @@ Timescale_Apply(ts) {
 
   ; apply in-game by exec’ing the cfg
   WinActivate("ahk_exe deadlock.exe")
-  Send CFG.mvtrack_ts_internal
+  SendSmartKey(CFG.mvtrack_set_timescale)
 
   CURRENT_TIMESCALE := ts
   try RouteTimer.RefreshOverlay()

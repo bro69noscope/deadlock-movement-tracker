@@ -75,6 +75,8 @@ HotKey(CFG.dec_host_timescale_big, (*) => Timescale_DOWN(0.1))
 Hotkey(CFG.norm_host_timescale, (*) => Timescale_Reset())
 HotKey(CFG.new_variation, (*) => NewVariation())
 HotKey(CFG.switch_variation, (*) => SwitchVariation())
+HotKey(CFG.mark_temp_pos, (*) => SetTemporaryInstancePos())
+HotKey(CFG.temp_pos_teleport, (*) => TeleportToTemporaryInstance())
 HotIf
 
 RouteTimer.StartVisibilityWatcher()

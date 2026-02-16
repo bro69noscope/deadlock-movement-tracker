@@ -1,10 +1,16 @@
 #Include debug.ahk
 #Include paths.ahk
 #include perf.ahk
+#include state.ahk
 
-WriteMvposCfg(posLine) {
+WriteMvposCfg(posLine, isTempInstance := false) {
   Perf.Step(A_ThisFunc ": init")
-  mvtrackPos := MVTRACK_CFG_POS_PATH
+
+  if isTempInstance
+    mvtrackPos := MVTRACK_CFG_TEMP_POS_PATH
+  else
+    mvtrackPos := MVTRACK_CFG_POS_PATH
+
   posLine := Trim(posLine)
   if (posLine = "") {
     Debug(A_ThisFunc ": posLine empty -> abort")

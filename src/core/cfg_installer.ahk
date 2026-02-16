@@ -57,12 +57,7 @@ GetPosToolsCfgText() {
     "alias train_team_toggle " "train_team_sapphire" "`n"
     "alias train_start " "spawn_hero_testing_controller" "`n"
     "`n"
-    "alias markpos " "getpos_exact" "`n"
-    "alias setpos  " "exec lastpos.cfg" "`n"
-    "`n"
     "// User key bindings`n"
-    "bind " "" CFG.mark_pos "" " " "getpos_exact" "`n"
-    "bind " "" CFG.teleport "" " " "exec lastpos.cfg" "`n"
     "bind " "" CFG.noclip "" " " "noclip" "`n"
     "bind " "" CFG.load_practice_map "" " " "map dl_midtown" "`n"
     "bind " "" CFG.swap_team "" " " "train_team_toggle" "`n"
@@ -71,10 +66,12 @@ GetPosToolsCfgText() {
     "bind " "" CFG.disable_fast_stamina "" " " "citadel_disable_fast_stamina" "`n"
     "bind " "" CFG.set_host_timescale_fast "" " " "host_timescale " CFG.host_timescale_factor "" "`n"
     "bind " "" CFG.set_host_timescale_normal "" " " "host_timescale 1" "`n"
-    "bind " "" CFG.mvtrack_ts_internal "" " " "exec mvtrack_timescale.cfg" "`n"
     "`n"
     "// Used programmatically by deadlock-movement-tracker only`n"
-    "bind " "" CFG.mvtrack_internal "" " " "exec mvtrack_pos.cfg" "`n"
+    "bind " "" CFG.mvtrack_mark_pos "" " " "getpos_exact" "`n"
+    "bind " "" CFG.mvtrack_teleport "" " " "exec mvtrack_pos.cfg" "`n"
+    "bind " "" CFG.mvtrack_teleport_temp "" " " "exec mvtrack_pos_temp.cfg" "`n"
+    "bind " "" CFG.mvtrack_set_timescale "" " " "exec mvtrack_timescale.cfg" "`n"
 
   )
 }

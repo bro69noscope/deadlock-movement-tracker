@@ -612,7 +612,7 @@ SaveCurrentInstancePos() {
   Debug(A_ThisFunc ": LASTPOS mtime before=" before)
 
   WinActivate("ahk_exe deadlock.exe")
-  Send CFG.mark_pos
+  SendSmartKey(CFG.mvtrack_mark_pos)
 
   r := ReadLastPosAfterMTime(before, 2000)
   if (!r.ok) {
@@ -647,4 +647,17 @@ SaveCurrentInstancePos() {
   IniWrite NowStamp(), ini, GetCurrentRouteKey(), "pos_saved_at"
   ok := WriteMvposCfg(line)
   return ok
+}
+
+SetTemporaryInstancePos() {
+  before := GetFileMTime(LASTPOS_CFG_PATH)
+  WinActivate("ahk_exe deadlock.exe")
+  SendSmartKey(CFG.mvtrack_mark_pos)
+  r := ReadLastPosAfterMTime(before, 2000)
+  posline := r.ok ? r.line : ""
+  WriteMvposCfg(posline, true)
+}
+
+TeleportToTemporaryInstance() {
+  ResetInGamePos("__temp__")
 }

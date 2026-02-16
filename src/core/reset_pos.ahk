@@ -121,7 +121,11 @@ ResetInGamePos(current_instance) {
 
   Send CFG.set_host_timescale_normal
   Send noclip
-  Send CFG.mvtrack_internal
+
+  if current_instance = "__temp__"
+    SendSmartKey(CFG.mvtrack_teleport_temp)
+  else
+    SendSmartKey(CFG.mvtrack_teleport)
   Perf.Step(A_ThisFunc ": 3 sends done")
 
   if !Timescale_IsNormal() {
