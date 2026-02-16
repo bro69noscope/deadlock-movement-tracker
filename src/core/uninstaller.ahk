@@ -122,7 +122,7 @@ Uninstall() {
   wipeData := (MsgBox(
     "Wipe instances and their history too ?" "`n`n",
     title,
-    "YesNo Icon!"
+    "YesNo Default2 Icon!"
   ) = "Yes")
 
   global DEBUG_UNINSTALL := true
