@@ -94,10 +94,10 @@ LoadUserConfigFromIni() {
     "set_host_timescale_normal", CFG.set_host_timescale_normal)
 
   ; Tracker hotkeys
-  CFG.temp_pos_teleport := IniRead(ini, "deadlock_hotkeys", "temp_pos_teleport",
+  CFG.temp_pos_teleport := IniRead(ini, "tracker_hotkeys", "temp_pos_teleport",
     CFG.temp_pos_teleport)
 
-  CFG.mark_temp_pos := IniRead(ini, "deadlock_hotkeys", "mark_temp_pos",
+  CFG.mark_temp_pos := IniRead(ini, "tracker_hotkeys", "mark_temp_pos",
     CFG.mark_temp_pos)
 
   CFG.fail := IniRead(ini, "tracker_hotkeys", "fail", CFG.fail)
