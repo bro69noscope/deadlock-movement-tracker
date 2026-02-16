@@ -1,43 +1,49 @@
 #Include paths.ahk
-ReadLastPosAfterMTime(prevMTime, timeoutMs) {
-  start := A_TickCount
-  lastSeenMTime := ""
-  lastSeenText := ""
-  lastError := ""
+#Include debug.ahk
+
+DeleteOldLastPos() {
   lastpos := LASTPOS_CFG_PATH
+  SplitPath lastpos, &fileName
+  try {
+    if FileExist(lastpos)
+      FileDelete(lastpos)
+    return true
+  }
+  catch as e {
+    Debug(A_ThisFunc ": FAILED to delete " fileName " err=" e.Message)
+    return false
+  }
+}
+
+ReadLastPosUntilValid(timeoutMs) {
+  lastpos := LASTPOS_CFG_PATH
+  SplitPath lastpos, &fileName
+  start := A_TickCount
+  err := ""
 
   while (A_TickCount - start) <= timeoutMs {
-    if !FileExist(lastpos) {
-      lastError := "missing " lastpos
-      Sleep 50
-      continue
-    }
-
-    try {
-      lastSeenMTime := FileGetTime(lastpos, "M")
-      lastSeenText := Trim(FileRead(lastpos))
-    } catch as e {
-      lastError := "read error: " e.Message
-      Sleep 50
-      continue
-    }
-
-    changed := (prevMTime = "" || lastSeenMTime != prevMTime)
-    if (changed) {
-      if RegExMatch(lastSeenText, "i)^\s*setpos\b") {
-        return { ok: true, line: lastSeenText, reason: "changed+valid" }
-      } else {
-        ; file changed but content isn't a setpos line
-        return { ok: false, line: "", reason: "changed_but_invalid", mtime: lastSeenMTime, text: lastSeenText }
+    if FileExist(lastpos) {
+      try {
+        txt := Trim(FileRead(lastpos))
+        if RegExMatch(txt, "i)^\s*setpos\b")
+          return txt
+      } catch as e {
+        ; silent retry
+        err := e.Message
       }
     }
-
-    Sleep 50
+    Sleep 25
   }
 
-  ; timeout
-  if (prevMTime != "" && lastSeenMTime = prevMTime)
-    return { ok: false, line: "", reason: "timeout_no_mtime_change", mtime: lastSeenMTime, text: lastSeenText, err: lastError }
+  Debug(A_ThisFunc ": timed out trying to read valid setpos from " lastpos
+    err ? " read err=" err : "")
 
-  return { ok: false, line: "", reason: "timeout_unknown", mtime: lastSeenMTime, text: lastSeenText, err: lastError }
+  MsgBox(
+    "Timed out trying to read: " fileName "`n"
+    "This can typically happens if '-condebug' is not set",
+    "Movement Tracker",
+    0x30
+  )
+
+  return ""
 }

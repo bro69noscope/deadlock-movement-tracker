@@ -608,53 +608,29 @@ SaveCurrentInstancePos() {
     return false
   }
 
-  before := GetFileMTime(LASTPOS_CFG_PATH)
-  Debug(A_ThisFunc ": LASTPOS mtime before=" before)
-
+  DeleteOldLastPos()
   WinActivate("ahk_exe deadlock.exe")
   SendSmartKey(CFG.mvtrack_mark_pos)
 
-  r := ReadLastPosAfterMTime(before, 2000)
-  if (!r.ok) {
-    snippet := ""
-    if r.HasOwnProp("text")
-      snippet := SubStr(r.text, 1, 80)
-
-    seen := r.HasOwnProp("mtime") ? r.mtime : ""
-    err := r.HasOwnProp("err") ? r.err : ""
-
-    Debug(A_ThisFunc ": FAILED"
-      " reason=" r.reason " before=" before " seen=" seen " err=" err " text='" snippet "'")
-
-    MsgBox(
-      "Failed to capture position.`n`n"
-      . "Reason: " r.reason "`n"
-      . "Before mtime: " before "`n"
-      . "Seen mtime: " seen "`n"
-      . "Seen text: " snippet "`n"
-      . (r.reason == "timeout_no_mtime_change"
-        ? "This usually happens if you don't have the '-condebug' DeadLock launch option set"
-        : ""),
-      "Movement Tracker",
-      0x30
-    )
+  posline := ReadLastPosUntilValid(2000)
+  if !posline
     return false
-  }
 
-  line := r.line
-
-  IniWrite line, ini, GetCurrentRouteKey(), "pos_line"
+  IniWrite posline, ini, GetCurrentRouteKey(), "pos_line"
   IniWrite NowStamp(), ini, GetCurrentRouteKey(), "pos_saved_at"
-  ok := WriteMvposCfg(line)
+  ok := WriteMvposCfg(posline)
   return ok
 }
 
 SetTemporaryInstancePos() {
-  before := GetFileMTime(LASTPOS_CFG_PATH)
+  DeleteOldLastPos()
   WinActivate("ahk_exe deadlock.exe")
   SendSmartKey(CFG.mvtrack_mark_pos)
-  r := ReadLastPosAfterMTime(before, 2000)
-  posline := r.ok ? r.line : ""
+
+  posline := ReadLastPosUntilValid(2000)
+  if !posline
+    return false
+
   WriteMvposCfg(posline, true)
 }
 
