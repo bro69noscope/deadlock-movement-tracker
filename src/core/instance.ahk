@@ -298,12 +298,14 @@ SwitchInstance() {
   if (pickedVar = "__cancel__")
     return
 
+  Perf.Start(A_ThisFunc)
   if (pickedVar = "__main__")
     SetCurrentInstance(base)
   else
     SetCurrentInstance(base, pickedVar)
 
   LoadInstancePos(GetCurrentRouteKey())
+  Perf.End("SwitchInstance")
 }
 
 DeleteInstance() {
@@ -312,6 +314,7 @@ DeleteInstance() {
 
   base := Trim(CURRENT_INSTANCE)
   var := Trim(CURRENT_VARIATION)
+  baseName := GetDisplayName(base)
 
   if (base = "") {
     WarnNoInstanceSelected()
@@ -321,6 +324,7 @@ DeleteInstance() {
   ; If on a variation: delete only that variation
   if (var != "") {
     routeKey := base VARIATION_SEPARATOR var
+    varName := GetDisplayName(routeKey)
 
     if !InstanceExists(routeKey) {
       MsgBox("No such variation: '" routeKey "'", "Tracker", 48)
@@ -329,8 +333,8 @@ DeleteInstance() {
 
     choice := MsgBox(
       "Delete variation?`n`n"
-      . "Base: " base "`n"
-      . "Variation: " var "`n`n"
+      . "Base: " baseName "`n"
+      . "Variation: " varName "`n`n"
       . "This will delete its stats, saved position, and its history log.",
       "Tracker",
       "YesNo Icon!"
@@ -348,14 +352,11 @@ DeleteInstance() {
 
     try IniDelete(ini, routeKey)
 
-    h := HistoryPath(routeKey)
-    if FileExist(h) {
-      try FileDelete(h)
-      catch as e
-        Debug(A_ThisFunc ": FAILED to delete variation history file: " h " | " e.Message)
-    }
+    try DeleteHistoryFiles(routeKey)
+    catch as e
+      Debug(A_ThisFunc ": FAILED to delete variation history files: " routeKey " | " e.Message)
 
-    AppendGlobalEvent("delete_variation:" base "->" var, routeKey)
+    AppendGlobalEvent("delete_variation:" baseName "->" varName, routeKey)
 
     CURRENT_VARIATION := ""
     if vars.Length > 1
@@ -401,29 +402,24 @@ DeleteInstance() {
       try IniDelete(ini, routeKey)
     }
 
-    hVar := HistoryPath(routeKey)
-    if FileExist(hVar) {
-      try FileDelete(hVar)
-      catch as e
-        Debug(A_ThisFunc ": FAILED to delete variation history file: " hVar " | " e.Message)
-    }
+    try DeleteHistoryFiles(routeKey)
+    catch as e
+      Debug(A_ThisFunc ": FAILED to delete variation history files: " routeKey " | " e.Message)
+
   }
 
   try IniDelete(ini, base)
 
-  hBase := HistoryPath(base)
-  if FileExist(hBase) {
-    try FileDelete(hBase)
-    catch as e
-      Debug(A_ThisFunc ": FAILED to delete base history file: " hBase " | " e.Message)
-  }
+  try DeleteHistoryFiles(base)
+  catch as e
+    Debug(A_ThisFunc ": FAILED to delete base history files: " base " | " e.Message)
 
   AppendGlobalEvent("delete_instance_with_variations", base)
   return true
 }
 
 RepositionInstance() {
-  name := GetCurrentRouteKey()
+  name := GetDisplayName(GetCurrentRouteKey())
   if (name = "") {
     WarnNoInstanceSelected()
     return false
@@ -485,10 +481,10 @@ RenameInstance() {
     return RenameVariation(base, var, newVar)
   }
 
-  oldName := base
+  oldName := GetDisplayName(base)
 
-  if !InstanceExists(oldName) {
-    MsgBox "No such instance: " oldName, "Tracker", 48
+  if !InstanceExists(base) {
+    MsgBox "No such instance: " base, "Tracker", 48
     return false
   }
 
@@ -542,6 +538,7 @@ RenameInstance() {
 }
 
 LoadInstancePos(instanceName) {
+  Perf.Step(A_ThisFunc ": init")
   ini := INSTANCES_INI
   pos := ""
   hasKey := false
@@ -557,6 +554,7 @@ LoadInstancePos(instanceName) {
     MsgBox("Failed to read instances.ini.`n`n" ini "`n`n" e.Message, "Movement Tracker", 0x30)
     return false
   }
+  Perf.Step(A_ThisFunc ": read ini pos_line")
 
   pos := StrReplace(pos, "`r", "")
   pos := StrReplace(pos, "`n", "")
@@ -585,6 +583,7 @@ LoadInstancePos(instanceName) {
 }
 
 SetCurrentInstance(baseName, variation := "") {
+  Perf.Step(A_ThisFunc ": init")
   global CURRENT_INSTANCE, CURRENT_VARIATION
   ini := INSTANCES_INI
 
@@ -593,10 +592,13 @@ SetCurrentInstance(baseName, variation := "") {
 
   IniWrite baseName, ini, "__global__", "current_instance"
   IniWrite CURRENT_VARIATION, ini, "__global__", "current_variation"
+  Perf.Step(A_ThisFunc ": ini writes")
 
   rk := GetCurrentRouteKey()
+  Perf.Step(A_ThisFunc ": GetCurrentRouteKey")
   if (rk != "")
     IniWrite NowStamp(), ini, rk, "last_switch"
+  Perf.Step(A_ThisFunc ": NowStamp write")
 }
 
 SaveCurrentInstancePos() {

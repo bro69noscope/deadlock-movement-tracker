@@ -1,4 +1,6 @@
 #Include debug.ahk
+#Include state.ahk
+#Include perf.ahk
 
 class RouteTimer {
 
@@ -9,7 +11,8 @@ class RouteTimer {
   static keysOn := false
 
   static gui := 0
-  static txt := 0
+  static timeTxt := 0
+  static timeScaleTxt := 0
   static visTimerOn := false
   static coord := "x55 y-2 NA"
 
@@ -29,10 +32,12 @@ class RouteTimer {
     RouteTimer.keysOn := true
     Debug("RouteTimer: listening for move keys")
 
+    Perf.Step("RouteTimer:" A_ThisFunc " before registering hotkeys")
     HotKey("~w", RouteTimer._OnMoveKey, "On")
     HotKey("~a", RouteTimer._OnMoveKey, "On")
     HotKey("~s", RouteTimer._OnMoveKey, "On")
     HotKey("~d", RouteTimer._OnMoveKey, "On")
+    Perf.Step("RouteTimer:" A_ThisFunc " after registering hotkeys")
   }
 
   static _DisableMoveKeys() {
@@ -41,10 +46,12 @@ class RouteTimer {
     RouteTimer.keysOn := false
     Debug("RouteTimer: stop listening for move keys")
 
+    Perf.Step("RouteTimer:" A_ThisFunc " before unregistering hotkeys")
     HotKey("~w", RouteTimer._OnMoveKey, "Off")
     HotKey("~a", RouteTimer._OnMoveKey, "Off")
     HotKey("~s", RouteTimer._OnMoveKey, "Off")
     HotKey("~d", RouteTimer._OnMoveKey, "Off")
+    Perf.Step("RouteTimer:" A_ThisFunc " after unregistering hotkeys")
   }
 
   static _OnMoveKey(*) {
@@ -69,6 +76,13 @@ class RouteTimer {
       RouteTimer.gui.Hide()
   }
 
+  static _TimeScaleString() {
+    ts := (CURRENT_TIMESCALE = "" ? 1 : CURRENT_TIMESCALE + 0)
+    if (ts = 1)
+      return ""
+    return Round(ts * 100) "%"
+  }
+
   static _EnsureGui() {
     if IsObject(RouteTimer.gui)
       return
@@ -79,16 +93,23 @@ class RouteTimer {
     g.MarginY := 4
     g.SetFont("s14 cb0b0b0", "Segoe UI Semibold")
 
-    RouteTimer.txt := g.AddText("BackgroundTrans w85 Right", "0.000s")
+    timeW := 90
+    tsW := 46
+    gap := 6
+
+    RouteTimer.timeTxt := g.AddText("BackgroundTrans w" timeW " Right", "0.000s")
+    RouteTimer.timeScaleTxt := g.AddText("x+" gap " BackgroundTrans w" tsW " Left",
+      RouteTimer._TimeScaleString())
+
     RouteTimer.gui := g
     g.Show(RouteTimer.coord)
-
     WinSetTransColor("Black", g.Hwnd)
   }
 
   static _SetText(text) {
     RouteTimer._EnsureGui()
-    RouteTimer.txt.Text := text
+    RouteTimer.timeTxt.Text := text
+    RouteTimer.timeScaleTxt.Text := RouteTimer._TimeScaleString()
   }
 
   static _Tick(*) {
@@ -99,10 +120,8 @@ class RouteTimer {
   }
 
   static _Start() {
-    RouteTimer._InitCallbacks()
     if RouteTimer.running
       return
-
     RouteTimer.running := true
     RouteTimer.startTick := A_TickCount
     SetTimer(RouteTimer.cbTick, 30)
@@ -132,9 +151,23 @@ class RouteTimer {
     SetTimer(RouteTimer.cbVis, 150)
   }
 
-  static Arm() {
+  static RefreshOverlay() {
     RouteTimer._EnsureGui()
-    RouteTimer._InitCallbacks()
+
+    if RouteTimer.running {
+      ms := A_TickCount - RouteTimer.startTick
+      RouteTimer._SetText(RouteTimer._Format(ms))
+    } else if (RouteTimer.lastMs > 0) {
+      RouteTimer._SetText(RouteTimer._Format(RouteTimer.lastMs))
+    } else {
+      RouteTimer._SetText("0.000s")
+    }
+  }
+
+  static Arm() {
+    Perf.Step("RouteTimer: " A_ThisFunc " init")
+    RouteTimer._EnsureGui()
+    Perf.Step("RouteTimer: " A_ThisFunc " ensure GUI")
 
     if RouteTimer.running {
       RouteTimer.running := false
@@ -143,7 +176,9 @@ class RouteTimer {
 
     RouteTimer.armed := true
     RouteTimer.lastMs := 0
+    RouteTimer._SetText("0.000s")
     RouteTimer._EnableMoveKeys()
+    Perf.Step("RouteTimer: " A_ThisFunc " done")
   }
 
   static Disarm() {
@@ -152,7 +187,6 @@ class RouteTimer {
   }
 
   static Stop() {
-    RouteTimer._InitCallbacks()
     if !RouteTimer.running
       return 0
 
@@ -168,5 +202,4 @@ class RouteTimer {
   static IsRunning() {
     return RouteTimer.running
   }
-
 }

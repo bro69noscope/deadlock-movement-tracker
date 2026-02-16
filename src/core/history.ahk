@@ -1,5 +1,6 @@
 #Include paths.ahk
 #Include helpers.ahk
+#Include debug.ahk
 
 ; Directory for per-instance logs
 global INSTANCE_HISTORY_DIR := DATA_DIR "\instances_history"
@@ -30,18 +31,26 @@ EscapeCsv(s) {
   return s
 }
 
-HistoryPath(instanceName) {
-  key := CanonKey(instanceName)
-  safe := RegExReplace(key, "[^\w\-. @]", "_")
-  return INSTANCE_HISTORY_DIR "\" safe ".csv"
+Safe(s) {
+  return RegExReplace(s, "[^\w\-. @]", "_")
 }
 
-AppendHistory(instanceName, result) {
-  instancePath := HistoryPath(instanceName)
+HistoryPath(instanceName, timeScale := 1) {
+  name := Safe(CanonKey(instanceName))
+  path := INSTANCE_HISTORY_DIR "\" name
+  pct := Round(timeScale * 100)
+  if (pct != 100)
+    path .= "_" pct "pct"
+  return path ".csv"
+}
+
+AppendHistory(instanceName, result, timeScale := 1) {
+  instancePath := HistoryPath(instanceName, timeScale)
   ts := NowStamp()
   line := ts "," EscapeCsv(instanceName) "," result "`n"
   FileAppend(line, instancePath, "UTF-8")
   FileAppend(line, GLOBAL_HISTORY, "UTF-8")
+  Debug(A_ThisFunc ": Appended '" line "' to '" instancePath "'")
 }
 
 AppendGlobalEvent(eventType, instanceName) {
@@ -50,16 +59,25 @@ AppendGlobalEvent(eventType, instanceName) {
   FileAppend(line, GLOBAL_HISTORY, "UTF-8")
 }
 
+DeleteHistoryFiles(instanceName) {
+  name := Safe(CanonKey(instanceName))
+  base := INSTANCE_HISTORY_DIR "\" name
 
-UndoHistory(instanceName) {
-  path := HistoryPath(instanceName)
+  try if FileExist(base ".csv")
+    FileDelete(base ".csv")
+
+  Loop Files, base "_*pct.csv"
+    try FileDelete(A_LoopFileFullPath)
+}
+
+UndoHistory(instanceName, timeScale := 1) {
+  path := HistoryPath(instanceName, timeScale)
   if !FileExist(path) {
     MsgBox "No history found for '" instanceName "'.", "Tracker", 48
     return false
   }
 
   text := FileRead(path, "UTF-8")
-  ; split into non-empty lines
   lines := []
   for _, raw in StrSplit(text, "`n", "`r") {
     v := Trim(raw)
@@ -74,7 +92,6 @@ UndoHistory(instanceName) {
 
   lines.Pop()
 
-  ; rewrite file
   out := ""
   for _, v in lines
     out .= v "`n"
@@ -86,8 +103,8 @@ UndoHistory(instanceName) {
   return true
 }
 
-RebuildStatsFromHistory(instanceName) {
-  path := HistoryPath(instanceName)
+RebuildStatsFromHistory(instanceName, timeScale := 1) {
+  path := HistoryPath(instanceName, timeScale)
   ini := INSTANCES_INI
 
   success := 0, fail := 0
@@ -99,7 +116,6 @@ RebuildStatsFromHistory(instanceName) {
       rline := Trim(raw)
       if (rline = "")
         continue
-      r := ""
 
       parts := StrSplit(rline, ",")
       r := Trim(parts[parts.Length])
@@ -114,18 +130,28 @@ RebuildStatsFromHistory(instanceName) {
         streakCur := 0
       }
     }
-
   }
 
   total := success + fail
   pct := (total > 0) ? Round((success / total) * 100, 2) : 0
 
-  IniWrite success, ini, instanceName, "success"
-  IniWrite fail, ini, instanceName, "fail"
-  IniWrite pct, ini, instanceName, "success_pct"
-  IniWrite streakCur, ini, instanceName, "streak_current"
-  IniWrite streakBest, ini, instanceName, "streak_best"
-  IniWrite NowStamp(), ini, instanceName, "last_event"
+  tsPct := Round(timeScale * 100)
 
+  if (tsPct = 100) {
+    IniWrite success, ini, instanceName, "success"
+    IniWrite fail, ini, instanceName, "fail"
+    IniWrite pct, ini, instanceName, "success_pct"
+    IniWrite streakCur, ini, instanceName, "streak_current"
+    IniWrite streakBest, ini, instanceName, "streak_best"
+  } else {
+    prefix := tsPct "%"
+    IniWrite success, ini, instanceName, prefix "success"
+    IniWrite fail, ini, instanceName, prefix "fail"
+    IniWrite pct, ini, instanceName, prefix "success_pct"
+    IniWrite streakCur, ini, instanceName, prefix "streak_current"
+    IniWrite streakBest, ini, instanceName, prefix "streak_best"
+  }
+
+  IniWrite NowStamp(), ini, instanceName, "last_event"
   return { success: success, fail: fail, pct: pct, streakCur: streakCur, streakBest: streakBest }
 }

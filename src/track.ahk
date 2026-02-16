@@ -30,6 +30,7 @@ tray.Add("Exit", (*) => ConfirmExit())
 #Include core\uninstaller.ahk
 #Include core\route_timer.ahk
 #Include core\migrations.ahk
+#Include core\timescale.ahk
 #Include settings\bros_settings.ahk
 #Include core\gui\graph_daemon.ahk
 #Include core\gui\graph_popup.ahk
@@ -53,6 +54,8 @@ LoadUserConfigFromIni()
 
 DebugBlank
 Debug("===Tracker start===")
+if CFG.throttle_timescale
+  Debug("Currently using slow repostion speed due to apparent inGame limitation")
 RunMigrations()
 
 if CFG.include_bro_settings
@@ -69,6 +72,11 @@ HotKey(CFG.reposition, (*) => RepositionInstance())
 HotKey(CFG.rename, (*) => RenameInstance())
 HotKey(CFG.exit, (*) => ConfirmExit())
 HotKey(CFG.graph, (*) => GraphPopup.Show())
+HotKey(CFG.inc_host_timescale, (*) => Timescale_UP())
+Hotkey(CFG.inc_host_timescale_big, (*) => Timescale_UP(0.1))
+HotKey(CFG.dec_host_timescale, (*) => Timescale_DOWN())
+HotKey(CFG.dec_host_timescale_big, (*) => Timescale_DOWN(0.1))
+Hotkey(CFG.norm_host_timescale, (*) => Timescale_Reset())
 HotKey(CFG.new_variation, (*) => NewVariation())
 HotKey(CFG.switch_variation, (*) => SwitchVariation())
 HotIf

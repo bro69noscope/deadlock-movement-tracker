@@ -1,3 +1,4 @@
 global CURRENT_INSTANCE := ""
 global VARIATION_SEPARATOR := " @ "
 global CURRENT_VARIATION := ""
+global CURRENT_TIMESCALE := 1.0

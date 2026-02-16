@@ -71,6 +71,7 @@ GetPosToolsCfgText() {
     "bind " "" CFG.disable_fast_stamina "" " " "citadel_disable_fast_stamina" "`n"
     "bind " "" CFG.set_host_timescale_fast "" " " "host_timescale " CFG.host_timescale_factor "" "`n"
     "bind " "" CFG.set_host_timescale_normal "" " " "host_timescale 1" "`n"
+    "bind " "" CFG.mvtrack_ts_internal "" " " "exec mvtrack_timescale.cfg" "`n"
     "`n"
     "// Used programmatically by deadlock-movement-tracker only`n"
     "bind " "" CFG.mvtrack_internal "" " " "exec mvtrack_pos.cfg" "`n"

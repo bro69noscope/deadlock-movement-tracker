@@ -57,19 +57,28 @@ RotateLogIfTooBig(logPath) {
     return
   }
 
-  try FileAppend("---- log rotated at " FormatTs(A_Now) " ----`n", logPath, "UTF-8")
+  try FileAppend("---- log rotated at " FormatTs() " ----`n", logPath, "UTF-8")
 }
 
-FormatTs(ts) {
+FormatTs() {
+  ts := A_Now
   return SubStr(ts, 1, 4) "-" SubStr(ts, 5, 2) "-" SubStr(ts, 7, 2)
     . " " SubStr(ts, 9, 2) ":" SubStr(ts, 11, 2) ":" SubStr(ts, 13, 2)
 }
+
+FormatTsMs() {
+  ts := A_Now
+  return SubStr(ts, 1, 4) "-" SubStr(ts, 5, 2) "-" SubStr(ts, 7, 2)
+    . " " SubStr(ts, 9, 2) ":" SubStr(ts, 11, 2) ":" SubStr(ts, 13, 2)
+    . "." Format("{:03}", A_MSec)
+}
+
 
 Debug(msg) {
   EnsureLogDirExists()
   logPath := GetLogPath()
 
-  line := FormatTs(A_Now) " | " msg "`n"
+  line := FormatTsMs() " | " msg "`n"
   FileAppend(line, logPath, "UTF-8")
 }
 

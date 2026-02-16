@@ -13,4 +13,5 @@ global MVTRACK_PS1_PATH := CFG.deadlock_root "\mvtrack.ps1"
 
 global LASTPOS_CFG_PATH := DEADLOCK_CFG_DIR "\lastpos.cfg"
 global MVTRACK_CFG_POS_PATH := DEADLOCK_CFG_DIR "\mvtrack_pos.cfg"
+global MVTRACK_CFG_TIMESCALE_PATH := DEADLOCK_CFG_DIR "\mvtrack_timescale.cfg"
 global MVTRACK_CFG_EXEC_PATH := DEADLOCK_CFG_DIR "\mvtrack.cfg"

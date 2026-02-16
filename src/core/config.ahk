@@ -9,6 +9,7 @@ global CFG := {
   swap_team: "9",
   setup_practice: "0",
   mvtrack_internal: "'",
+  mvtrack_ts_internal: "/",
   enable_fast_stamina: "k",
   disable_fast_stamina: "l",
   set_host_timescale_fast: ",",
@@ -26,6 +27,11 @@ global CFG := {
   new_variation: "F9",
   switch_variation: "F10",
   graph: "F11",
+  inc_host_timescale: "!Up",
+  inc_host_timescale_big: "+!Up",
+  dec_host_timescale: "!Down",
+  dec_host_timescale_big: "+!Down",
+  norm_host_timescale: "!Left",
   ; Flags
   logging_level: "debug",
   include_bro_settings: false,
@@ -34,6 +40,7 @@ global CFG := {
   practice_without_infinite_stamina: true,
   reset_position_duration: 350,
   host_timescale_factor: 10,
+  throttle_timescale: true,
   randomize_reset_pos: true,
   randomize_reset_units: 20,
   no_randomize_prefixes: ""
@@ -66,10 +73,12 @@ LoadUserConfigFromIni() {
   CFG.mark_pos := IniRead(ini, "deadlock_hotkeys", "mark_pos", CFG.mark_pos)
   CFG.teleport := IniRead(ini, "deadlock_hotkeys", "teleport", CFG.teleport)
   CFG.noclip := IniRead(ini, "deadlock_hotkeys", "noclip", CFG.noclip)
+  CFG.mvtrack_internal := IniRead(ini, "deadlock_hotkeys", "mvtrack_internal", CFG.mvtrack_internal)
+
   CFG.load_practice_map := IniRead(ini, "deadlock_hotkeys", "load_practice_map", CFG.load_practice_map)
   CFG.swap_team := IniRead(ini, "deadlock_hotkeys", "swap_team", CFG.swap_team)
   CFG.setup_practice := IniRead(ini, "deadlock_hotkeys", "setup_practice", CFG.setup_practice)
-  CFG.mvtrack_internal := IniRead(ini, "deadlock_hotkeys", "mvtrack_internal", CFG.mvtrack_internal)
+
   CFG.enable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "enable_fast_stamina", CFG.enable_fast_stamina)
   CFG.disable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "disable_fast_stamina", CFG.disable_fast_stamina)
   CFG.set_host_timescale_fast := IniRead(ini, "deadlock_hotkeys", "set_host_timescale_fast", CFG.set_host_timescale_fast)
@@ -85,15 +94,26 @@ LoadUserConfigFromIni() {
   CFG.reposition := IniRead(ini, "tracker_hotkeys", "reposition", CFG.reposition)
   CFG.delete := IniRead(ini, "tracker_hotkeys", "delete", CFG.delete)
   CFG.exit := IniRead(ini, "tracker_hotkeys", "exit", CFG.exit)
+
   CFG.graph := IniRead(ini, "tracker_hotkeys", "graph", CFG.graph)
   CFG.new_variation := IniRead(ini, "tracker_hotkeys", "new_variation", CFG.new_variation)
   CFG.switch_variation := IniRead(ini, "tracker_hotkeys", "switch_variation", CFG.switch_variation)
+
+  CFG.inc_host_timescale := IniRead(ini, "tracker_hotkeys", "inc_host_timescale", CFG.inc_host_timescale)
+  CFG.inc_host_timescale_big := IniRead(ini, "tracker_hotkeys", "inc_host_timescale_big", CFG.inc_host_timescale_big)
+  CFG.dec_host_timescale := IniRead(ini, "tracker_hotkeys", "dec_host_timescale", CFG.dec_host_timescale)
+  CFG.dec_host_timescale_big := IniRead(ini, "tracker_hotkeys", "dec_host_timescale_big", CFG.dec_host_timescale_big)
+  CFG.norm_host_timescale := IniRead(ini, "tracker_hotkeys", "norm_host_timescale", CFG.norm_host_timescale)
 
   ; Settings
   CFG.target_success_streak := ReadIntIni(ini, "tracker_settings", "target_success_streak", CFG.target_success_streak)
   CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_settings", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
   CFG.reset_position_duration := ReadIntIni(ini, "tracker_settings", "reset_position_duration", CFG.reset_position_duration)
-  CFG.host_timescale_factor := 3500 / CFG.reset_position_duration
+
+  ;NOTE:host_timescale higher than 10 doesnt seem to benefit stamina regen at all currently
+  dynamicFactor := 5000 / CFG.reset_position_duration
+  CFG.host_timescale_factor := CFG.throttle_timescale ? Min(10, dynamicFactor) : dynamicFactor
+
   CFG.randomize_reset_pos := ReadBoolIni(ini, "tracker_settings", "randomize_reset_pos", CFG.randomize_reset_pos)
   CFG.randomize_reset_units := ReadIntIni(ini, "tracker_settings", "randomize_reset_units", CFG.randomize_reset_units)
   CFG.no_randomize_prefixes := IniRead(ini, "tracker_settings", "no_randomize_prefixes", CFG.no_randomize_prefixes)

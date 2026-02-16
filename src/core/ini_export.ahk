@@ -36,18 +36,19 @@ ExportPrettyIniSnapshot(outPath := "") {
     ordered.Push(s)
 
   preferredOrder := [
-    "created_at",
+    "display_name",
     "pos_line",
+    "created_at",
     "pos_saved_at",
     "last_switch",
+    "last_event",
+    "variations",
     "success",
     "fail",
     "success_pct",
     "streak_current",
     "streak_best",
-    "last_event"
   ]
-
   out := "; pretty snapshot (read-only)`n"
   out .= "; generated: " NowStamp() "`n"
   out .= "; source: " ini "`n`n"
@@ -75,7 +76,8 @@ ExportPrettyIniSnapshot(outPath := "") {
     }
 
     written := Map()
-
+    statsStarted := false
+    ; Write preferred order fields (main data)
     for _, k in preferredOrder {
       if kv.Has(k) {
         out .= k "=" kv[k] "`n"
@@ -83,15 +85,75 @@ ExportPrettyIniSnapshot(outPath := "") {
       }
     }
 
-    rest := []
+    ; Separate main fields from % fields
+    hasPercentFields := false
     for k, _ in kv {
-      if !written.Has(k)
-        rest.Push(k)
+      if !written.Has(k) && InStr(k, "%") {
+        hasPercentFields := true
+        break
+      }
     }
-    rest.Sort((a, b) => StrCompare(a, b, true))
 
-    for _, k in rest
+    ; Collect non-% fields that weren't in preferred order
+    restNonPercent := []
+    restPercent := []
+    for k, _ in kv {
+      if !written.Has(k) {
+        if InStr(k, "%")
+          restPercent.Push(k)
+        else
+          restNonPercent.Push(k)
+      }
+    }
+
+    ; Write remaining non-% fields
+    restNonPercent.Sort((a, b) => StrCompare(a, b, true))
+    for _, k in restNonPercent {
       out .= k "=" kv[k] "`n"
+      written[k] := true
+    }
+
+    ; Add blank line before % fields if they exist
+    if (restPercent.Length > 0)
+      out .= "#`n"
+
+    ; Write % fields with stats in preferred order
+    statOrder := ["success", "fail", "success_pct", "streak_current", "streak_best"]
+
+    ; Group by prefix
+    prefixGroups := Map()
+    for _, k in restPercent {
+      if RegExMatch(k, "^(\d+)%(.+)$", &m) {
+        prefix := m[1]
+        stat := m[2]
+        if !prefixGroups.Has(prefix)
+          prefixGroups[prefix] := []
+        prefixGroups[prefix].Push({ key: k, stat: stat })
+      }
+    }
+
+    ; Sort prefixes numerically
+    prefixes := []
+    for prefix, _ in prefixGroups
+      prefixes.Push(prefix)
+    prefixes.Sort((a, b) => Integer(a) - Integer(b))
+
+    ; Write each prefix group
+    firstGroup := true
+    for _, prefix in prefixes {
+      if !firstGroup
+        out .= "#`n"
+      firstGroup := false
+
+      group := prefixGroups[prefix]
+      ; Write in stat order
+      for _, stat in statOrder {
+        for _, item in group {
+          if (item.stat = stat)
+            out .= item.key "=" kv[item.key] "`n"
+        }
+      }
+    }
 
     out .= "`n"
   }
