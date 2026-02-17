@@ -51,7 +51,7 @@ PickVariationForBase(baseName) {
   g.AddText("y+20", "Press 0-9 (or Esc to cancel)")
 
   g.SetFont("s10")
-  g.AddButton("xm w" BTN_WIDTH, "0: Main (" baseName ")")
+  g.AddButton("xm w" BTN_WIDTH, "0: Main")
     .OnEvent("Click", (*) => (g.__picked := "__main__", g.Destroy()))
 
   PickIdx(guiObj, idx, *) {
