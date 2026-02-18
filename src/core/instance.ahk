@@ -10,6 +10,15 @@
 #Include gui\variation_picker.ahk
 #Include state.ahk
 
+_AskOverwriteExistingInstance(name) {
+  return MsgBox(
+    "Instance '" name "' already exists.`n`n"
+    "Replace it? This will overwrite/reset its stats and saved position.",
+    "Tracker",
+    "YesNo Icon!"
+  ) = "Yes"
+}
+
 RenameBaseAndVariations(oldBase, newBase) {
   ini := INSTANCES_INI
 
@@ -207,12 +216,8 @@ RenameVariation(base, oldVar, newVar) {
   }
 
   if InstanceExists(newKey) {
-    choice := MsgBox(
-      "Variation '" newKey "' already exists.`n`n"
-      . "Replace it? This will overwrite its stats/pos (and its history file if any).",
-      "Tracker",
-      "YesNo Icon!"
-    )
+    choice := _AskOverwriteExistingInstance(newKey)
+
     if (choice = "No")
       return false
 
@@ -266,12 +271,7 @@ NewInstance() {
     key := CanonKey(display)
 
     if InstanceExists(name) {
-      choice := MsgBox(
-        "Instance '" name "' already exists.`n`n"
-        . "Replace it? This will overwrite/reset its stats and saved position.",
-        "Tracker",
-        "YesNo Icon!"
-      )
+      choice := _AskOverwriteExistingInstance(name)
 
       if (choice = "No")
         continue
@@ -517,17 +517,14 @@ RenameInstance() {
     newName := v.name
 
     if InstanceExists(newName) {
-      choice := MsgBox(
-        "Instance '" newName "' already exists.`n`n"
-        "Replace it? This will overwrite its stats/pos (and its history file if any).",
-        "Tracker",
-        "YesNo Icon!"
-      )
+      choice := _AskOverwriteExistingInstance(newName)
+
       if (choice = "No")
         continue
 
       try IniDelete ini, newName
       hist := HistoryPath(newName)
+
       if FileExist(hist) {
         try FileDelete(hist)
       }
@@ -555,9 +552,12 @@ LoadInstancePos(instanceName) {
 
   try {
     secText := IniRead(ini, name)
+
     if RegExMatch(secText, "im)^\s*pos_line\s*=")
       hasKey := true
+
     pos := IniRead(ini, name, "pos_line", "")
+
   } catch as e {
     Debug(A_ThisFunc
       ": FAILED to read ini. instance=" name " err=" e.Message " path=" ini)
