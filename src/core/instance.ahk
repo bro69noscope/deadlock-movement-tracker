@@ -313,62 +313,65 @@ SwitchInstance() {
   Perf.End("SwitchInstance")
 }
 
+_DeleteVariation(base, var) {
+  global CURRENT_VARIATION
+  routeKey := base VARIATION_SEPARATOR var
+  varName := GetDisplayName(routeKey)
+  baseName := GetDisplayName(base)
+
+  if !InstanceExists(routeKey) {
+    MsgBox("No such variation key: '" routeKey "'", "Tracker", 48)
+    return false
+  }
+
+  choice := MsgBox(
+    "Delete variation: " varName "?`n`n"
+    "Base: " baseName "`n`n"
+    "This will delete its stats, saved position, and its history log.",
+    "Tracker",
+    "YesNo Icon!"
+  )
+  if choice = "No"
+    return false
+
+  vars := ReadVariations(base)
+  kept := []
+  for _, v in vars {
+    if (StrLower(Trim(v)) != StrLower(var))
+      kept.Push(v)
+  }
+  WriteVariations(base, kept)
+
+  try IniDelete(INSTANCES_INI, routeKey)
+
+  try DeleteHistoryFiles(routeKey)
+  catch as e
+    Debug(A_ThisFunc
+      ": FAILED to delete variation history files: " routeKey " | " e.Message)
+
+  AppendGlobalEvent("delete_variation:" baseName "->" varName, routeKey)
+
+  CURRENT_VARIATION := ""
+  if vars.Length > 1
+    SwitchVariation()
+  return true
+}
+
 DeleteInstance() {
   global CURRENT_INSTANCE, CURRENT_VARIATION, VARIATION_SEPARATOR
   ini := INSTANCES_INI
 
   base := Trim(CURRENT_INSTANCE)
   var := Trim(CURRENT_VARIATION)
-  baseName := GetDisplayName(base)
 
-  if (base = "") {
+  if base = "" {
     WarnNoInstanceSelected()
     return false
   }
 
   ; If on a variation: delete only that variation
-  if (var != "") {
-    routeKey := base VARIATION_SEPARATOR var
-    varName := GetDisplayName(routeKey)
-
-    if !InstanceExists(routeKey) {
-      MsgBox("No such variation: '" routeKey "'", "Tracker", 48)
-      return false
-    }
-
-    choice := MsgBox(
-      "Delete variation?`n`n"
-      "Base: " baseName "`n"
-      "Variation: " varName "`n`n"
-      "This will delete its stats, saved position, and its history log.",
-      "Tracker",
-      "YesNo Icon!"
-    )
-    if (choice = "No")
-      return false
-
-    vars := ReadVariations(base)
-    kept := []
-    for _, v in vars {
-      if (StrLower(Trim(v)) != StrLower(var))
-        kept.Push(v)
-    }
-    WriteVariations(base, kept)
-
-    try IniDelete(ini, routeKey)
-
-    try DeleteHistoryFiles(routeKey)
-    catch as e
-      Debug(A_ThisFunc
-        ": FAILED to delete variation history files: " routeKey " | " e.Message)
-
-    AppendGlobalEvent("delete_variation:" baseName "->" varName, routeKey)
-
-    CURRENT_VARIATION := ""
-    if vars.Length > 1
-      SwitchVariation()
-    return true
-  }
+  if var != ""
+    return _DeleteVariation(base, var)
 
   ; Otherwise: on base -> delete base + all variations
   if !InstanceExists(base) {
@@ -379,21 +382,21 @@ DeleteInstance() {
   vars := ReadVariations(base)
 
   extra := ""
-  if (vars.Length > 0) {
+  if vars.Length > 0 {
     extra .= "`n`nThis will also delete variations:`n"
     for _, v in vars
       extra .= "  - " GetDisplayName(v) "`n"
   }
 
   choice := MsgBox(
-    "Delete '" baseName "'?`n`n"
+    "Delete '" GetDisplayName(base) "'?`n`n"
     "This will remove it from instances.ini"
     (FileExist(HistoryPath(base)) ? " and delete its history log." : ".")
     extra,
     "Tracker",
     "YesNo Icon!"
   )
-  if (choice = "No")
+  if choice = "No"
     return false
 
   CURRENT_INSTANCE := ""
