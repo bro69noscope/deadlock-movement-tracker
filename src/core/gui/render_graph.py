@@ -1,3 +1,4 @@
+from pathlib import Path
 import sys
 import textwrap
 import traceback
@@ -21,8 +22,11 @@ def main() -> int:
     csv_path = sys.argv[1]
     out_path = sys.argv[2]
     instance_name = sys.argv[3]
+    df = None
 
     try:
+        if not Path(csv_path).exists():
+            raise FileNotFoundError(f"CSV file not found: {csv_path}")
         df = pd.read_csv(csv_path, names=["ts", "instance", "result"])
     except Exception:
         # Let the daemon capture it
