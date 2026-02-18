@@ -176,7 +176,6 @@ class RouteTimer {
 
     RouteTimer.armed := true
     RouteTimer.lastMs := 0
-    RouteTimer._SetText("0.000s")
     RouteTimer._EnableMoveKeys()
     Perf.Step("RouteTimer: " A_ThisFunc " done")
   }
