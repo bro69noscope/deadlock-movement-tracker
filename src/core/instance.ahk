@@ -115,12 +115,13 @@ NewVariation() {
     WarnNoInstanceSelected()
     return false
   }
+  baseName := GetDisplayName(base)
 
   ini := INSTANCES_INI
 
   while true {
     name := PromptName(
-      "Add new variation for:`n`n " base,
+      "Add new variation for:`n`n " baseName,
     )
     name := Trim(name)
 
@@ -164,13 +165,14 @@ SwitchVariation() {
     WarnNoInstanceSelected()
     return false
   }
+  baseName := GetDisplayName(base)
 
   pickedVar := PickVariationForBase(base)
   if (pickedVar = "__cancel__")
     return false
 
   if pickedVar == "" {
-    MsgBox "No variation for: '" base "'`nCreate one with " CFG.new_variation,
+    MsgBox "No variation for: '" baseName "'`nCreate one with " CFG.new_variation,
       "Tracker", 48
     return false
   }
@@ -380,11 +382,11 @@ DeleteInstance() {
   if (vars.Length > 0) {
     extra .= "`n`nThis will also delete variations:`n"
     for _, v in vars
-      extra .= "  - " base VARIATION_SEPARATOR v "`n"
+      extra .= "  - " GetDisplayName(v) "`n"
   }
 
   choice := MsgBox(
-    "Delete '" base "'?`n`n"
+    "Delete '" baseName "'?`n`n"
     . "This will remove it from instances.ini"
     . (FileExist(HistoryPath(base)) ? " and delete its history log." : ".")
     . extra,
