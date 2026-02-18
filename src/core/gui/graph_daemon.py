@@ -17,12 +17,15 @@ def _run_render(
     old_argv = sys.argv[:]
     sys.argv = [str(render_script), csv_path, out_path, title]
     buf = io.StringIO()
+
     try:
         with contextlib.redirect_stderr(buf):
             runpy.run_path(str(render_script), run_name="__main__")
         return 0, buf.getvalue()
+
     except SystemExit as e:
         return int(e.code) if isinstance(e.code, int) else 0, buf.getvalue()
+
     finally:
         sys.argv = old_argv
 

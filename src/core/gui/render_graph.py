@@ -28,6 +28,7 @@ def main() -> int:
         if not Path(csv_path).exists():
             raise FileNotFoundError(f"CSV file not found: {csv_path}")
         df = pd.read_csv(csv_path, names=["ts", "instance", "result"])
+
     except Exception:
         # Let the daemon capture it
         traceback.print_exc()
