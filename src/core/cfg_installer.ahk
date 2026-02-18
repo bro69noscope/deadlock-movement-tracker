@@ -34,8 +34,8 @@ EnsureCfgInstalled() {
     Debug(A_ThisFunc ": FAILED`n" err)
     MsgBox(
       "Write failed.`n`n"
-      . outPath "`n`n"
-      . e.Message,
+      outPath "`n`n"
+      e.Message,
       "Movement Tracker",
       0x30
     )

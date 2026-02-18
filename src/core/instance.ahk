@@ -338,9 +338,9 @@ DeleteInstance() {
 
     choice := MsgBox(
       "Delete variation?`n`n"
-      . "Base: " baseName "`n"
-      . "Variation: " varName "`n`n"
-      . "This will delete its stats, saved position, and its history log.",
+      "Base: " baseName "`n"
+      "Variation: " varName "`n`n"
+      "This will delete its stats, saved position, and its history log.",
       "Tracker",
       "YesNo Icon!"
     )
@@ -387,9 +387,9 @@ DeleteInstance() {
 
   choice := MsgBox(
     "Delete '" baseName "'?`n`n"
-    . "This will remove it from instances.ini"
-    . (FileExist(HistoryPath(base)) ? " and delete its history log." : ".")
-    . extra,
+    "This will remove it from instances.ini"
+    (FileExist(HistoryPath(base)) ? " and delete its history log." : ".")
+    extra,
     "Tracker",
     "YesNo Icon!"
   )
@@ -579,9 +579,9 @@ LoadInstancePos(instanceName) {
 
     MsgBox(
       "No saved position for '" GetDisplayName(name) "'.`n`n"
-      . "Reason: " reason "`n"
-      . "Fix: reposition it with " CFG.reposition
-      . " (or recreate with " CFG.new ").",
+      "Reason: " reason "`n"
+      "Fix: reposition it with " CFG.reposition
+      " (or recreate with " CFG.new ").",
       "Movement Tracker",
       0x30
     )

@@ -81,8 +81,8 @@ EnsureAutoexecConfigured() {
     }
     MsgBox(
       "If you are sure that autoexec.cfg already contains the required lines,"
-      . " it would be appreciated if you report this false positive.`n`n"
-      . "TY!",
+      " it would be appreciated if you report this false positive.`n`n"
+      "TY!",
       "Movement Tracker",
       0x30
     )
@@ -115,8 +115,8 @@ EnsureAutoexecConfigured() {
     Debug(A_ThisFunc ": FAILED`n" err)
     MsgBox(
       "Failed to update autoexec.cfg.`n`n"
-      . autoexec "`n`n"
-      . e.Message,
+      autoexec "`n`n"
+      e.Message,
       "Movement Tracker",
       0x30
     )

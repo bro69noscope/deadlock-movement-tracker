@@ -19,7 +19,7 @@ GraphDaemon_Warmup() {
   if !FileExist(csv) {
     FileAppend(
       "0,init,success`n"
-      . "1,init,fail`n",
+      "1,init,fail`n",
       csv,
       "UTF-8"
     )
