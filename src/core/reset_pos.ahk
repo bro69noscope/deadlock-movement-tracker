@@ -12,7 +12,7 @@ ShouldSkipRandomize(instanceName) {
   prefixes := []
   for _, p in StrSplit(raw, ",") {
     p := Trim(p)
-    if (p != "")
+    if p != ""
       prefixes.Push(p)
   }
 
@@ -32,18 +32,18 @@ ShouldSkipRandomize(instanceName) {
 
 RandomizeResetPos(instanceName) {
   Perf.Step(A_ThisFunc ": init")
-  if (instanceName = "")
+  if instanceName = ""
     return
   if ShouldSkipRandomize(instanceName)
     return
 
   base := IniRead(INSTANCES_INI, instanceName, "pos_line", "")
   base := Trim(StrReplace(StrReplace(base, "`r", ""), "`n", ""))
-  if (base = "")
+  if base = ""
     return
 
   delta := Max(0, CFG.randomize_reset_units)
-  if (delta <= 0)
+  if delta <= 0
     return
 
   line := Trim(base)
@@ -59,7 +59,7 @@ RandomizeResetPos(instanceName) {
     return
   }
 
-  if (StrLower(parts[1]) != "setpos") {
+  if StrLower(parts[1]) != "setpos" {
     Debug(A_ThisFunc ": expected 'setpos' but got '" parts[1] "'")
     return
   }

@@ -14,7 +14,10 @@ tray.Delete()
 tray.Add(appName, (*) => 0)
 tray.Disable(appName)
 tray.Add()
-tray.Add("Open user_settings.ini", (*) => Run('"' A_ScriptDir '\..\user_settings.ini"'))
+
+tray.Add("Open user_settings.ini", (*) => Run(
+  '"' A_ScriptDir '\..\user_settings.ini"'))
+
 tray.Add("Reload", (*) => Reload())
 tray.Add()
 tray.Add("Exit", (*) => ConfirmExit())
@@ -42,7 +45,7 @@ ExitHandler(ExitReason, ExitCode) {
 
 OnExit(ExitHandler)
 
-if (A_Args.Length >= 1 && A_Args[1] = "--uninstall") {
+if A_Args.Length >= 1 && A_Args[1] = "--uninstall" {
   Uninstall()
   ExitApp()
 }

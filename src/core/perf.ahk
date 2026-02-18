@@ -11,7 +11,7 @@ class Perf {
   static lines := ""
 
   static _Init() {
-    if (Perf.freq != 0)
+    if Perf.freq != 0
       return
 
     f := 0
@@ -29,7 +29,7 @@ class Perf {
   }
 
   static _Ms(dtCounts) {
-    if (Perf.freq = 0)
+    if Perf.freq = 0
       return 0.0
     return (dtCounts * 1000.0) / Perf.freq
   }
@@ -78,7 +78,7 @@ class Perf {
     now := Perf._Now()
     total := now - Perf.t0
 
-    if (label = "")
+    if label = ""
       label := Perf.label
 
     Perf._Log("perf END" (label != "" ? " [" label "]" : "") ": total="

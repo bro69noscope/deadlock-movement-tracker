@@ -12,7 +12,7 @@ ListInstances(variationSeparator) {
   all := []
   for _, raw in StrSplit(txt, "`n", "`r") {
     s := Trim(raw)
-    if (s = "" || s = "__global__")
+    if s = "" || s = "__global__"
       continue
     if InStr(s, variationSeparator)
       continue
@@ -20,7 +20,7 @@ ListInstances(variationSeparator) {
     all.Push(s)
   }
 
-  if (all.Length = 0) {
+  if all.Length = 0 {
     MsgBox(
       "No instances found.`nPress " CFG.new
       " to create a new instance.",
@@ -73,7 +73,7 @@ ListInstances(variationSeparator) {
 
     pairsOut := []
 
-    if (q = "") {
+    if q = "" {
       for _, key in all2
         pairsOut.Push({ key: key, label: GetDisplayName(key) })
     } else {
@@ -81,7 +81,7 @@ ListInstances(variationSeparator) {
       for _, key in all2 {
         label := GetDisplayName(key)
         sc := FuzzyScore(q, StrLower(label))
-        if (sc != "")
+        if sc != ""
           scored.Push({ score: sc, key: key, label: label })
       }
 
@@ -105,7 +105,7 @@ ListInstances(variationSeparator) {
 
     lb2.Delete()
     guiObj.__keys := newKeys
-    if (newLabels.Length) {
+    if newLabels.Length {
       lb2.Add(newLabels)
       lb2.Choose(1)
     }
@@ -113,9 +113,9 @@ ListInstances(variationSeparator) {
   }
 
   ComparePairs(a, b) {
-    if (a.score > b.score)
+    if a.score > b.score
       return -1
-    if (a.score < b.score)
+    if a.score < b.score
       return 1
     return StrCompare(a.name, b.name, true)
   }
@@ -124,9 +124,9 @@ ListInstances(variationSeparator) {
   FuzzyScore(needle, hay) {
     nLen := StrLen(needle)
     hLen := StrLen(hay)
-    if (nLen = 0)
+    if nLen = 0
       return 0
-    if (hLen = 0)
+    if hLen = 0
       return ""
     nIdx := 1
     score := 0
@@ -138,11 +138,11 @@ ListInstances(variationSeparator) {
       cH := SubStr(hay, A_Index, 1)
       cN := SubStr(needle, nIdx, 1)
 
-      if (cH = cN) {
-        if (firstPos = 0)
+      if cH = cN {
+        if firstPos = 0
           firstPos := A_Index
 
-        if (lastPos = A_Index - 1) {
+        if lastPos = A_Index - 1 {
           consec += 1
           score += 25 + (consec * 10)
         } else {
@@ -155,12 +155,12 @@ ListInstances(variationSeparator) {
 
         lastPos := A_Index
         nIdx += 1
-        if (nIdx > nLen)
+        if nIdx > nLen
           break
       }
     }
 
-    if (nIdx <= nLen)
+    if nIdx <= nLen
       return ""  ; didn't match all chars in order
 
     ; prefer tighter/shorter names a bit
@@ -172,7 +172,7 @@ ListInstances(variationSeparator) {
 
   SelectCurrentGui(guiObj) {
     idx := guiObj.__lb.Value
-    if (idx <= 0)
+    if idx <= 0
       return
     guiObj.__picked := guiObj.__keys[idx]
     guiObj.Destroy()

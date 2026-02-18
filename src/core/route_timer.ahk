@@ -60,7 +60,7 @@ class RouteTimer {
     if !WinActive("ahk_exe deadlock.exe")
       return
 
-    if (!RouteTimer.armed || RouteTimer.running)
+    if !RouteTimer.armed || RouteTimer.running
       return
 
     RouteTimer.armed := false
@@ -78,7 +78,7 @@ class RouteTimer {
 
   static _TimeScaleString() {
     ts := (CURRENT_TIMESCALE = "" ? 1 : CURRENT_TIMESCALE + 0)
-    if (ts = 1)
+    if ts = 1
       return ""
     return Round(ts * 100) "%"
   }
@@ -128,7 +128,7 @@ class RouteTimer {
   }
 
   static _Format(ms) {
-    if (ms < 0)
+    if ms < 0
       ms := 0
 
     totalSec := Floor(ms / 1000)
@@ -136,7 +136,7 @@ class RouteTimer {
     s := Mod(totalSec, 60)
     milli := Mod(ms, 1000)
 
-    if (m > 0)
+    if m > 0
       return Format("{1:02d}:{2:02d}.{3:03d}", m, s, milli)
     else
       return Format("{1}.{2:03d}s", s, milli)
@@ -157,7 +157,7 @@ class RouteTimer {
     if RouteTimer.running {
       ms := A_TickCount - RouteTimer.startTick
       RouteTimer._SetText(RouteTimer._Format(ms))
-    } else if (RouteTimer.lastMs > 0) {
+    } else if RouteTimer.lastMs > 0 {
       RouteTimer._SetText(RouteTimer._Format(RouteTimer.lastMs))
     } else {
       RouteTimer._SetText("0.000s")

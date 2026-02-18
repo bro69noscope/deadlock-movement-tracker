@@ -32,7 +32,7 @@ RotateLogIfTooBig(logPath) {
   catch
     return
 
-  if (size <= MAX_LOG_BYTES)
+  if size <= MAX_LOG_BYTES
     return
 
   Loop MAX_LOG_BACKUPS - 1 {

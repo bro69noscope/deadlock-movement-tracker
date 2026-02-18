@@ -77,7 +77,7 @@ StopGraphDaemon(timeoutMs := 1000) {
     Sleep 25
   }
 
-  if (pid && ProcessExist(pid)) {
+  if pid && ProcessExist(pid) {
     try ProcessClose(pid)
   }
 
@@ -97,7 +97,7 @@ EnsureGraphDaemon() {
   ; Fast path: daemon already running
   pid := 0
   try pid := Integer(Trim(FileRead(GRAPH_PID_PATH, "UTF-8")))
-  if (pid && ProcessExist(pid))
+  if pid && ProcessExist(pid)
     return true
 
   daemon := GUI_DIR "\graph_daemon.py"
@@ -111,7 +111,7 @@ EnsureGraphDaemon() {
   while (A_TickCount - t0 < 2000) {
     if FileExist(GRAPH_PID_PATH) {
       try pid := Integer(Trim(FileRead(GRAPH_PID_PATH, "UTF-8")))
-      if (pid && ProcessExist(pid))
+      if pid && ProcessExist(pid)
         return true
     }
     Sleep 25

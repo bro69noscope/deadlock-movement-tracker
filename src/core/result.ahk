@@ -29,7 +29,7 @@ MarkResult(result) {
   name := GetCurrentRouteKey()
   Perf.Step(A_ThisFunc ": GetCurrentRouteKey")
 
-  if (name = "") {
+  if name = "" {
     WarnNoInstanceSelected()
     Perf.End("early-exit")
     return
@@ -49,10 +49,10 @@ MarkResult(result) {
     streakBest := IniRead(ini, name, "streak_best", "0") + 0
     Perf.Step(A_ThisFunc ": IniRead stats (normal)")
 
-    if (result = "success") {
+    if result = "success" {
       s += 1
       streakCur += 1
-      if (streakCur > streakBest)
+      if streakCur > streakBest
         streakBest := streakCur
     } else {
       f += 1
@@ -72,7 +72,7 @@ MarkResult(result) {
 
     ResetInGamePos(name)
 
-    if (CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak) {
+    if CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak {
       StreakPopup.Show(streakCur)
       Perf.Step(A_ThisFunc ": StreakPopup.Show")
     }
@@ -92,10 +92,10 @@ MarkResult(result) {
   streakBest := IniReadTS(ini, name, ts, "streak_best", "0") + 0
   Perf.Step(A_ThisFunc ": IniReadTS stats")
 
-  if (result = "success") {
+  if result = "success" {
     s += 1
     streakCur += 1
-    if (streakCur > streakBest)
+    if streakCur > streakBest
       streakBest := streakCur
   } else {
     f += 1
@@ -116,7 +116,7 @@ MarkResult(result) {
   ResetInGamePos(name)
   Perf.Step(A_ThisFunc ": ResetInGamePos returned (ts)")
 
-  if (CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak) {
+  if CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak {
     StreakPopup.Show(streakCur)
     Perf.Step(A_ThisFunc ": StreakPopup.Show (ts)")
   }
@@ -130,7 +130,7 @@ ForgetLastResult() {
   name := GetCurrentRouteKey()
   Perf.Step(A_ThisFunc ": GetCurrentRouteKey")
 
-  if (name = "") {
+  if name = "" {
     WarnNoInstanceSelected()
     Perf.End("early-exit")
     return

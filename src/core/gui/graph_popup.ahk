@@ -14,13 +14,13 @@ class GraphPopup {
   }
 
   static _TryDismissBySpace(*) {
-    if (GraphPopup.hwnd && WinExist("ahk_id " GraphPopup.hwnd))
+    if GraphPopup.hwnd && WinExist("ahk_id " GraphPopup.hwnd)
       GraphPopup.Dismiss(true)
   }
 
   static _Render(&pngOut, &csvOut, &titleOut, timeoutMs := 5000) {
     cur := GetCurrentRouteKey()
-    if (cur = "")
+    if cur = ""
       return false
 
     ts := CURRENT_TIMESCALE
@@ -34,7 +34,7 @@ class GraphPopup {
     }
 
     title := GetDisplayName(CURRENT_INSTANCE)
-    if (CURRENT_VARIATION != "")
+    if CURRENT_VARIATION != ""
       title .= VARIATION_SEPARATOR GetDisplayName(cur)
     title .= titleSuffix
 
@@ -45,7 +45,7 @@ class GraphPopup {
       title "'")
 
     respJson := GraphDaemon_Render(csv, png, title, timeoutMs)
-    if (respJson = "")
+    if respJson = ""
       return false
 
     try resp := Jxon_Load(&respJson)
@@ -95,11 +95,11 @@ class GraphPopup {
   }
 
   static Show() {
-    if (GraphPopup.hwnd && WinExist("ahk_id " GraphPopup.hwnd))
+    if GraphPopup.hwnd && WinExist("ahk_id " GraphPopup.hwnd)
       GraphPopup.Dismiss(false)
 
     cur := GetCurrentRouteKey()
-    if (cur = "") {
+    if cur = "" {
       WarnNoInstanceSelected()
       return false
     }
@@ -133,7 +133,7 @@ class GraphPopup {
   }
 
   static Dismiss(focusBack := true) {
-    if (GraphPopup.spaceBound) {
+    if GraphPopup.spaceBound {
       HotIf(GraphPopup._SpaceHotIf)
       Hotkey("Space", GraphPopup._TryDismissBySpace, "Off")
       HotIf()
@@ -148,7 +148,7 @@ class GraphPopup {
     GraphPopup.hwnd := 0
     GraphPopup.pic := 0
 
-    if (focusBack)
+    if focusBack
       WinActivate("ahk_exe deadlock.exe")
   }
 }

@@ -7,7 +7,7 @@ GetPoswatchPidPath() {
 
 IsPidRunning(pidText) {
   pid := Integer(Trim(pidText))
-  if (pid <= 0)
+  if pid <= 0
     return false
   return ProcessExist(pid) != 0
 }
@@ -21,7 +21,7 @@ StopPoswatch() {
   try pidText := FileRead(pidFile, "UTF-8")
 
   pid := Integer(Trim(pidText))
-  if (pid > 0 && ProcessExist(pid)) {
+  if pid > 0 && ProcessExist(pid) {
     try {
       ProcessClose(pid)
       Debug(A_ThisFunc ": terminated pid=" pid)
@@ -44,7 +44,7 @@ StartPoswatch() {
   if FileExist(pidFile) {
     oldPidText := ""
     try oldPidText := FileRead(pidFile, "UTF-8")
-    if (IsPidRunning(oldPidText)) {
+    if IsPidRunning(oldPidText) {
       Debug(A_ThisFunc ": already running pid=" Trim(oldPidText))
       return true
     } else {
@@ -55,7 +55,7 @@ StartPoswatch() {
 
 
   exe := FindPowerShellExe()
-  if (exe = "") {
+  if exe = "" {
     MsgBox "Couldn't find PowerShell (pwsh/powershell.exe).", "Movement Tracker", 48
     return false
   }
@@ -104,7 +104,7 @@ FindPowerShellExe() {
     p := Trim(FileRead(tmp, "UTF-8"))
     ; where can return multiple lines; take first (NOTE: not sure abt that)
     p := StrSplit(p, "`n", "`r")[1]
-    if (p != "" && FileExist(p))
+    if p != "" && FileExist(p)
       return p
   }
 

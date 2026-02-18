@@ -7,13 +7,13 @@ ReadVariations(baseName) {
   ini := INSTANCES_INI
   raw := IniRead(ini, baseName, "variations", "")
   raw := Trim(raw)
-  if (raw = "")
+  if raw = ""
     return []
 
   out := []
   for _, v in StrSplit(raw, "|") {
     v := Trim(v)
-    if (v != "")
+    if v != ""
       out.Push(v)
   }
   return out
@@ -22,7 +22,7 @@ ReadVariations(baseName) {
 PickVariationForBase(baseName) {
   BTN_WIDTH := 220
   vars := ReadVariations(baseName)
-  if (vars.Length = 0)
+  if vars.Length = 0
     return ""
 
   shownKeys := []

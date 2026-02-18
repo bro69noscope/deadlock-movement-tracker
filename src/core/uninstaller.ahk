@@ -57,7 +57,7 @@ RemoveAutoexecLines(&removedLines := "", &autoexecPath := "") {
     original := line
     l := Trim(line)
 
-    if (l = "") {
+    if l = "" {
       outLines.Push(original)
       continue
     }
@@ -71,7 +71,7 @@ RemoveAutoexecLines(&removedLines := "", &autoexecPath := "") {
     outLines.Push(original)
   }
 
-  if (removed = 0) {
+  if removed = 0 {
     Debug(A_ThisFunc ": nothing to remove in autoexec.cfg")
     return true
   }
@@ -115,7 +115,7 @@ Uninstall() {
     title,
     "YesNo Icon!"
   )
-  if (choice = "No")
+  if choice = "No"
     return false
 
 
@@ -141,9 +141,9 @@ Uninstall() {
   autoexecPath := ""
   okAuto := RemoveAutoexecLines(&removedText, &autoexecPath)
 
-  if (!okAuto) {
+  if !okAuto {
     MsgBox("Failed to edit autoexec.cfg:" "`n" autoexecPath, title, 0x30)
-  } else if (removedText != "") {
+  } else if removedText != "" {
     MsgBox(
       "Automatically removed these lines from autoexec.cfg ✓:" "`n"
       removedText,
@@ -153,7 +153,7 @@ Uninstall() {
   }
 
 
-  if (wipeData) {
+  if wipeData {
     SafeDirDelete(DATA_DIR)
   }
 

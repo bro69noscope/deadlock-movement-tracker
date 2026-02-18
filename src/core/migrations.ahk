@@ -10,7 +10,7 @@ RunMigrations() {
   state := STATE_INI
   cur := IniRead(state, "meta", "data_version", "0") + 0
 
-  if (cur < 1) {
+  if cur < 1 {
     Migration_1_AddDisplayName_NormalizeHistoryFiles()
     cur := 1
   }
@@ -42,7 +42,7 @@ TempHopMove(oldPath, newPath) {
   if !FileExist(oldPath)
     return true
 
-  if (StrCompare(oldPath, newPath, 1) = 0)
+  if StrCompare(oldPath, newPath, 1) = 0
     return true
 
   Debug(A_ThisFunc ": migrating: " oldPath " -> " newPath)
@@ -64,9 +64,9 @@ TempHopMove(oldPath, newPath) {
     newTxt := FileRead(newPath, "UTF-8")
 
     merged := ""
-    if (Trim(newTxt) != "")
+    if Trim(newTxt) != ""
       merged .= RTrim(newTxt, "`r`n") "`n"
-    if (Trim(oldTxt) != "")
+    if Trim(oldTxt) != ""
       merged .= RTrim(oldTxt, "`r`n") "`n"
 
     outTmp := dir "\__mvtrack_merge__" A_TickCount ".csv"
@@ -95,7 +95,7 @@ Migration_1_AddDisplayName_NormalizeHistoryFiles() {
 
   for _, raw in StrSplit(txt, "`n", "`r") {
     sec := Trim(raw)
-    if (sec = "" || sec = "__global__")
+    if sec = "" || sec = "__global__"
       continue
 
     ; 1) ensure display_name exists (only add if missing)
@@ -104,12 +104,12 @@ Migration_1_AddDisplayName_NormalizeHistoryFiles() {
     catch
       dn := ""
 
-    if (dn = "") {
+    if dn = "" {
       name := sec
 
       if InStr(sec, VARIATION_SEPARATOR) {
         parts := StrSplit(sec, VARIATION_SEPARATOR)
-        if (parts.Length >= 2) {
+        if parts.Length >= 2 {
           baseKey := Trim(parts[1])
           varKey := Trim(parts[2])
 
@@ -118,7 +118,7 @@ Migration_1_AddDisplayName_NormalizeHistoryFiles() {
           m := Map()
           for _, idx in StrSplit(rawVars, "|") {
             idx := Trim(idx)
-            if (idx != "")
+            if idx != ""
               m[CanonKey(idx)] := idx
           }
 
@@ -132,7 +132,7 @@ Migration_1_AddDisplayName_NormalizeHistoryFiles() {
     oldPath := LegacyHistoryPath(sec)
     newPath := HistoryPath(sec)
 
-    if (StrCompare(oldPath, newPath, 1) != 0 && FileExist(oldPath)) {
+    if StrCompare(oldPath, newPath, 1) != 0 && FileExist(oldPath) {
       TempHopMove(oldPath, newPath)
     }
   }

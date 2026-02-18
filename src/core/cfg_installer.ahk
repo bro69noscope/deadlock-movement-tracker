@@ -9,7 +9,7 @@ EnsureCfgInstalled() {
   if FileExist(outPath) {
     try {
       existing := FileRead(outPath)
-      if (existing = txt) {
+      if existing = txt {
         Debug(A_ThisFunc ": " fileName " already up-to-date at " outPath)
         return true
       }

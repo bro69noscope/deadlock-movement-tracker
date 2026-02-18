@@ -11,7 +11,7 @@ class StreakPopup {
   }
 
   static _TryDismissBySpace(*) {
-    if (StreakPopup.hwnd && WinExist("ahk_id " StreakPopup.hwnd))
+    if StreakPopup.hwnd && WinExist("ahk_id " StreakPopup.hwnd)
       StreakPopup.Dismiss(true)
   }
 
@@ -35,7 +35,7 @@ class StreakPopup {
 
     Loop split.Length - start + 1 {
       line := Trim(split[start + A_Index - 1])
-      if (line = "")
+      if line = ""
         continue
       total++
 
@@ -89,7 +89,7 @@ class StreakPopup {
   }
 
   static Dismiss(focusBack := true) {
-    if (StreakPopup.spaceBound) {
+    if StreakPopup.spaceBound {
       HotIf(StreakPopup._SpaceHotIf)
       Hotkey("Space", StreakPopup._TryDismissBySpace, "Off")
       HotIf()
@@ -103,7 +103,7 @@ class StreakPopup {
     StreakPopup.gui := 0
     StreakPopup.hwnd := 0
 
-    if (focusBack)
+    if focusBack
       WinActivate("ahk_exe deadlock.exe")
   }
 }

@@ -39,7 +39,7 @@ HistoryPath(instanceName, timeScale := 1) {
   name := Safe(CanonKey(instanceName))
   path := INSTANCE_HISTORY_DIR "\" name
   pct := Round(timeScale * 100)
-  if (pct != 100)
+  if pct != 100
     path .= "_" pct "pct"
   return path ".csv"
 }
@@ -81,11 +81,11 @@ UndoHistory(instanceName, timeScale := 1) {
   lines := []
   for _, raw in StrSplit(text, "`n", "`r") {
     v := Trim(raw)
-    if (v != "")
+    if v != ""
       lines.Push(v)
   }
 
-  if (lines.Length = 0) {
+  if lines.Length = 0 {
     MsgBox "Reached end of sucess history to forget for '" instanceName "'.",
       "Tracker", 48
     return false
@@ -98,7 +98,7 @@ UndoHistory(instanceName, timeScale := 1) {
     out .= v "`n"
 
   try FileDelete(path)
-  if (out != "")
+  if out != ""
     FileAppend(out, path, "UTF-8")
 
   return true
@@ -115,18 +115,18 @@ RebuildStatsFromHistory(instanceName, timeScale := 1) {
     text := FileRead(path, "UTF-8")
     for _, raw in StrSplit(text, "`n", "`r") {
       rline := Trim(raw)
-      if (rline = "")
+      if rline = ""
         continue
 
       parts := StrSplit(rline, ",")
       r := Trim(parts[parts.Length])
 
-      if (r = "success") {
+      if r = "success" {
         success += 1
         streakCur += 1
-        if (streakCur > streakBest)
+        if streakCur > streakBest
           streakBest := streakCur
-      } else if (r = "fail") {
+      } else if r = "fail" {
         fail += 1
         streakCur := 0
       }
@@ -138,7 +138,7 @@ RebuildStatsFromHistory(instanceName, timeScale := 1) {
 
   tsPct := Round(timeScale * 100)
 
-  if (tsPct = 100) {
+  if tsPct = 100 {
     IniWrite success, ini, instanceName, "success"
     IniWrite fail, ini, instanceName, "fail"
     IniWrite pct, ini, instanceName, "success_pct"

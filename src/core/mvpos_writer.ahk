@@ -12,7 +12,7 @@ WriteMvposCfg(posLine, isTempInstance := false) {
     mvtrackPos := MVTRACK_CFG_POS_PATH
 
   posLine := Trim(posLine)
-  if (posLine = "") {
+  if posLine = "" {
     Debug(A_ThisFunc ": posLine empty -> abort")
     return false
   }

@@ -30,7 +30,7 @@ ConfirmExit() {
     "Movement Tracker",
     "YesNo Icon!"
   )
-  if (choice = "Yes")
+  if choice = "Yes"
     ExitApp()
 }
 

@@ -48,7 +48,7 @@ RenameBaseAndVariations(oldBase, newBase) {
 InitRouteStats(routeKey) {
   ini := INSTANCES_INI
 
-  if (routeKey = "")
+  if routeKey = ""
     return false
 
   IniWrite "0", ini, routeKey, "success"
@@ -68,7 +68,7 @@ InitRouteStats(routeKey) {
 ValidateInstanceName(name) {
   name := Trim(name)
 
-  if (name = "__global__")
+  if name = "__global__"
     return { ok: false, reason: "reserved_name (__global__)" }
 
   if InStr(name, "|")
@@ -103,7 +103,7 @@ WriteVariations(baseName, vars) {
 
   for _, v in vars {
     v := CanonKey(v)
-    if (v = "")
+    if v = ""
       continue
     if !seen.Has(v) {
       seen[v] := true
@@ -120,7 +120,7 @@ WriteVariations(baseName, vars) {
 
 NewVariation() {
   base := Trim(CURRENT_INSTANCE)
-  if (base = "") {
+  if base = "" {
     WarnNoInstanceSelected()
     return false
   }
@@ -134,13 +134,13 @@ NewVariation() {
     )
     name := Trim(name)
 
-    if (name = "")
+    if name = ""
       return false
 
     defaultVal := name
 
     v := ValidateInstanceName(name)
-    if (!v.ok) {
+    if !v.ok {
       MsgBox("Invalid name (" v.reason ").`n`nTry again.", "Tracker", 48)
       continue
     }
@@ -170,14 +170,14 @@ NewVariation() {
 
 SwitchVariation() {
   base := CURRENT_INSTANCE
-  if (base = "") {
+  if base = "" {
     WarnNoInstanceSelected()
     return false
   }
   baseName := GetDisplayName(base)
 
   pickedVar := PickVariationForBase(base)
-  if (pickedVar = "__cancel__")
+  if pickedVar = "__cancel__"
     return false
 
   if pickedVar == "" {
@@ -218,7 +218,7 @@ RenameVariation(base, oldVar, newVar) {
   if InstanceExists(newKey) {
     choice := _AskOverwriteExistingInstance(newKey)
 
-    if (choice = "No")
+    if choice = "No"
       return false
 
     try IniDelete(ini, newKey)
@@ -237,7 +237,7 @@ RenameVariation(base, oldVar, newVar) {
   vars := ReadVariations(base)
   kept := []
   for _, v in vars {
-    if (StrLower(Trim(v)) = StrLower(oldVar))
+    if StrLower(Trim(v)) = StrLower(oldVar)
       kept.Push(newVar)
     else
       kept.Push(v)
@@ -258,11 +258,11 @@ NewInstance() {
     name := PromptName("New instance name:")
     name := Trim(name)
 
-    if (name = "")
+    if name = ""
       return
 
     v := ValidateInstanceName(name)
-    if (!v.ok) {
+    if !v.ok {
       MsgBox("Invalid name (" v.reason ").`n`nTry again.", "Tracker", 48)
       continue
     }
@@ -273,7 +273,7 @@ NewInstance() {
     if InstanceExists(name) {
       choice := _AskOverwriteExistingInstance(name)
 
-      if (choice = "No")
+      if choice = "No"
         continue
 
       IniDelete ini, name
@@ -291,7 +291,7 @@ NewInstance() {
 
 SwitchInstance() {
   base := ListInstances(VARIATION_SEPARATOR)
-  if (base = "")
+  if base = ""
     return
 
   if !InstanceExists(base) {
@@ -300,11 +300,11 @@ SwitchInstance() {
   }
 
   pickedVar := PickVariationForBase(base)
-  if (pickedVar = "__cancel__")
+  if pickedVar = "__cancel__"
     return
 
   Perf.Start(A_ThisFunc)
-  if (pickedVar = "__main__")
+  if pickedVar = "__main__"
     SetCurrentInstance(base)
   else
     SetCurrentInstance(base, pickedVar)
@@ -337,7 +337,7 @@ _DeleteVariation(base, var) {
   vars := ReadVariations(base)
   kept := []
   for _, v in vars {
-    if (StrLower(Trim(v)) != StrLower(var))
+    if StrLower(Trim(v)) != StrLower(var)
       kept.Push(v)
   }
   WriteVariations(base, kept)
@@ -429,7 +429,7 @@ DeleteInstance() {
 
 RepositionInstance() {
   name := GetDisplayName(GetCurrentRouteKey())
-  if (name = "") {
+  if name = "" {
     WarnNoInstanceSelected()
     return false
   }
@@ -439,7 +439,7 @@ RepositionInstance() {
     "Tracker",
     "YesNo Icon!"
   )
-  if (choice = "No")
+  if choice = "No"
     return false
 
   SaveCurrentInstancePos()
@@ -452,12 +452,12 @@ RenameInstance() {
   base := Trim(CURRENT_INSTANCE)
   var := Trim(CURRENT_VARIATION)
 
-  if (base = "") {
+  if base = "" {
     WarnNoInstanceSelected()
     return false
   }
 
-  if (var != "") {
+  if var != "" {
     full := base VARIATION_SEPARATOR var
     varName := GetDisplayName(full)
     baseName := GetDisplayName(base)
@@ -472,16 +472,16 @@ RenameInstance() {
       )
       newVar := Trim(newVar)
 
-      if (newVar = "" || newVar == varName)
+      if newVar = "" || newVar == varName
         return false
 
-      if (StrLower(newVar) = StrLower(varName)) {
+      if StrLower(newVar) = StrLower(varName) {
         SetDisplayName(base VARIATION_SEPARATOR var, newVar)
         return true
       }
 
       v := ValidateInstanceName(newVar)
-      if (!v.ok) {
+      if !v.ok {
         MsgBox("Invalid name (" v.reason ").`n`nTry again.", "Tracker", 48)
         continue
       }
@@ -504,16 +504,16 @@ RenameInstance() {
     newName := PromptName("Rename instance:`n`nOld: " oldName "`nNew:", oldName)
     newName := Trim(newName)
 
-    if (newName = "" || newName == oldName)
+    if newName = "" || newName == oldName
       return false
 
-    if (StrLower(newName) = StrLower(oldName)) {
+    if StrLower(newName) = StrLower(oldName) {
       SetDisplayName(base, newName)
       return true
     }
 
     v := ValidateInstanceName(newName)
-    if (!v.ok) {
+    if !v.ok {
       MsgBox("Invalid name (" v.reason ").`n`nTry again.", "Tracker", 48)
       continue
     }
@@ -522,7 +522,7 @@ RenameInstance() {
     if InstanceExists(newName) {
       choice := _AskOverwriteExistingInstance(newName)
 
-      if (choice = "No")
+      if choice = "No"
         continue
 
       try IniDelete ini, newName
@@ -576,7 +576,7 @@ LoadInstancePos(instanceName) {
   pos := StrReplace(pos, "`n", "")
   pos := Trim(pos)
 
-  if (pos = "") {
+  if pos = "" {
     reason := hasKey ? "pos_line_empty" : "pos_line_missing"
     Debug(A_ThisFunc ": NO POS. instance=" name " reason=" reason " path=" ini)
 
@@ -612,14 +612,14 @@ SetCurrentInstance(baseName, variation := "") {
 
   rk := GetCurrentRouteKey()
   Perf.Step(A_ThisFunc ": GetCurrentRouteKey")
-  if (rk != "")
+  if rk != ""
     IniWrite NowStamp(), ini, rk, "last_switch"
   Perf.Step(A_ThisFunc ": NowStamp write")
 }
 
 SaveCurrentInstancePos() {
   ini := INSTANCES_INI
-  if (CURRENT_INSTANCE = "") {
+  if CURRENT_INSTANCE = "" {
     Debug(A_thisFunc ": no current instance -> abort")
     return false
   }

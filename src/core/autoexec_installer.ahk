@@ -4,7 +4,7 @@
 #Include gui\yes_no_dontask.ahk
 
 NormalizeCfgText(text) {
-  if (SubStr(text, 1, 1) = Chr(0xFEFF))
+  if SubStr(text, 1, 1) = Chr(0xFEFF)
     text := SubStr(text, 2)
   text := NormalizeNewlines(text)
   return text
@@ -42,12 +42,12 @@ EnsureAutoexecConfigured() {
 
   missingLines := []
 
-  if (!hasCheats)
+  if !hasCheats
     missingLines.Push("sv_cheats 1")
-  if (!hasExec)
+  if !hasExec
     missingLines.Push("exec mvtrack.cfg")
 
-  if (missingLines.Length = 0) {
+  if missingLines.Length = 0 {
     Debug(A_ThisFunc ": autoexec already contains required lines: " autoexec)
     return true
   }
@@ -61,7 +61,7 @@ EnsureAutoexecConfigured() {
     pretty .= "  " line "`n"
 
   skip := IniRead(state, "ui", "skip_autoexec_prompt", "0")
-  if (skip = "1") {
+  if skip = "1" {
     Debug(A_ThisFunc ": skipped (dont ask again)")
     return false
   }
@@ -74,8 +74,8 @@ EnsureAutoexecConfigured() {
     autoexec
   )
 
-  if (res.result = "No") {
-    if (res.dontAsk) {
+  if res.result = "No" {
+    if res.dontAsk {
       IniWrite "1", state, "ui", "skip_autoexec_prompt"
       Debug(A_ThisFunc ": user declined + dont ask again")
     }
@@ -100,9 +100,9 @@ EnsureAutoexecConfigured() {
     } else {
 
       norm := NormalizeCfgText(txt)
-      if (norm != "" && SubStr(norm, -1) != "`n")
+      if norm != "" && SubStr(norm, -1) != "`n"
         FileAppend("`n", autoexec, "UTF-8-RAW")
-      if (Trim(norm) != "")
+      if Trim(norm) != ""
         FileAppend("`n", autoexec, "UTF-8-RAW")
     }
 

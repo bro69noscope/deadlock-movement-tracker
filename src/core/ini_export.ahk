@@ -2,7 +2,7 @@
 #Include helpers.ahk
 
 ExportPrettyIniSnapshot(outPath := "") {
-  if (outPath = "")
+  if outPath = ""
     outPath := DATA_DIR "\instances.pretty.ini"
   ini := INSTANCES_INI
 
@@ -16,7 +16,7 @@ ExportPrettyIniSnapshot(outPath := "") {
   sections := []
   for _, raw in StrSplit(sectionsText, "`n", "`r") {
     s := Trim(raw)
-    if (s != "")
+    if s != ""
       sections.Push(s)
   }
 
@@ -27,7 +27,7 @@ ExportPrettyIniSnapshot(outPath := "") {
 
   others := []
   for _, s in sections {
-    if (s != "__global__")
+    if s != "__global__"
       others.Push(s)
   }
   others.Sort((a, b) => StrCompare(a, b, true))
@@ -66,7 +66,7 @@ ExportPrettyIniSnapshot(outPath := "") {
     kv := Map()
     for _, rawLine in StrSplit(secText, "`n", "`r") {
       line := Trim(rawLine)
-      if (line = "")
+      if line = ""
         continue
       if RegExMatch(line, "^\s*[;#]")
         continue
@@ -114,7 +114,7 @@ ExportPrettyIniSnapshot(outPath := "") {
     }
 
     ; Add blank line before % fields if they exist
-    if (restPercent.Length > 0)
+    if restPercent.Length > 0
       out .= "#`n"
 
     ; Write % fields with stats in preferred order
@@ -149,7 +149,7 @@ ExportPrettyIniSnapshot(outPath := "") {
       ; Write in stat order
       for _, stat in statOrder {
         for _, item in group {
-          if (item.stat = stat)
+          if item.stat = stat
             out .= item.key "=" kv[item.key] "`n"
         }
       }

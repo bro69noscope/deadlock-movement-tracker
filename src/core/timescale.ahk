@@ -9,7 +9,7 @@
 Timescale_Load() {
   global CURRENT_TIMESCALE
   ts := IniRead(STATE_INI, "timescale", "value", "1") + 0.0
-  if (ts <= 0)
+  if ts <= 0
     ts := 1.0
   CURRENT_TIMESCALE := ts
   return ts
@@ -46,9 +46,9 @@ Timescale_Apply(ts) {
   global CURRENT_TIMESCALE
 
   ; clamp (tweak as you like)
-  if (ts < 0.1)
+  if ts < 0.1
     ts := 0.1
-  if (ts > 2.0)
+  if ts > 2.0
     ts := 2.0
 
   ; avoid tiny float drift
