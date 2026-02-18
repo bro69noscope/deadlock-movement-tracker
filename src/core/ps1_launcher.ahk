@@ -82,6 +82,7 @@ StartPoswatch() {
     FileAppend(pid, pidFile, "UTF-8")
     Debug(A_ThisFunc ": started pid=" pid " cmd=" cmd)
     return true
+
   } catch as e {
     Debug(A_ThisFunc ": FAILED " e.Message " cmd=" cmd)
     MsgBox(

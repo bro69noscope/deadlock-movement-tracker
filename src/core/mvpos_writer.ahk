@@ -27,6 +27,7 @@ WriteMvposCfg(posLine, isTempInstance := false) {
     f.Close()
     Perf.Step(A_ThisFunc ": wrote posLine")
     return true
+
   } catch as e {
     Debug(A_ThisFunc ": ERROR: " e.Message)
     return false

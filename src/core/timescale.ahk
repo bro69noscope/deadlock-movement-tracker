@@ -35,6 +35,7 @@ Timescale_WriteCfg(ts) {
     ; BOM-free matters in your project; keep it simple
     FileAppend("host_timescale " ts "`n", MVTRACK_CFG_TIMESCALE_PATH, "UTF-8-RAW")
     return true
+
   } catch as e {
     Debug("Timescale_WriteCfg FAILED: " e.Message)
     return false

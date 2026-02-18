@@ -13,6 +13,7 @@ EnsureCfgInstalled() {
         Debug(A_ThisFunc ": " fileName " already up-to-date at " outPath)
         return true
       }
+
     } catch as e {
       Debug(A_ThisFunc ": couldn't read existing cfg: " e.Message)
     }
@@ -29,6 +30,7 @@ EnsureCfgInstalled() {
 
     Debug(A_ThisFunc ": wrote " outPath)
     return true
+
   } catch as e {
     err := "Message: " e.Message "`nWhat: " e.What "`nStack:`n" e.Stack
     Debug(A_ThisFunc ": FAILED`n" err)

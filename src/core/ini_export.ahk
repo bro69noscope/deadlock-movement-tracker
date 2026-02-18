@@ -7,6 +7,7 @@ ExportPrettyIniSnapshot(outPath := "") {
   ini := INSTANCES_INI
 
   sectionsText := ""
+
   try {
     sectionsText := IniRead(ini)
   } catch {

@@ -7,10 +7,12 @@
 SafeDelete(path) {
   if !FileExist(path)
     return true
+
   try {
     FileDelete(path)
     Debug(A_ThisFunc ": deleted " path)
     return true
+
   } catch as e {
     Debug(A_ThisFunc ": FAILED delete " path " | " e.Message)
     return false
@@ -20,10 +22,12 @@ SafeDelete(path) {
 SafeDirDelete(dir) {
   if !DirExist(dir)
     return true
+
   try {
     DirDelete(dir, 1)
     Debug(A_ThisFunc ": deleted dir " dir)
     return true
+
   } catch as e {
     Debug(A_ThisFunc ": FAILED delete dir " dir " | " e.Message)
     return false
@@ -90,6 +94,7 @@ RemoveAutoexecLines(&removedLines := "", &autoexecPath := "") {
     Debug(A_ThisFunc ": removed " removed " line(s) from " autoexec)
     Debug(A_ThisFunc ": removed lines:`n" Trim(removedLines))
     return true
+
   } catch as e {
     Debug(A_ThisFunc ": FAILED write autoexec: " e.Message " path=" autoexec)
     return false

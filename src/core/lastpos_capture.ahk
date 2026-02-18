@@ -4,12 +4,13 @@
 DeleteOldLastPos() {
   lastpos := LASTPOS_CFG_PATH
   SplitPath lastpos, &fileName
+
   try {
     if FileExist(lastpos)
       FileDelete(lastpos)
     return true
-  }
-  catch as e {
+
+  } catch as e {
     Debug(A_ThisFunc ": FAILED to delete " fileName " err=" e.Message)
     return false
   }
@@ -23,10 +24,12 @@ ReadLastPosUntilValid(timeoutMs) {
 
   while (A_TickCount - start) <= timeoutMs {
     if FileExist(lastpos) {
+
       try {
         txt := Trim(FileRead(lastpos))
         if RegExMatch(txt, "i)^\s*setpos\b")
           return txt
+
       } catch as e {
         ; silent retry
         err := e.Message
