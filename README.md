@@ -68,7 +68,7 @@ In Steam:
 
 On first run the tracker will:
 - Install or update `mvtrack.ps1` in your Deadlock folder
-- Install or update `mvtrack.cfg` and `mvtrack_pos.cfg` in `game\citadel\cfg` with your customized binds
+- Install or update `mvtrack_config.cfg` and `mvtrack_pos.cfg` in `game\citadel\cfg` with your customized binds
 - Prompt to add required lines to `autoexec.cfg`
 
 Accept the prompt unless you already managed these lines manually.
@@ -91,7 +91,7 @@ If positions are not saved or restored correctly:
 
 - Verify Deadlock launch options include `-condebug`
 - Ensure you accepted the `autoexec.cfg` modification
-  (or manually added `sv_cheats 1` and `exec mvtrack.cfg`)
+  (or manually added `sv_cheats 1` and `exec mvtrack_config.cfg`)
 - Check that the `root=` path in `user_settings.ini` is correct
 - Open an issue/send me a discord msg with the contents in: `logs\debug.log`
 - Keep in mind conflicts could be possible if you run your own scripts in `autoexec.cfg` that also bind the same keys as this script in deadlock

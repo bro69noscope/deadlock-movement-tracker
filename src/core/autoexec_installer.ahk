@@ -45,7 +45,7 @@ EnsureAutoexecConfigured() {
   if !hasCheats
     missingLines.Push("sv_cheats 1")
   if !hasExec
-    missingLines.Push("exec mvtrack.cfg")
+    missingLines.Push("exec mvtrack_config.cfg")
 
   if missingLines.Length = 0 {
     Debug(A_ThisFunc ": autoexec already contains required lines: " autoexec)
