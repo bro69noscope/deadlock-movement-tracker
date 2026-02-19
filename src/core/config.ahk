@@ -44,10 +44,12 @@ global CFG := {
   practice_without_fast_cooldowns: true,
   reset_position_duration: 350,
   host_timescale_factor: 10,
-  throttle_timescale: true,
   randomize_reset_pos: true,
   randomize_reset_units: 20,
-  no_randomize_prefixes: ""
+  no_randomize_prefixes: "",
+  ; Dev settings
+  throttle_timescale: true,
+  throttled_timescale_factor: 15
 }
 
 ReadBoolIni(ini, section, key, defaultBool) {
@@ -156,11 +158,16 @@ LoadUserConfigFromIni() {
     "reset_position_duration", CFG.reset_position_duration)
 
 
-  ;NOTE:host_timescale higher than 10 doesnt seem to benefit stamina regen at all
-  ;currently
-  dynamicFactor := 5000 / CFG.reset_position_duration
+  ; NOTE:host_timescale higher than 10 doesn't seem to benefit stamina regen at all
+  ; currently (Feb 2026), so we limit it to a maximum since there is no point in having
+  ; it very high. We use whatever value allows us to reset cooldowns/state quickly
+  ; without loosing on too much on bridge buff durations
 
-  CFG.host_timescale_factor := CFG.throttle_timescale ? Min(10, dynamicFactor) :
+  dynamicFactor := 5000 / CFG.reset_position_duration ; will usually be between 5 and 200
+  throttle := CFG.throttle_timescale
+  throttledFactor := CFG.throttled_timescale_factor
+
+  CFG.host_timescale_factor := throttle ? Min(throttledFactor, dynamicFactor) :
     dynamicFactor
 
   CFG.randomize_reset_pos := ReadBoolIni(ini, "tracker_settings", "randomize_reset_pos",
