@@ -24,14 +24,17 @@ WarnNoInstanceSelected() {
   )
 }
 
-ConfirmExit() {
+ConfirmExit(focusback := false) {
   choice := MsgBox(
     "Exit Movement Tracker?",
     "Movement Tracker",
     "YesNo Icon!"
   )
-  if choice = "Yes"
+  if choice = "Yes" {
+    if focusback
+      WinActivate("ahk_exe deadlock.exe")
     ExitApp()
+  }
 }
 
 JsonEscape(s) {
