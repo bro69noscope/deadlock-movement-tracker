@@ -8,6 +8,8 @@ global CFG := {
   setup_practice: "0",
   enable_fast_stamina: "k",
   disable_fast_stamina: "l",
+  enable_fast_cooldowns: "i",
+  disable_fast_cooldowns: "o",
   set_host_timescale_fast: ",",
   set_host_timescale_normal: ".",
   mvtrack_mark_pos: "F13",
@@ -39,6 +41,7 @@ global CFG := {
   ; Settings
   target_success_streak: 3,
   practice_without_infinite_stamina: true,
+  practice_without_fast_cooldowns: true,
   reset_position_duration: 350,
   host_timescale_factor: 10,
   throttle_timescale: true,
@@ -86,6 +89,12 @@ LoadUserConfigFromIni() {
 
   CFG.disable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "disable_fast_stamina",
     CFG.disable_fast_stamina)
+
+  CFG.enable_fast_cooldowns := IniRead(ini, "deadlock_hotkeys", "enable_fast_cooldowns",
+    CFG.enable_fast_cooldowns)
+
+  CFG.disable_fast_cooldowns := IniRead(ini, "deadlock_hotkeys",
+    "disable_fast_cooldowns", CFG.disable_fast_cooldowns)
 
   CFG.set_host_timescale_fast := IniRead(ini, "deadlock_hotkeys",
     "set_host_timescale_fast", CFG.set_host_timescale_fast)
@@ -139,6 +148,9 @@ LoadUserConfigFromIni() {
 
   CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_settings",
     "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
+
+  CFG.practice_without_fast_cooldowns := ReadBoolIni(ini, "tracker_settings",
+    "practice_without_fast_cooldowns", CFG.practice_without_fast_cooldowns)
 
   CFG.reset_position_duration := ReadIntIni(ini, "tracker_settings",
     "reset_position_duration", CFG.reset_position_duration)

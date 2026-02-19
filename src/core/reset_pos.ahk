@@ -93,9 +93,11 @@ RandomizeResetPos(instanceName) {
 ResetInGamePos(current_instance) {
   sleepTime := CFG.throttle_timescale ? CFG.host_timescale_factor * 25 :
     CFG.reset_position_duration
-  limitStam := CFG.practice_without_infinite_stamina
-  noclip := CFG.noclip
+  noclipKey := CFG.noclip
   randomize := CFG.randomize_reset_pos
+  resetStamina := CFG.practice_without_infinite_stamina
+  resetCooldowns := CFG.practice_without_fast_cooldowns
+
   Perf.Step(A_ThisFunc ": init")
 
   if !WinActive("ahk_exe deadlock.exe") {
@@ -106,17 +108,22 @@ ResetInGamePos(current_instance) {
   }
 
   Send CFG.set_host_timescale_fast
-  if limitStam
+
+  if resetStamina
     Send CFG.enable_fast_stamina
+  if resetCooldowns
+    Send CFG.enable_fast_cooldowns
 
   ; kill momentum
-  Send noclip
+  Send noclipKey
   Perf.Step(A_ThisFunc ": 2~3 sends done")
   Sleep sleepTime
   Perf.Step(A_ThisFunc ": Sleep " sleepTime " done")
 
-  if limitStam
+  if resetStamina
     Send CFG.disable_fast_stamina
+  if resetCooldowns
+    Send CFG.disable_fast_cooldowns
 
   if randomize {
     RandomizeResetPos(current_instance)
@@ -124,7 +131,7 @@ ResetInGamePos(current_instance) {
   }
 
   Send CFG.set_host_timescale_normal
-  Send noclip
+  Send noclipKey
 
   if current_instance = "__temp__"
     SendSmartKey(CFG.mvtrack_teleport_temp)

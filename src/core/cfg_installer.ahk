@@ -73,6 +73,8 @@ GetPosToolsCfgText() {
     "bind " "" CFG.setup_practice "" " " "train_start" "`n"
     "bind " "" CFG.enable_fast_stamina "" " " "citadel_enable_fast_stamina" "`n"
     "bind " "" CFG.disable_fast_stamina "" " " "citadel_disable_fast_stamina" "`n"
+    "bind " "" CFG.enable_fast_cooldowns "" " " "citadel_enable_fast_cooldowns" "`n"
+    "bind " "" CFG.disable_fast_cooldowns "" " " "citadel_disable_fast_cooldowns" "`n"
 
     "bind " "" CFG.set_host_timescale_fast "" " " "host_timescale "
     CFG.host_timescale_factor "" "`n"
