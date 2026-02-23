@@ -1,5 +1,6 @@
 #Include config.ahk
 #Include paths.ahk
+#Include state.ahk
 
 NowStamp() {
   t := A_Now
@@ -25,6 +26,9 @@ WarnNoInstanceSelected() {
 }
 
 ConfirmExit(focusback := false) {
+  if CurrentlySavingPosition()
+    return false
+
   choice := MsgBox(
     "Exit Movement Tracker?",
     "Movement Tracker",

@@ -21,6 +21,7 @@ tray.Add("Open user_settings.ini", (*) => Run(
 tray.Add("Reload", (*) => Reload())
 tray.Add()
 tray.Add("Exit", (*) => ConfirmExit())
+tray.Add("Force Exit", (*) => ExitApp())
 
 #Include ..\vendor\ahk-v2-libraries\Lib\Array.ahk
 #Include core\ini_export.ahk

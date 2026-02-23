@@ -19,6 +19,9 @@ IniWriteTS(ini, section, ts, field, value) {
 }
 
 MarkResult(result) {
+  if CurrentlySavingPosition()
+    return false
+
   Perf.Start(A_ThisFunc ": MarkResult:" result)
 
   ini := INSTANCES_INI
@@ -125,6 +128,9 @@ MarkResult(result) {
 }
 
 ForgetLastResult() {
+  if CurrentlySavingPosition()
+    return false
+
   Perf.Start("ForgetLastResult")
 
   name := GetCurrentRouteKey()

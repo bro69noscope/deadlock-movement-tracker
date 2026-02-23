@@ -358,6 +358,9 @@ _DeleteVariation(base, var) {
 }
 
 DeleteInstance() {
+  if CurrentlySavingPosition()
+    return false
+
   global CURRENT_INSTANCE, CURRENT_VARIATION, VARIATION_SEPARATOR
   ini := INSTANCES_INI
 
@@ -428,6 +431,9 @@ DeleteInstance() {
 }
 
 RepositionInstance() {
+  if CurrentlySavingPosition()
+    return false
+
   name := GetDisplayName(GetCurrentRouteKey())
   if name = "" {
     WarnNoInstanceSelected()
@@ -446,6 +452,9 @@ RepositionInstance() {
 }
 
 RenameInstance() {
+  if CurrentlySavingPosition()
+    return false
+
   global CURRENT_INSTANCE
   ini := INSTANCES_INI
 
@@ -628,13 +637,24 @@ SaveCurrentInstancePos() {
   WinActivate("ahk_exe deadlock.exe")
   SendSmartKey(CFG.mvtrack_mark_pos)
 
+  StatusTip.Saving()
   posline := ReadLastPosUntilValid(2000)
-  if !posline
+
+  if !posline {
+    StatusTip.FailedSave()
     return false
+  }
 
   IniWrite posline, ini, GetCurrentRouteKey(), "pos_line"
   IniWrite NowStamp(), ini, GetCurrentRouteKey(), "pos_saved_at"
+
   ok := WriteMvposCfg(posline)
+
+  if ok
+    StatusTip.Saved()
+  else
+    StatusTip.FailedSave()
+
   return ok
 }
 
@@ -643,13 +663,24 @@ SetTemporaryInstancePos() {
   WinActivate("ahk_exe deadlock.exe")
   SendSmartKey(CFG.mvtrack_mark_pos)
 
+  StatusTip.Saving()
   posline := ReadLastPosUntilValid(2000)
-  if !posline
-    return false
 
-  WriteMvposCfg(posline, true)
+  if !posline {
+    StatusTip.FailedSave()
+    return false
+  }
+
+  ok := WriteMvposCfg(posline, true)
+
+  if ok
+    StatusTip.Saved()
+  else
+    StatusTip.FailedSave()
 }
 
 TeleportToTemporaryInstance() {
+  if CurrentlySavingPosition()
+    return false
   ResetInGamePos("__temp__")
 }
