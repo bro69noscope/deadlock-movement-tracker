@@ -40,8 +40,8 @@ global CFG := {
   logging_level: "debug",
   ; Settings
   target_success_streak: 3,
-  practice_without_infinite_stamina: true,
-  practice_without_fast_cooldowns: true,
+  use_regular_stamina: true,
+  use_regular_cooldowns: true,
   reset_position_duration: 350,
   host_timescale_factor: 10,
   randomize_reset_pos: true,
@@ -162,14 +162,14 @@ LoadUserConfigFromIni() {
       ini, "tracker_settings", "target_success_streak", CFG.target_success_streak
     )
 
-  CFG.practice_without_infinite_stamina :=
+  CFG.use_regular_stamina :=
     ReadBoolIni(
-      ini, "tracker_settings", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina
+      ini, "tracker_settings", "use_regular_stamina", CFG.use_regular_stamina
     )
 
-  CFG.practice_without_fast_cooldowns :=
+  CFG.use_regular_cooldowns :=
     ReadBoolIni(
-      ini, "tracker_settings", "practice_without_fast_cooldowns", CFG.practice_without_fast_cooldowns
+      ini, "tracker_settings", "use_regular_cooldowns", CFG.use_regular_cooldowns
     )
 
   CFG.reset_position_duration :=

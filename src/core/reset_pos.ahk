@@ -95,8 +95,8 @@ ResetInGamePos(current_instance) {
     CFG.reset_position_duration
   noclipKey := CFG.noclip
   randomize := CFG.randomize_reset_pos
-  resetStamina := CFG.practice_without_infinite_stamina
-  resetCooldowns := CFG.practice_without_fast_cooldowns
+  resetStamina := CFG.use_regular_stamina
+  resetCooldowns := CFG.use_regular_cooldowns
 
   Perf.Step(A_ThisFunc ": init")
 
