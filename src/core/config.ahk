@@ -49,7 +49,7 @@ global CFG := {
   no_randomize_prefixes: "",
   ; Dev settings
   throttle_timescale: true,
-  throttled_timescale_factor: 15
+  throttled_timescale_factor: 10
 }
 
 ReadBoolIni(ini, section, key, defaultBool) {
