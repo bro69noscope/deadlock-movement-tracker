@@ -91,8 +91,9 @@ RandomizeResetPos(instanceName) {
 }
 
 ResetInGamePos(current_instance) {
-  sleepTime := CFG.throttle_timescale ? CFG.host_timescale_factor * 25 :
-    CFG.reset_position_duration
+  sleepTime :=
+    CFG.throttle_timescale ? CFG.host_timescale_factor * 25 : CFG.reset_position_duration
+
   noclipKey := CFG.noclip
   randomize := CFG.randomize_reset_pos
   resetStamina := CFG.use_regular_stamina
