@@ -144,9 +144,8 @@ ForgetLastResult() {
   rebuilt := RebuildStatsFromHistory(name, ts)
   Perf.Step(A_ThisFunc ": RebuildStatsFromHistory")
 
-  if didForget {
+  if didForget
     ResetInGamePos(name)
-  }
 
   Perf.End()
 }

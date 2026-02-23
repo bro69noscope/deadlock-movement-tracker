@@ -158,9 +158,8 @@ Uninstall() {
   }
 
 
-  if wipeData {
+  if wipeData
     SafeDirDelete(DATA_DIR)
-  }
 
   MsgBox("Uninstall complete.", title, 0x40)
   return true

@@ -71,15 +71,13 @@ StopGraphDaemon(timeoutMs := 1000) {
 
   t0 := A_TickCount
   while (A_TickCount - t0 < timeoutMs) {
-    if !(pid && ProcessExist(pid)) {
+    if !(pid && ProcessExist(pid))
       break
-    }
     Sleep 25
   }
 
-  if pid && ProcessExist(pid) {
+  if pid && ProcessExist(pid)
     try ProcessClose(pid)
-  }
 
   try FileDelete(GRAPH_PID_PATH)
   try FileDelete(GRAPH_STOP_PATH)
