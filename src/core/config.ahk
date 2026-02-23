@@ -78,38 +78,46 @@ LoadUserConfigFromIni() {
   ; Deadlock hotkeys
   CFG.noclip := IniRead(ini, "deadlock_hotkeys", "noclip", CFG.noclip)
 
-  CFG.load_practice_map := IniRead(ini, "deadlock_hotkeys", "load_practice_map",
-    CFG.load_practice_map)
+  CFG.load_practice_map :=
+    IniRead(ini, "deadlock_hotkeys", "load_practice_map", CFG.load_practice_map)
 
   CFG.swap_team := IniRead(ini, "deadlock_hotkeys", "swap_team", CFG.swap_team)
 
-  CFG.setup_practice := IniRead(ini, "deadlock_hotkeys", "setup_practice",
-    CFG.setup_practice)
+  CFG.setup_practice :=
+    IniRead(ini, "deadlock_hotkeys", "setup_practice", CFG.setup_practice)
 
-  CFG.enable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "enable_fast_stamina",
-    CFG.enable_fast_stamina)
+  CFG.enable_fast_stamina :=
+    IniRead(ini, "deadlock_hotkeys", "enable_fast_stamina", CFG.enable_fast_stamina)
 
-  CFG.disable_fast_stamina := IniRead(ini, "deadlock_hotkeys", "disable_fast_stamina",
-    CFG.disable_fast_stamina)
+  CFG.disable_fast_stamina :=
+    IniRead(ini, "deadlock_hotkeys", "disable_fast_stamina", CFG.disable_fast_stamina)
 
-  CFG.enable_fast_cooldowns := IniRead(ini, "deadlock_hotkeys", "enable_fast_cooldowns",
-    CFG.enable_fast_cooldowns)
+  CFG.enable_fast_cooldowns :=
+    IniRead(
+      ini, "deadlock_hotkeys", "enable_fast_cooldowns", CFG.enable_fast_cooldowns
+    )
 
-  CFG.disable_fast_cooldowns := IniRead(ini, "deadlock_hotkeys",
-    "disable_fast_cooldowns", CFG.disable_fast_cooldowns)
+  CFG.disable_fast_cooldowns :=
+    IniRead(
+      ini, "deadlock_hotkeys", "disable_fast_cooldowns", CFG.disable_fast_cooldowns
+    )
 
-  CFG.set_host_timescale_fast := IniRead(ini, "deadlock_hotkeys",
-    "set_host_timescale_fast", CFG.set_host_timescale_fast)
+  CFG.set_host_timescale_fast :=
+    IniRead(
+      ini, "deadlock_hotkeys", "set_host_timescale_fast", CFG.set_host_timescale_fast
+    )
 
-  CFG.set_host_timescale_normal := IniRead(ini, "deadlock_hotkeys",
-    "set_host_timescale_normal", CFG.set_host_timescale_normal)
+  CFG.set_host_timescale_normal :=
+    IniRead(
+      ini, "deadlock_hotkeys", "set_host_timescale_normal", CFG.set_host_timescale_normal
+    )
 
   ; Tracker hotkeys
-  CFG.temp_pos_teleport := IniRead(ini, "tracker_hotkeys", "temp_pos_teleport",
-    CFG.temp_pos_teleport)
+  CFG.temp_pos_teleport :=
+    IniRead(ini, "tracker_hotkeys", "temp_pos_teleport", CFG.temp_pos_teleport)
 
-  CFG.mark_temp_pos := IniRead(ini, "tracker_hotkeys", "mark_temp_pos",
-    CFG.mark_temp_pos)
+  CFG.mark_temp_pos :=
+    IniRead(ini, "tracker_hotkeys", "mark_temp_pos", CFG.mark_temp_pos)
 
   CFG.fail := IniRead(ini, "tracker_hotkeys", "fail", CFG.fail)
   CFG.success := IniRead(ini, "tracker_hotkeys", "success", CFG.success)
@@ -123,39 +131,51 @@ LoadUserConfigFromIni() {
 
   CFG.graph := IniRead(ini, "tracker_hotkeys", "graph", CFG.graph)
 
-  CFG.new_variation := IniRead(ini, "tracker_hotkeys", "new_variation",
-    CFG.new_variation)
+  CFG.new_variation :=
+    IniRead(ini, "tracker_hotkeys", "new_variation", CFG.new_variation)
 
-  CFG.switch_variation := IniRead(ini, "tracker_hotkeys", "switch_variation",
-    CFG.switch_variation)
+  CFG.switch_variation :=
+    IniRead(ini, "tracker_hotkeys", "switch_variation", CFG.switch_variation)
 
-  CFG.inc_host_timescale := IniRead(ini, "tracker_hotkeys", "inc_host_timescale",
-    CFG.inc_host_timescale)
+  CFG.inc_host_timescale :=
+    IniRead(ini, "tracker_hotkeys", "inc_host_timescale", CFG.inc_host_timescale)
 
-  CFG.inc_host_timescale_big := IniRead(ini, "tracker_hotkeys",
-    "inc_host_timescale_big", CFG.inc_host_timescale_big)
+  CFG.inc_host_timescale_big :=
+    IniRead(
+      ini, "tracker_hotkeys", "inc_host_timescale_big", CFG.inc_host_timescale_big
+    )
 
-  CFG.dec_host_timescale := IniRead(ini, "tracker_hotkeys", "dec_host_timescale",
-    CFG.dec_host_timescale)
+  CFG.dec_host_timescale :=
+    IniRead(ini, "tracker_hotkeys", "dec_host_timescale", CFG.dec_host_timescale)
 
-  CFG.dec_host_timescale_big := IniRead(ini, "tracker_hotkeys",
-    "dec_host_timescale_big", CFG.dec_host_timescale_big)
+  CFG.dec_host_timescale_big :=
+    IniRead(
+      ini, "tracker_hotkeys", "dec_host_timescale_big", CFG.dec_host_timescale_big
+    )
 
-  CFG.norm_host_timescale := IniRead(ini, "tracker_hotkeys", "norm_host_timescale",
-    CFG.norm_host_timescale)
+  CFG.norm_host_timescale :=
+    IniRead(ini, "tracker_hotkeys", "norm_host_timescale", CFG.norm_host_timescale)
 
   ; Settings
-  CFG.target_success_streak := ReadIntIni(ini, "tracker_settings",
-    "target_success_streak", CFG.target_success_streak)
+  CFG.target_success_streak :=
+    ReadIntIni(
+      ini, "tracker_settings", "target_success_streak", CFG.target_success_streak
+    )
 
-  CFG.practice_without_infinite_stamina := ReadBoolIni(ini, "tracker_settings",
-    "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina)
+  CFG.practice_without_infinite_stamina :=
+    ReadBoolIni(
+      ini, "tracker_settings", "practice_without_infinite_stamina", CFG.practice_without_infinite_stamina
+    )
 
-  CFG.practice_without_fast_cooldowns := ReadBoolIni(ini, "tracker_settings",
-    "practice_without_fast_cooldowns", CFG.practice_without_fast_cooldowns)
+  CFG.practice_without_fast_cooldowns :=
+    ReadBoolIni(
+      ini, "tracker_settings", "practice_without_fast_cooldowns", CFG.practice_without_fast_cooldowns
+    )
 
-  CFG.reset_position_duration := ReadIntIni(ini, "tracker_settings",
-    "reset_position_duration", CFG.reset_position_duration)
+  CFG.reset_position_duration :=
+    ReadIntIni(
+      ini, "tracker_settings", "reset_position_duration", CFG.reset_position_duration
+    )
 
 
   ; NOTE:host_timescale higher than 10 doesn't seem to benefit stamina regen at all
@@ -167,26 +187,33 @@ LoadUserConfigFromIni() {
   throttle := CFG.throttle_timescale
   throttledFactor := CFG.throttled_timescale_factor
 
-  CFG.host_timescale_factor := throttle ? Min(throttledFactor, dynamicFactor) :
-    dynamicFactor
+  CFG.host_timescale_factor :=
+    throttle ? Min(throttledFactor, dynamicFactor) : dynamicFactor
 
-  CFG.randomize_reset_pos := ReadBoolIni(ini, "tracker_settings", "randomize_reset_pos",
-    CFG.randomize_reset_pos)
+  CFG.randomize_reset_pos :=
+    ReadBoolIni(
+      ini, "tracker_settings", "randomize_reset_pos", CFG.randomize_reset_pos
+    )
 
-  CFG.randomize_reset_units := ReadIntIni(ini, "tracker_settings",
-    "randomize_reset_units", CFG.randomize_reset_units)
+  CFG.randomize_reset_units :=
+    ReadIntIni(
+      ini, "tracker_settings", "randomize_reset_units", CFG.randomize_reset_units
+    )
 
-  CFG.no_randomize_prefixes := IniRead(ini, "tracker_settings", "no_randomize_prefixes",
-    CFG.no_randomize_prefixes)
+  CFG.no_randomize_prefixes :=
+    IniRead(
+      ini, "tracker_settings", "no_randomize_prefixes", CFG.no_randomize_prefixes
+    )
 
 
   ; Logging
   CFG.logging_level := IniRead(ini, "dev", "logging_level", CFG.logging_level)
   CFG.logging_level := StrUpper(CFG.logging_level)
+
   validLevels := Map("DEBUG", 1, "INFO", 1, "WARN", 1, "ERROR", 1, "FATAL", 1)
-  if !validLevels.Has(CFG.logging_level) {
+
+  if !validLevels.Has(CFG.logging_level)
     CFG.logging_level := "DEBUG"
-  }
 
   return true
 }
