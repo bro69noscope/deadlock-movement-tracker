@@ -84,10 +84,10 @@ HotKey(CFG.mark_temp_pos, (*) => SetTemporaryInstancePos())
 HotKey(CFG.temp_pos_teleport, (*) => TeleportToTemporaryInstance())
 HotIf
 
-RouteTimer.StartVisibilityWatcher()
-EnsureGraphDaemon()
-GraphDaemon_Warmup()
 EnsurePs1Installed()
 EnsureCfgInstalled()
 EnsureAutoexecConfigured()
 StartPoswatch()
+RouteTimer.StartVisibilityWatcher()
+EnsureGraphDaemon()
+GraphDaemon_Warmup()
