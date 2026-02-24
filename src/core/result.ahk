@@ -2,7 +2,6 @@
 #Include helpers.ahk
 #Include history.ahk
 #Include route_timer.ahk
-#Include gui\streak_popup.ahk
 #Include timescale.ahk
 #Include perf.ahk
 
@@ -76,8 +75,8 @@ MarkResult(result) {
     ResetInGamePos(name)
 
     if CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak {
-      StreakPopup.Show(streakCur)
-      Perf.Step(A_ThisFunc ": StreakPopup.Show")
+      ToolTip("Streak: " streakCur "!")
+      SetTimer(ToolTip, -2000)
     }
 
     Perf.End()
@@ -120,8 +119,8 @@ MarkResult(result) {
   Perf.Step(A_ThisFunc ": ResetInGamePos returned (ts)")
 
   if CFG.target_success_streak > 0 && streakCur >= CFG.target_success_streak {
-    StreakPopup.Show(streakCur)
-    Perf.Step(A_ThisFunc ": StreakPopup.Show (ts)")
+    ToolTip("Streak: " streakCur "!")
+    SetTimer(ToolTip, -2000)
   }
 
   Perf.End()

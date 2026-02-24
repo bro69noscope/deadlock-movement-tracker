@@ -1,6 +1,7 @@
 #Include ..\paths.ahk
 #Include ..\debug.ahk
 #Include ..\helpers.ahk
+#Include ..\perf.ahk
 
 global GRAPH_DAEMON_DIR := A_Temp "\mvtrack_graph"
 global GRAPH_REQ_DIR := GRAPH_DAEMON_DIR "\req"
@@ -33,12 +34,14 @@ GraphDaemon_Warmup() {
 }
 
 GraphDaemon_Render(csv, png, title := "", timeoutMs := 3000) {
+  Perf.Step(A_ThisFunc ": start")
   id := A_NowUTC "_" A_TickCount
   reqPath := GRAPH_REQ_DIR "\" id ".json"
   resPath := GRAPH_RES_DIR "\" id ".json"
 
   try FileDelete(resPath)
   try FileDelete(png)
+  Perf.Step(A_ThisFunc ": cleaned old files")
 
   json :=
     "{"
@@ -49,6 +52,7 @@ GraphDaemon_Render(csv, png, title := "", timeoutMs := 3000) {
 
   Debug(A_ThisFunc ": req json=" json)
   FileAppend(json, reqPath, "UTF-8")
+  Perf.Step(A_ThisFunc ": wrote req file")
 
   t0 := A_TickCount
   while (A_TickCount - t0 < timeoutMs) {

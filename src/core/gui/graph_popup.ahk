@@ -19,6 +19,7 @@ class GraphPopup {
   }
 
   static _Render(&pngOut, &csvOut, &titleOut, timeoutMs := 5000) {
+    Perf.Step(A_ThisFunc ": start")
     cur := GetCurrentRouteKey()
     if cur = ""
       return false
@@ -44,10 +45,12 @@ class GraphPopup {
     Debug("GraphPopup: cur='" cur "' csv='" csv "' ts=" ts " png='" png "' title='"
       title "'")
 
+    Perf.Step(A_ThisFunc ": calling daemon")
     respJson := GraphDaemon_Render(csv, png, title, timeoutMs)
     if respJson = ""
       return false
 
+    Perf.Step(A_ThisFunc ": got daemon response")
     try resp := Jxon_Load(&respJson)
     catch {
       Debug("Invalid JSON from daemon:")
@@ -77,6 +80,7 @@ class GraphPopup {
     pngOut := png
     csvOut := csv
     titleOut := title
+    Perf.Step(A_ThisFunc ": done")
     return true
   }
 
@@ -95,6 +99,7 @@ class GraphPopup {
   }
 
   static Show() {
+    Perf.Start("Show GraphPopup")
     if GraphPopup.hwnd && WinExist("ahk_id " GraphPopup.hwnd)
       GraphPopup.Dismiss(false)
 
@@ -113,7 +118,7 @@ class GraphPopup {
     g.MarginX := 10
     g.MarginY := 10
 
-    GraphPopup.pic := g.AddPicture("w600 h300", png)
+    GraphPopup.pic := g.AddPicture("w600 h800", png)
     g.AddText("y+8 Center w600", "Press SPACE to dismiss")
 
     GraphPopup.gui := g
@@ -129,6 +134,7 @@ class GraphPopup {
     HotIf()
     GraphPopup.spaceBound := true
 
+    Perf.End("Show GraphPopup")
     return true
   }
 
