@@ -31,7 +31,7 @@ ShouldSkipRandomize(instanceName) {
 }
 
 RandomizeResetPos(instanceName) {
-  Perf.Step(A_ThisFunc ": init")
+  Perf.Step(A_ThisFunc ": start")
   if instanceName = ""
     return
   if ShouldSkipRandomize(instanceName)
@@ -99,7 +99,7 @@ ResetInGamePos(current_instance) {
   resetStamina := CFG.use_regular_stamina
   resetCooldowns := CFG.use_regular_cooldowns
 
-  Perf.Step(A_ThisFunc ": init")
+  Perf.Step(A_ThisFunc ": start")
 
   if !WinActive("ahk_exe deadlock.exe") {
     WinActivate("ahk_exe deadlock.exe")

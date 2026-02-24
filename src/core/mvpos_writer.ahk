@@ -4,7 +4,7 @@
 #include state.ahk
 
 WriteMvposCfg(posLine, isTempInstance := false) {
-  Perf.Step(A_ThisFunc ": init")
+  Perf.Step(A_ThisFunc ": start")
 
   if isTempInstance
     mvtrackPos := MVTRACK_CFG_TEMP_POS_PATH

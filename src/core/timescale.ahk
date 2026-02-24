@@ -43,7 +43,7 @@ Timescale_WriteCfg(ts) {
 }
 
 Timescale_Apply(ts) {
-  Perf.Step(A_ThisFunc ": init")
+  Perf.Step(A_ThisFunc ": start")
   global CURRENT_TIMESCALE
 
   ; clamp (tweak as you like)

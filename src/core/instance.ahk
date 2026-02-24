@@ -556,7 +556,7 @@ RenameInstance() {
 }
 
 LoadInstancePos(instanceName) {
-  Perf.Step(A_ThisFunc ": init")
+  Perf.Step(A_ThisFunc ": start")
   ini := INSTANCES_INI
   pos := ""
   hasKey := false
@@ -608,7 +608,7 @@ LoadInstancePos(instanceName) {
 }
 
 SetCurrentInstance(baseName, variation := "") {
-  Perf.Step(A_ThisFunc ": init")
+  Perf.Step(A_ThisFunc ": start")
   global CURRENT_INSTANCE, CURRENT_VARIATION
   ini := INSTANCES_INI
 

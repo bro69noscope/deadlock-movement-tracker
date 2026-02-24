@@ -50,13 +50,13 @@ class GraphPopup {
     if respJson = ""
       return false
 
-    Perf.Step(A_ThisFunc ": got daemon response")
     try resp := Jxon_Load(&respJson)
     catch {
       Debug("Invalid JSON from daemon:")
       Debug(respJson)
       return false
     }
+    Perf.Step(A_ThisFunc ": loaded daemon response")
 
     error := resp.Has("error") && resp["error"] != ""
     Debug(

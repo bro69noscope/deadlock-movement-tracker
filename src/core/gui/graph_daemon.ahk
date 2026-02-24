@@ -59,10 +59,12 @@ GraphDaemon_Render(csv, png, title := "", timeoutMs := 3000) {
     if FileExist(resPath) {
       txt := FileRead(resPath, "UTF-8")
       try FileDelete(resPath)
+      Perf.Step(A_ThisFunc ": got response, done")
       return txt
     }
     Sleep 5
   }
+  Perf.Step(A_ThisFunc ": timeout, done")
   return ""
 }
 

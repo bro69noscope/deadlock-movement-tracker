@@ -165,7 +165,7 @@ class RouteTimer {
   }
 
   static Arm() {
-    Perf.Step("RouteTimer: " A_ThisFunc " init")
+    Perf.Step("RouteTimer: " A_ThisFunc " start")
     RouteTimer._EnsureGui()
     Perf.Step("RouteTimer: " A_ThisFunc " ensure GUI")
 
