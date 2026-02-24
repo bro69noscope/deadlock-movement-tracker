@@ -26,7 +26,7 @@ WarnNoInstanceSelected() {
 }
 
 ConfirmExit(focusback := false) {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
 
   choice := MsgBox(

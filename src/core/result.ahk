@@ -18,7 +18,7 @@ IniWriteTS(ini, section, ts, field, value) {
 }
 
 MarkResult(result) {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
 
   Perf.Start(A_ThisFunc ": MarkResult:" result)
@@ -127,7 +127,7 @@ MarkResult(result) {
 }
 
 ForgetLastResult() {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
 
   Perf.Start("ForgetLastResult")

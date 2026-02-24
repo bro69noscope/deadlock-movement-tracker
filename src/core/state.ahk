@@ -1,3 +1,5 @@
+#Include debug.ahk
+
 global CURRENT_INSTANCE := ""
 global VARIATION_SEPARATOR := " @ "
 global CURRENT_VARIATION := ""
@@ -40,9 +42,10 @@ class StatusTip {
   }
 }
 
-CurrentlySavingPosition() {
+CurrentlySavingPosition(caller) {
   if StatusTip.saveBusy {
     StatusTip.Show("Not done saving!")
+    Debug(A_ThisFunc ": save is busy. Caller:" caller)
     return true
   }
   return false

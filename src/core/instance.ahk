@@ -358,7 +358,7 @@ _DeleteVariation(base, var) {
 }
 
 DeleteInstance() {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
 
   global CURRENT_INSTANCE, CURRENT_VARIATION, VARIATION_SEPARATOR
@@ -431,7 +431,7 @@ DeleteInstance() {
 }
 
 RepositionInstance() {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
 
   name := GetDisplayName(GetCurrentRouteKey())
@@ -452,7 +452,7 @@ RepositionInstance() {
 }
 
 RenameInstance() {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
 
   global CURRENT_INSTANCE
@@ -680,7 +680,7 @@ SetTemporaryInstancePos() {
 }
 
 TeleportToTemporaryInstance() {
-  if CurrentlySavingPosition()
+  if CurrentlySavingPosition(A_ThisFunc)
     return false
   ResetInGamePos("__temp__")
 }
