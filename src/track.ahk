@@ -55,7 +55,6 @@ DirCreate(DATA_DIR)
 
 LoadUserConfigFromIni()
 
-EnsureLogDirExists()
 DebugBlank
 Debug("===Tracker start===")
 if CFG.throttle_timescale
@@ -72,6 +71,7 @@ HotKey(CFG.delete, (*) => DeleteInstance())
 HotKey(CFG.reposition, (*) => RepositionInstance())
 HotKey(CFG.rename, (*) => RenameInstance())
 HotKey(CFG.exit, (*) => ConfirmExit(focusback := true))
+HotKey(CFG.flush_logs, (*) => FlushLog())
 HotKey(CFG.graph, (*) => GraphPopup.Show())
 HotKey(CFG.inc_host_timescale, (*) => Timescale_UP())
 Hotkey(CFG.inc_host_timescale_big, (*) => Timescale_UP(0.1))

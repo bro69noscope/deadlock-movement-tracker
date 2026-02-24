@@ -8,6 +8,9 @@ global DEBUG_UNINSTALL := false
 global MAX_LOG_BYTES := 3 * 1024 * 1024
 global MAX_LOG_BACKUPS := 3
 
+global CUR_LOG_FILE := 0
+global CUR_LOG_PATH := ""
+
 GetLogPath() {
   return DEBUG_UNINSTALL ? UNINSTALL_LOG_PATH : DEBUG_LOG_PATH
 }
@@ -19,6 +22,26 @@ EnsureLogDirExists() {
     DirCreate(dir)
 
   RotateLogIfTooBig(logPath)
+}
+
+GetLogFile() {
+  global CUR_LOG_FILE, CUR_LOG_PATH
+  path := GetLogPath()
+
+  if (!CUR_LOG_FILE || CUR_LOG_PATH != path) {
+    ; switch log target if DEBUG_UNINSTALL toggles
+    try CUR_LOG_FILE.Close()
+    EnsureLogDirExists()
+    CUR_LOG_FILE := FileOpen(path, "a", "UTF-8")
+    CUR_LOG_PATH := path
+  }
+  return CUR_LOG_FILE
+}
+
+FlushLog() {
+  global CUR_LOG_FILE
+  if CUR_LOG_FILE
+    DllCall("FlushFileBuffers", "ptr", CUR_LOG_FILE.Handle)
 }
 
 RotateLogIfTooBig(logPath) {
@@ -75,9 +98,8 @@ FormatTsMs() {
 
 
 Debug(msg) {
-  logPath := GetLogPath()
-  line := FormatTsMs() " | " msg "`n"
-  FileAppend(line, logPath, "UTF-8")
+  f := GetLogFile()
+  f.Write(FormatTsMs() " | " msg "`n")
 }
 
 ; Logs a file's existence + size + mtime (helps detect wrong paths)

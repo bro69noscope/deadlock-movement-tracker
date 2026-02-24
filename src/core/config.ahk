@@ -31,6 +31,7 @@ global CFG := {
   new_variation: "F9",
   switch_variation: "F10",
   graph: "F11",
+  flush_logs: "^!F12",
   inc_host_timescale: "!Up",
   inc_host_timescale_big: "+!Up",
   dec_host_timescale: "!Down",
@@ -128,8 +129,8 @@ LoadUserConfigFromIni() {
   CFG.reposition := IniRead(ini, "tracker_hotkeys", "reposition", CFG.reposition)
   CFG.delete := IniRead(ini, "tracker_hotkeys", "delete", CFG.delete)
   CFG.exit := IniRead(ini, "tracker_hotkeys", "exit", CFG.exit)
-
   CFG.graph := IniRead(ini, "tracker_hotkeys", "graph", CFG.graph)
+  CfG.flush_logs := IniRead(ini, "tracker_hotkeys", "flush_logs", CFG.flush_logs)
 
   CFG.new_variation :=
     IniRead(ini, "tracker_hotkeys", "new_variation", CFG.new_variation)
