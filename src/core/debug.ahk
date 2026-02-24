@@ -75,9 +75,7 @@ FormatTsMs() {
 
 
 Debug(msg) {
-  EnsureLogDirExists()
   logPath := GetLogPath()
-
   line := FormatTsMs() " | " msg "`n"
   FileAppend(line, logPath, "UTF-8")
 }

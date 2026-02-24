@@ -55,6 +55,7 @@ DirCreate(DATA_DIR)
 
 LoadUserConfigFromIni()
 
+EnsureLogDirExists()
 DebugBlank
 Debug("===Tracker start===")
 if CFG.throttle_timescale
