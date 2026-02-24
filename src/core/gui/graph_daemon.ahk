@@ -26,6 +26,7 @@ GraphDaemon_Warmup() {
     )
   }
 
+  Debug(A_ThisFunc ": warming up graph daemon")
   GraphDaemon_Render(csv, png, "warmup", 5000)
 
   try FileDelete(csv)

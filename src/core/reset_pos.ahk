@@ -87,7 +87,7 @@ RandomizeResetPos(instanceName) {
   Perf.Step(A_ThisFunc ": did pos_line randomization maths")
   WriteMvposCfg(rnd)
   Debug(A_ThisFunc
-    ": randomized pos_line for instance=" instanceName " base=" base " rnd=" rnd)
+    ": randomized pos_line for instance=" instanceName "`nbase=" base "`nrand=" rnd)
 }
 
 ResetInGamePos(current_instance) {

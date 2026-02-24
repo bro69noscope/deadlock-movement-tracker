@@ -32,12 +32,12 @@ class RouteTimer {
     RouteTimer.keysOn := true
     Debug("RouteTimer: listening for move keys")
 
-    Perf.Step("RouteTimer:" A_ThisFunc " before registering hotkeys")
+    Perf.Step(A_ThisFunc ": before registering hotkeys")
     HotKey("~w", RouteTimer._OnMoveKey, "On")
     HotKey("~a", RouteTimer._OnMoveKey, "On")
     HotKey("~s", RouteTimer._OnMoveKey, "On")
     HotKey("~d", RouteTimer._OnMoveKey, "On")
-    Perf.Step("RouteTimer:" A_ThisFunc " after registering hotkeys")
+    Perf.Step(A_ThisFunc ": after registering hotkeys")
   }
 
   static _DisableMoveKeys() {
@@ -46,12 +46,12 @@ class RouteTimer {
     RouteTimer.keysOn := false
     Debug("RouteTimer: stop listening for move keys")
 
-    Perf.Step("RouteTimer:" A_ThisFunc " before unregistering hotkeys")
+    Perf.Step(A_ThisFunc ": before unregistering hotkeys")
     HotKey("~w", RouteTimer._OnMoveKey, "Off")
     HotKey("~a", RouteTimer._OnMoveKey, "Off")
     HotKey("~s", RouteTimer._OnMoveKey, "Off")
     HotKey("~d", RouteTimer._OnMoveKey, "Off")
-    Perf.Step("RouteTimer:" A_ThisFunc " after unregistering hotkeys")
+    Perf.Step(A_ThisFunc ": after unregistering hotkeys")
   }
 
   static _OnMoveKey(*) {
@@ -165,9 +165,9 @@ class RouteTimer {
   }
 
   static Arm() {
-    Perf.Step("RouteTimer: " A_ThisFunc " start")
+    Perf.Step(A_ThisFunc ": start")
     RouteTimer._EnsureGui()
-    Perf.Step("RouteTimer: " A_ThisFunc " ensure GUI")
+    Perf.Step(A_ThisFunc ": ensured GUI")
 
     if RouteTimer.running {
       RouteTimer.running := false
@@ -177,7 +177,7 @@ class RouteTimer {
     RouteTimer.armed := true
     RouteTimer.lastMs := 0
     RouteTimer._EnableMoveKeys()
-    Perf.Step("RouteTimer: " A_ThisFunc " done")
+    Perf.Step(A_ThisFunc ": done")
   }
 
   static Disarm() {
