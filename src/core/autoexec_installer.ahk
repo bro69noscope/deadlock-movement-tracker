@@ -21,7 +21,7 @@ HasSvCheats1(text) {
 }
 
 HasExecMvtrack(text) {
-  return CfgHasLine(text, 'exec\s+"?mvtrack\.cfg"?')
+  return CfgHasLine(text, 'exec\s+"?mvtrack_config\.cfg"?')
 }
 
 EnsureAutoexecConfigured() {
