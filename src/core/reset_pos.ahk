@@ -91,15 +91,14 @@ RandomizeResetPos(instanceName) {
 }
 
 ResetInGamePos(current_instance) {
+  Perf.Step(A_ThisFunc ": start")
+
   sleepTime :=
     CFG.throttle_timescale ? CFG.host_timescale_factor * 25 : CFG.reset_position_duration
-
   noclipKey := CFG.noclip
   randomize := CFG.randomize_reset_pos
   resetStamina := CFG.use_regular_stamina
   resetCooldowns := CFG.use_regular_cooldowns
-
-  Perf.Step(A_ThisFunc ": start")
 
   if !WinActive("ahk_exe deadlock.exe") {
     WinActivate("ahk_exe deadlock.exe")
