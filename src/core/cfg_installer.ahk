@@ -55,7 +55,7 @@ GetPosToolsCfgText() {
     . " citadel_allow_purchasing_anywhere 1;"
     . " citadel_crate_respawn_interval 0;"
     . " citadel_allow_duplicate_heroes 1;"
-    . " ai_disable"
+  ; . " ai_disable"
 
   return
   (
