@@ -85,9 +85,12 @@ RandomizeResetPos(instanceName) {
   rnd := rnd ";"
 
   Perf.Step(A_ThisFunc ": did pos_line randomization maths")
+
   WriteMvposCfg(rnd)
   Debug(A_ThisFunc
     ": randomized pos_line for instance=" instanceName "`nbase=" base "`nrand=" rnd)
+
+  Perf.Step(A_ThisFunc ": done")
 }
 
 ResetInGamePos(current_instance) {
@@ -137,11 +140,10 @@ ResetInGamePos(current_instance) {
     SendSmartKey(CFG.mvtrack_teleport_temp)
   else
     SendSmartKey(CFG.mvtrack_teleport)
-  Perf.Step(A_ThisFunc ": 3 sends done")
+  Perf.Step(A_ThisFunc ": after noclip reset")
 
   if !Timescale_IsNormal() {
     Timescale_Apply(CURRENT_TIMESCALE)
-    Perf.Step(A_ThisFunc ": Timescale_Apply")
   }
 
   RouteTimer.Arm()

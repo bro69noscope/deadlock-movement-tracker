@@ -25,7 +25,7 @@ WriteMvposCfg(posLine, isTempInstance := false) {
     f := FileOpen(mvtrackPos, "w", "UTF-8-RAW")
     f.Write(posLine "`n")
     f.Close()
-    Perf.Step(A_ThisFunc ": wrote posLine")
+    Perf.Step(A_ThisFunc ": done")
     return true
 
   } catch as e {
