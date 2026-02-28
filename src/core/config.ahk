@@ -48,6 +48,7 @@ global CFG := {
   randomize_reset_pos: true,
   randomize_reset_units: 20,
   no_randomize_prefixes: "",
+  movement_keys: "w,a,s,d",
   ; Dev settings
   throttle_timescale: true,
   throttled_timescale_factor: 10
@@ -60,6 +61,15 @@ ReadBoolIni(ini, section, key, defaultBool) {
 
 ReadIntIni(ini, section, key, defaultInt) {
   return IniRead(ini, section, key, defaultInt) + 0
+}
+
+InitMovementKeys() {
+  global MOVEMENT_KEYS := []
+  for _, k in StrSplit(CFG.movement_keys, ",") {
+    k := StrLower(Trim(k))
+    if k != ""
+      MOVEMENT_KEYS.Push(k)
+  }
 }
 
 LoadUserConfigFromIni() {
@@ -178,6 +188,9 @@ LoadUserConfigFromIni() {
       ini, "tracker_settings", "reset_position_duration", CFG.reset_position_duration
     )
 
+  CFG.movement_keys :=
+    IniRead(ini, "tracker_settings", "movement_keys", CFG.movement_keys)
+
 
   ; NOTE:host_timescale higher than 10 doesn't seem to benefit stamina regen at all
   ; currently (Feb 2026), so we limit it to a maximum since there is no point in having
@@ -216,5 +229,6 @@ LoadUserConfigFromIni() {
   if !validLevels.Has(CFG.logging_level)
     CFG.logging_level := "DEBUG"
 
+  InitMovementKeys()
   return true
 }

@@ -96,6 +96,8 @@ RandomizeResetPos(instanceName) {
 ResetInGamePos(current_instance) {
   Perf.Step(A_ThisFunc ": start")
 
+  global INPUT_BLOCK_WASD
+
   sleepTime :=
     CFG.throttle_timescale ? CFG.host_timescale_factor * 25 : CFG.reset_position_duration
   noclipKey := CFG.noclip
@@ -117,9 +119,12 @@ ResetInGamePos(current_instance) {
   if resetCooldowns
     Send CFG.enable_fast_cooldowns
 
-  ; kill momentum
   Send noclipKey
-  Perf.Step(A_ThisFunc ": 2~3 sends done")
+  INPUT_BLOCK_WASD := true
+  for _, k in MOVEMENT_KEYS
+    Send "{" k " up}"
+  Perf.Step(A_ThisFunc ": before sleep")
+
   Sleep sleepTime
   Perf.Step(A_ThisFunc ": Sleep " sleepTime " done")
 
@@ -147,5 +152,7 @@ ResetInGamePos(current_instance) {
   }
 
   RouteTimer.Arm()
+  INPUT_BLOCK_WASD := false
+
   Perf.Step(A_ThisFunc ": done")
 }

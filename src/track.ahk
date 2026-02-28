@@ -82,6 +82,13 @@ HotKey(CFG.new_variation, (*) => NewVariation())
 HotKey(CFG.switch_variation, (*) => SwitchVariation())
 HotKey(CFG.mark_temp_pos, (*) => SetTemporaryInstancePos())
 HotKey(CFG.temp_pos_teleport, (*) => TeleportToTemporaryInstance())
+
+HotIf (*) => WinActive("ahk_exe deadlock.exe") && INPUT_BLOCK_WASD
+for _, k in MOVEMENT_KEYS {
+  HotKey("$*" k, (*) => 0)
+  HotKey("$*" k " up", (*) => 0)
+}
+
 HotIf
 
 EnsurePs1Installed()
