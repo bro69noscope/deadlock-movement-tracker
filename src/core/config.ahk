@@ -123,6 +123,21 @@ LoadUserConfigFromIni() {
       ini, "deadlock_hotkeys", "set_host_timescale_normal", CFG.set_host_timescale_normal
     )
 
+  ; Internal deadlock hotkeys
+  CFG.mvtrack_mark_pos :=
+    IniRead(ini, "deadlock_hotkeys", "mvtrack_mark_pos", CFG.mvtrack_mark_pos)
+
+  CFG.mvtrack_teleport :=
+    IniRead(ini, "deadlock_hotkeys", "mvtrack_teleport", CFG.mvtrack_teleport)
+
+  CFG.mvtrack_teleport_temp :=
+    IniRead(ini, "deadlock_hotkeys", "mvtrack_teleport_temp", CFG.mvtrack_teleport_temp
+    )
+
+  CFG.mvtrack_set_timescale :=
+    IniRead(ini, "deadlock_hotkeys", "mvtrack_set_timescale", CFG.mvtrack_set_timescale
+    )
+
   ; Tracker hotkeys
   CFG.temp_pos_teleport :=
     IniRead(ini, "tracker_hotkeys", "temp_pos_teleport", CFG.temp_pos_teleport)
