@@ -68,8 +68,8 @@ InitRouteStats(routeKey) {
 ValidateInstanceName(name) {
   name := Trim(name)
 
-  if name = "__global__"
-    return { ok: false, reason: "reserved_name (__global__)" }
+  if name = "__global__" || name = "__temp__"
+    return { ok: false, reason: "reserved_name (" name ")" }
 
   if InStr(name, "|")
     return { ok: false, reason: "contains_pipe (|)" }
@@ -672,6 +672,8 @@ SetTemporaryInstancePos() {
   }
 
   ok := WriteMvposCfg(posline, true)
+  IniWrite posline, INSTANCES_INI, "__temp__", "pos_line"
+  IniWrite NowStamp(), INSTANCES_INI, "__temp__", "pos_saved_at"
 
   if ok
     StatusTip.Saved()

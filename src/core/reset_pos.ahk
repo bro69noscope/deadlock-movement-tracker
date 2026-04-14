@@ -3,8 +3,12 @@
 #Include mvpos_writer.ahk
 #Include timescale.ahk
 #Include perf.ahk
+#Include state.ahk
 
 ShouldSkipRandomize(instanceName) {
+  if instanceName = "__temp__"
+    return !RANDOMIZE_TEMP_INSTANCE_POS
+
   raw := CFG.no_randomize_prefixes
   if raw = ""
     return false
@@ -86,7 +90,8 @@ RandomizeResetPos(instanceName) {
 
   Perf.Step(A_ThisFunc ": did pos_line randomization maths")
 
-  WriteMvposCfg(rnd)
+  isTemp := (instanceName = "__temp__")
+  WriteMvposCfg(rnd, isTemp)
   Debug(A_ThisFunc
     ": randomized pos_line for instance=" instanceName "`nbase=" base "`nrand=" rnd)
 

@@ -5,6 +5,7 @@ global VARIATION_SEPARATOR := " @ "
 global CURRENT_VARIATION := ""
 global CURRENT_TIMESCALE := 1.0
 global INPUT_BLOCK_WASD := false
+global RANDOMIZE_TEMP_INSTANCE_POS := false
 
 class StatusTip {
   static saveBusy := false
@@ -50,4 +51,12 @@ CurrentlySavingPosition(caller) {
     return true
   }
   return false
+}
+
+ToggleTemporaryInstanceRandomize() {
+  global RANDOMIZE_TEMP_INSTANCE_POS
+  RANDOMIZE_TEMP_INSTANCE_POS := !RANDOMIZE_TEMP_INSTANCE_POS
+  StatusTip.Show("Randomize temp instance: " (RANDOMIZE_TEMP_INSTANCE_POS ? "ON" :
+    "OFF"))
+  StatusTip.ClearAfter(1000)
 }

@@ -37,6 +37,7 @@ global CFG := {
   dec_host_timescale: "!Down",
   dec_host_timescale_big: "+!Down",
   norm_host_timescale: "!Left",
+  toggle_temp_pos_randomize: "!Right",
   ; Flags
   logging_level: "debug",
   ; Settings
@@ -47,6 +48,7 @@ global CFG := {
   host_timescale_factor: 10,
   randomize_reset_pos: true,
   randomize_reset_units: 20,
+  randomize_temp_pos_by_default: true,
   no_randomize_prefixes: "",
   movement_keys: "w,a,s,d",
   ; Dev settings
@@ -182,6 +184,11 @@ LoadUserConfigFromIni() {
   CFG.norm_host_timescale :=
     IniRead(ini, "tracker_hotkeys", "norm_host_timescale", CFG.norm_host_timescale)
 
+  CFG.toggle_temp_pos_randomize :=
+    IniRead(
+      ini, "tracker_hotkeys", "toggle_temp_pos_randomize", CFG.toggle_temp_pos_randomize
+    )
+
   ; Settings
   CFG.target_success_streak :=
     ReadIntIni(
@@ -227,6 +234,11 @@ LoadUserConfigFromIni() {
   CFG.randomize_reset_units :=
     ReadIntIni(
       ini, "tracker_settings", "randomize_reset_units", CFG.randomize_reset_units
+    )
+
+  CFG.randomize_temp_pos_by_default :=
+    ReadBoolIni(
+      ini, "tracker_settings", "randomize_temp_pos_by_default", CFG.randomize_temp_pos_by_default
     )
 
   CFG.no_randomize_prefixes :=
