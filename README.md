@@ -58,17 +58,18 @@ In Steam:
     [deadlock]
     root=C:\Program Files (x86)\Steam\steamapps\common\Deadlock
  ```
-3. You can copy and backup `user_settings.ini` To be able to restore defaults easily. Change the values in this file to customize the settings for this script.
+3. (optional) You can copy and backup `user_settings.ini` To be able to restore defaults easily. Change the values in this file to customize the settings for this script.
+4. (optional) You can create `user_settings.local.ini` and paste `user_settings.ini` contents in it if you want (create the local file right next to the original one). This will make every setting that you change in `user_settings.local.ini` take priority.
 
 ---
 
 ### First run
 - Double-click `DMT.ahk` in the repository root.
 
-On first run the tracker will:
+On first run the tracker will automatically:
 - Install or update `mvtrack.ps1` in your Deadlock folder
 - Install or update `mvtrack_config.cfg` and `mvtrack_pos.cfg` in `game\citadel\cfg` with your customized binds
-- Prompt to add required lines to `autoexec.cfg`
+- Prompt you to add a few minimal required lines in `autoexec.cfg`
 
 Accept the prompt unless you already managed these lines manually.
 
