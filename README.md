@@ -5,25 +5,24 @@ https://github.com/user-attachments/assets/2150e524-b25d-4a55-8395-c64f735e47d8
 #### Features list
 
 <details>
-<summary>📋 Expand me daddy </summary>
+<summary>📋 Click to expand me daddy </summary>
 
 ### Current Features (6 Feb 2026)
 
-- ⌨️ 95% Customizable hotkeys (supports modifiers like `!q` for tracker hotkeys)
+- ⌨️ 95% Customizable hotkeys (supports modifiers like `!q` (alt-q))
 - 📍 Save an in-game position with a name (=instance)
-- 🔍 Search for position and tp to it (supports approx terms like `zip boost green` for `zipline dash from yellow edgeboost to green`)
-- ✅ Press success/fail key to tp to the starting pos and declare your last run as good/bad
-- 🎉 Popup message when a route was succeeded `x` times in a row
+- 🔍 Search for an instance and tp to it (supports approximative search terms like `zip boost green` for `zipline dash from yellow edgeboost to green`)
+- ✅ Press success/fail key to tp back to the starting position and declare your last run as
+  passed/failed
+- 🎉 Get a popup message when a route was succeeded `x` times in a row
 - ⚡ Practice routes without infinite stamina, immediately fully replenishing it between attempts
-- 📐 Reposition current instance
-- ✏️ Rename current instance
-- ↩️ Forget last run success/fail (press multiple times to forget multiple, does not break success streak)
-- 🎲 Randomize starting position to avoid practicing the exact same start (prefixing a route name with `randoff` or other `prefixes` disables this)
-
-### Work in Progress
-
-- ⏱️ Auto-start timer on first movement input to measure route completion time
-- 📊 Accuracy graph over time for each instance (requires Python)
+- ✏️ Rename & Reposition your current instance
+- ↩️ Forget your last run's success/fail if you missclicked (press multiple times to forget multiple times)
+- 🎲 Randomize your starting positions to avoid practicing the exact same start (prefixing a route name with `randoff` or other `prefixes` disables this)
+- ⏱️ Auto-start a timer on your first movement input to measure how long running a route takes you
+- 🐌 Slow down in game time to practice more techs more slowly (your slowed/sped up stats are
+  tracked, separately than regular speed)
+- 📊 Show a graph showing your success percentage over time for each instance (requires Python)
 
 </details>
 
@@ -64,7 +63,7 @@ In Steam:
 ---
 
 ### First run
-- Double-click `deadlock-movement-tracker.ahk` in the repository root.
+- Double-click `DMT.ahk` in the repository root.
 
 On first run the tracker will:
 - Install or update `mvtrack.ps1` in your Deadlock folder
@@ -93,7 +92,6 @@ If positions are not saved or restored correctly:
 - Ensure you accepted the `autoexec.cfg` modification
   (or manually added `sv_cheats 1` and `exec mvtrack_config.cfg`)
 - Check that the `root=` path in `user_settings.ini` is correct
-- Open an issue/send me a discord msg with the contents in: `logs\debug.log`
 - Keep in mind conflicts could be possible if you run your own scripts in `autoexec.cfg` that also bind the same keys as this script in deadlock
 
 ## Uninstalling
